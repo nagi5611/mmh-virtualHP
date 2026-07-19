@@ -1,0 +1,166 @@
+/* ar/ar.css — ばーちゃるず AR 体験ページ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body.ar-page {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+    min-height: 100dvh;
+    background: #ffffff;
+    color: #2da597;
+    line-height: 1.6;
+}
+
+.ar-page__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    padding-top: max(12px, env(safe-area-inset-top));
+    background: #fff;
+    border-bottom: 1px solid rgba(45, 165, 151, 0.2);
+}
+
+.ar-page__back {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #ff6b9d;
+    text-decoration: none;
+}
+
+.ar-page__back:hover {
+    text-decoration: underline;
+}
+
+.ar-page__title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #2da597;
+}
+
+.ar-page__main {
+    padding: 16px;
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.ar-page__notice {
+    margin: 0 0 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #fff8e6;
+    border: 1px solid #f0d78c;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #2da597;
+}
+
+.ar-page__notice--info {
+    background: rgba(45, 165, 151, 0.08);
+    border-color: rgba(45, 165, 151, 0.25);
+}
+
+.ar-viewer-wrap {
+    margin-bottom: 8px;
+}
+
+.ar-viewer-stage .ar-viewer {
+    width: 100%;
+    height: min(62dvh, 520px);
+    min-height: 280px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(45, 165, 151, 0.25);
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(45, 165, 151, 0.15);
+    --poster-color: transparent;
+}
+
+.ar-launch-btn {
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    z-index: 2;
+    white-space: nowrap;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #ff6b9d, #2da597);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(45, 165, 151, 0.25);
+}
+
+.ar-viewer__hint {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 16px;
+    text-align: center;
+    color: #2da597;
+    font-size: 0.9375rem;
+    pointer-events: none;
+}
+
+.ar-page__howto {
+    margin-top: 20px;
+}
+
+.ar-page__howto-title {
+    margin-bottom: 10px;
+    font-size: 1.125rem;
+    color: #ff6b9d;
+}
+
+.ar-page__steps {
+    margin-bottom: 12px;
+    padding-left: 1.25rem;
+    font-size: 0.9375rem;
+}
+
+.ar-page__steps li + li {
+    margin-top: 6px;
+}
+
+.ar-page__note {
+    font-size: 0.875rem;
+    opacity: 0.85;
+}
+
+html[data-theme="dark"] body.ar-page {
+    background: #0a0a0a;
+    color: #a8e6cf;
+}
+
+html[data-theme="dark"] .ar-page__header {
+    background: #111;
+    border-bottom-color: rgba(0, 212, 255, 0.2);
+}
+
+html[data-theme="dark"] .ar-page__title,
+html[data-theme="dark"] .ar-page__steps,
+html[data-theme="dark"] .ar-page__note,
+html[data-theme="dark"] .ar-page__notice {
+    color: #a8e6cf;
+}
+
+html[data-theme="dark"] .ar-viewer-stage .ar-viewer {
+    border-color: rgba(0, 212, 255, 0.2);
+    background: #111;
+}
+
+@media (min-width: 721px) {
+    .ar-viewer-stage .ar-viewer {
+        height: 480px;
+    }
+}

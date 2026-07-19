@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ARジオラマ体験 — 松山空港ジオラマプロジェクト</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="stylesheet" href="../css/theme.css">
+  <link rel="stylesheet" href="ar.css">
+  <link rel="stylesheet" href="../../ar/ar-scale-control.css">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+  <script src="../../ar/ar-scale-control.js" defer></script>
+  <script src="../assets/i18n.js" defer></script>
+  <script src="ar.js" defer></script>
+</head>
+<body class="ar-page">
+  <header class="ar-page__header">
+    <a class="ar-page__back" href="../index.html#diorama-ar" data-i18n="arDiorama.backHome">トップへ戻る</a>
+    <p class="ar-page__title" data-i18n="arDiorama.pageTitle">ARジオラマ体験</p>
+  </header>
+
+  <main class="ar-page__main">
+    <p id="ar-unsupported" class="ar-page__notice" hidden data-i18n="arDiorama.unsupported">
+      この端末ではARをご利用いただけません。下の画面で3Dモデルを回転・拡大してご覧いただけます。
+    </p>
+
+    <div class="ar-viewer-wrap">
+      <div class="ar-viewer-stage">
+        <model-viewer
+          id="diorama-viewer"
+          class="ar-viewer"
+          src="../models/f2_low.glb"
+          ios-src="../models/f2_low.usdz"
+          ar
+          ar-modes="webxr scene-viewer quick-look"
+          ar-placement="floor"
+          ar-scale="auto"
+          camera-controls
+          touch-action="none"
+          shadow-intensity="1"
+          exposure="1"
+          alt="松山空港ジオラマ"
+          data-i18n="arDiorama.viewerAlt"
+          data-i18n-attr="alt"
+        >
+          <button slot="ar-button" class="ar-launch-btn btn btn-primary btn-lg" type="button">
+            <span data-i18n="arDiorama.launchAr">ARでジオラマを体験</span>
+          </button>
+          <p class="ar-viewer__hint" slot="poster" data-i18n="arDiorama.loadingHint">モデルを読み込んでいます…</p>
+        </model-viewer>
+        <aside class="ar-scale-control" data-i18n="arDiorama.scaleAria" data-i18n-attr="aria-label" aria-label="モデルの大きさ">
+          <span class="ar-scale-control__label" data-i18n="arDiorama.scaleLabel">サイズ</span>
+          <input
+            type="range"
+            class="ar-scale-control__slider"
+            min="0"
+            max="1000"
+            value="1000"
+            step="1"
+            aria-valuemin="0.1"
+            aria-valuemax="100"
+            aria-valuetext="100%"
+            data-i18n="arDiorama.scaleSliderAria"
+            data-i18n-attr="aria-label"
+          >
+          <output class="ar-scale-control__value" aria-hidden="true">100%</output>
+        </aside>
+      </div>
+    </div>
+
+    <div class="ar-page__howto">
+      <h1 class="ar-page__howto-title" data-i18n="arDiorama.howtoTitle">操作方法</h1>
+      <ol class="ar-page__steps">
+        <li data-i18n="arDiorama.howtoStep1">「ARでジオラマを体験」をタップし、カメラの使用を許可します。</li>
+        <li data-i18n="arDiorama.howtoStep2">スマホをゆっくり動かし、机や床などの水平な面を認識させます。</li>
+        <li data-i18n="arDiorama.howtoStep3">画面をタップして、松山空港ジオラマを配置します。</li>
+        <li data-i18n="arDiorama.howtoStep4">AR中は2本指のピンチで拡大・縮小できます。</li>
+        <li data-i18n="arDiorama.howtoStep5">2本指でスライドしてオブジェクトを移動できます（Androidのブラウザ内ARではモデル上を1本指でドラッグ）。</li>
+        <li data-i18n="arDiorama.howtoStep6">右端のスライダーでモデルの大きさを調整できます（最小0.1%）。</li>
+      </ol>
+      <p class="ar-page__note muted" data-i18n="arDiorama.mobileNote">スマートフォン専用の体験です。明るい場所でのご利用をおすすめします。</p>
+    </div>
+  </main>
+</body>
+</html>

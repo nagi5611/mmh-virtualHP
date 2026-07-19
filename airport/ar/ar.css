@@ -1,0 +1,140 @@
+/* airport/ar/ar.css — AR 専用ページ */
+.ar-page {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--surface-2, #f4f6f8);
+  color: var(--text-strong, #0b0d2b);
+}
+
+.ar-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  padding-top: max(12px, env(safe-area-inset-top));
+  background: #fff;
+  border-bottom: 1px solid var(--border, #e2e6ec);
+}
+
+.ar-page__back {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary, #1a1a5e);
+  text-decoration: none;
+}
+
+.ar-page__back:hover {
+  text-decoration: underline;
+}
+
+.ar-page__title {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.ar-page__main {
+  padding: 16px;
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.ar-page__notice {
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #fff8e6;
+  border: 1px solid #f0d78c;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.ar-viewer-wrap {
+  margin-bottom: 8px;
+}
+
+.ar-viewer-stage .ar-viewer {
+  width: 100%;
+  height: min(62dvh, 520px);
+  min-height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border, #e2e6ec);
+  background: #fff;
+  box-shadow: 0 24px 60px -24px rgba(11, 13, 43, 0.14);
+  --poster-color: transparent;
+}
+
+.ar-scale-control {
+  border-left-color: var(--border, #e2e6ec);
+}
+
+.ar-scale-control__label {
+  color: var(--primary, #1a1a5e);
+}
+
+.ar-scale-control__value {
+  color: var(--accent, #e85d04);
+}
+
+.ar-scale-control__slider {
+  accent-color: var(--primary, #1a1a5e);
+}
+
+.ar-launch-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  z-index: 2;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(11, 13, 43, 0.2);
+}
+
+.ar-viewer__hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 16px;
+  text-align: center;
+  color: var(--text-muted, #5c6478);
+  font-size: 0.9375rem;
+  pointer-events: none;
+}
+
+.ar-page__howto {
+  margin-top: 20px;
+}
+
+.ar-page__howto-title {
+  margin: 0 0 10px;
+  font-size: 1.125rem;
+}
+
+.ar-page__steps {
+  margin: 0 0 12px;
+  padding-left: 1.25rem;
+  line-height: 1.6;
+  font-size: 0.9375rem;
+}
+
+.ar-page__steps li + li {
+  margin-top: 6px;
+}
+
+.ar-page__note {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 721px) {
+  .ar-viewer-stage .ar-viewer {
+    height: 480px;
+  }
+}

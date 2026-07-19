@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防災シミュレーション開発記録 - 松山南高校ばーちゃるず</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #212529;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* ヒーローセクション */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1), rgba(45, 165, 151, 0.1)), 
+                        linear-gradient(45deg, #ffffff 0%, #f8f9fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.05), rgba(45, 165, 151, 0.05));
+            z-index: 1;
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b9d, #2da597);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        }
+        
+        .nav-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(255, 107, 157, 0.1);
+        }
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6b9d;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: #495057;
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: #ff6b9d;
+            background: rgba(255, 107, 157, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.2);
+        }
+        
+        /* コンテンツセクション */
+        .section {
+            padding: 100px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(45deg, #ff6b9d, #2da597);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .development-timeline {
+            position: relative;
+            margin: 50px 0;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #ff6b9d, #2da597);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 50px;
+            position: relative;
+            align-items: center;
+        }
+        
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-content {
+            flex: 1;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            margin: 0 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 107, 157, 0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .timeline-date {
+            color: #ff6b9d;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #2da597;
+        }
+        
+        .timeline-description {
+            color: #6c757d;
+            line-height: 1.8;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #ff6b9d, #2da597);
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 0 4px rgba(0,0,0,0.8);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .status-success {
+            background: linear-gradient(45deg, #2da597, #26a69a);
+            color: #fff;
+        }
+        
+        .status-problem {
+            background: linear-gradient(45deg, #ff6b9d, #e91e63);
+            color: #fff;
+        }
+        
+        .status-progress {
+            background: linear-gradient(45deg, #ffa726, #ff9800);
+            color: #fff;
+        }
+        
+        /* コードブロック */
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #212529;
+            overflow-x: auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .code-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .code-block .comment {
+            color: #6c757d;
+        }
+        
+        .code-block .keyword {
+            color: #d73502;
+        }
+        
+        .code-block .string {
+            color: #0f5132;
+        }
+        
+        /* 技術詳細セクション */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .tech-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 107, 157, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 157, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .tech-card:hover::before {
+            left: 100%;
+        }
+        
+        .tech-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(255, 107, 157, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b9d, #2da597);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .tech-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #2da597;
+        }
+        
+        .tech-description {
+            color: #6c757d;
+            line-height: 1.8;
+        }
+        
+
+        
+        /* 数式表示 */
+        .math-formula {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.05), rgba(45, 165, 151, 0.05));
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 107, 157, 0.2);
+            margin: 20px 0;
+            font-family: 'Times New Roman', serif;
+            font-size: 1.1rem;
+            text-align: center;
+            color: #212529;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .math-formula:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.1);
+        }
+        
+        /* チームセクション */
+        .team-section {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.05), rgba(45, 165, 151, 0.05));
+            padding: 100px 20px;
+            border-radius: 30px;
+            margin: 50px 0;
+            border: 1px solid rgba(255, 107, 157, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .achievement-item {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 107, 157, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .achievement-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(45, 165, 151, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .achievement-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b9d, #2da597);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .achievement-label {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+        
+        /* フッター */
+        .footer {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 50px 0;
+            text-align: center;
+            margin-top: 100px;
+            border-top: 1px solid rgba(255, 107, 157, 0.1);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-links a {
+            color: #6c757d;
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .footer-links a:hover {
+            color: #ff6b9d;
+            background: rgba(255, 107, 157, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* レスポンシブ対応 */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .timeline-line {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                flex-direction: column !important;
+                margin-left: 50px;
+            }
+            
+            .timeline-dot {
+                left: 30px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .achievement-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* スクロールアニメーション */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* パーティクルアニメーション */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #ff6b9d;
+            border-radius: 50%;
+            animation: float 8s infinite linear;
+            opacity: 0.3;
+            box-shadow: 0 0 6px rgba(255, 107, 157, 0.4);
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+                transform: translateY(90vh) rotate(36deg) scale(1);
+            }
+            90% {
+                opacity: 0.3;
+                transform: translateY(10vh) rotate(324deg) scale(1);
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes ripple-animation {
+            0% {
+                transform: scale(0);
+                opacity: 0.6;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        /* 追加のアニメーション */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes slideInLeft {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideInRight {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* セクションタイトルに脈動効果を追加 */
+        .section-title {
+            animation: pulse 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- パーティクル背景 -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- ナビゲーション -->
+    <nav class="nav-header">
+        <div class="nav-content">
+            <a href="index.html" class="nav-logo">ばーちゃるず</a>
+            <ul class="nav-links">
+                <li><a href="index.html">ホーム</a></li>
+                <li><a href="index.html#metaverse">メタバース</a></li>
+                <li><a href="index.html#about">活動について</a></li>
+                <li><a href="#contact">お問い合わせ</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- ヒーローセクション -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">防災シミュレーション開発記録</h1>
+            <p class="hero-subtitle" style="font-size: 1.1em; white-space: nowrap;">
+                MetaQuest3S × Unity × VRで実現する煙のシミュレーション開発日記
+            </p>
+        </div>
+    </section>
+    
+    <!-- 開発プロセス -->
+    <section class="section">
+        <h2 class="section-title fade-in">開発の軌跡</h2>
+        <div class="development-timeline fade-in">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2024年10月</div>
+                    <h3 class="timeline-title">Blenderでの煙のシミュレーション<span class="status-badge status-success">成功</span></h3>
+                    <p class="timeline-description">
+                        Blenderの流体シミュレーション機能を使って煙のシミュレーションを実装。有限差分法による移流方程式・拡散方程式・非圧縮条件を用いた高精度なシミュレーションを実現しました。
+                    </p>
+                    <div class="math-formula">
+                        <strong>移流方程式:</strong> ∂φ/∂t + (u·∇)φ = 0<br>
+                        <strong>拡散方程式:</strong> ∂φ/∂t = D∇²φ<br>
+                        <strong>非圧縮条件:</strong> ∇·u = 0
+                    </div>
+                    <p class="timeline-description">
+                        結果は大成功！かなり良好なシミュレーション結果を得ることができました。物理的に正確な煙の動きを再現できています。
+                    </p>
+                </div>
+                
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2024年11月初旬</div>
+                    <h3 class="timeline-title">Unity + OpenXRでMetaQuest3Sへ<span class="status-badge status-problem">問題発生</span></h3>
+                    <p class="timeline-description">
+                        MetaQuest3Sに導入するためにUnityのOpenXRパッケージを使用。自作のアプリをMetaQuest3Sに導入できることが判明し、早速煙のシミュレーションを動かそうとしました。
+                    </p>
+                    <p class="timeline-description">
+                        <strong>ここで問題発生！</strong> 煙のシミュレーションデータは一般的な3Dモデルデータとしてエクスポートできません。シミュレーションデータはOpenVDBというファイル形式で保存されるため、Unity標準のインポート機能では読み込めませんでした。
+                    </p>
+                </div>
+                
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2024年11月中旬</div>
+                    <h3 class="timeline-title">OpenVDBforUnityの試行<span class="status-badge status-problem">問題発生</span></h3>
+                    <p class="timeline-description">
+                        GitHubでOpenVDBforUnityというパッケージを発見。これを使えばOpenVDBファイルをUnityで読み込めるはずです。
+                    </p>
+                    <p class="timeline-description">
+                        <strong>さらに問題発生！</strong> そのパッケージは7年前のもので、7年前のUnityバージョンではMetaQuest3Sに対応させるOpenXRパッケージが存在しません。新しいUnityバージョンとの互換性がありませんでした。
+                    </p>
+                </div>
+                
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2024年11月下旬</div>
+                    <h3 class="timeline-title">ZibbraEffectによる代替案<span class="status-badge status-problem">問題発生</span></h3>
+                    <p class="timeline-description">
+                        最新のUnityでも使えるZibbraEffectなどのVFX系パッケージを発見。これを使ってBlenderで行った煙のシミュレーションを再現することにしました。
+                    </p>
+                    <p class="timeline-description">
+                        VFXの構築を行い、Unity上での実行に成功！視覚的に美しい煙の効果を再現できました。さあ、いよいよMetaQuest3Sへ書き込みです。
+                    </p>
+                    <p class="timeline-description">
+                        <strong>またしても問題発生！</strong> OpenXRなどのパッケージがZibbraEffectなどのVFXパッケージに対応していませんでした。外部パッケージを使えないとなると、いよいよ手詰まりです。
+                    </p>
+                </div>
+                
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2024年12月初旬</div>
+                    <h3 class="timeline-title">リアルタイムシミュレーション+レンダリング<span class="status-badge status-problem">重い</span></h3>
+                    <p class="timeline-description">
+                        アプリケーション内でのリアルタイム流体シミュレーションと、逆投影行列・体積分を使ったカメラのピクセルごとのアルファ値の算出、テクスチャマッピングの作成、カメラへの合成を毎フレーム行う方法を考案。
+                    </p>
+                    <div class="math-formula">
+                        <strong>逆投影行列:</strong> P<sup>-1</sup> = (VP)<sup>-1</sup><br>
+                        <strong>体積分:</strong> I = ∫∫∫ ρ(x,y,z) dV<br>
+                        <strong>アルファ値:</strong> α = 1 - e<sup>-τ</sup>
+                    </div>
+                    <p class="timeline-description">
+                        これは実際のBlenderの流体シミュレーション描画方式と同じ方式なので、理論上は実現可能です。開発開始！
+                    </p>
+                    <p class="timeline-description">
+                        <strong>しかし問題発生！</strong> 煙のシミュレーションが重い！リアルタイムでの流体シミュレーションは処理に時間がかかります。さらに、実行環境はMetaQuestなのでPC以上に処理負荷が問題になります。完全に盲点でした。
+                    </p>
+                </div>
+                
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2024年12月中旬</div>
+                    <h3 class="timeline-title">nanoVDBの発見<span class="status-badge status-success">突破口</span></h3>
+                    <p class="timeline-description">
+                        ここまで来てかなりの難題にぶち当たりました。シミュレーションデータはあるが、Unityに持って行けない + 外部パッケージ不可 + リアルタイムでのシミュレーション・レンダリングもスペック的に不可...
+                    </p>
+                    <p class="timeline-description">
+                        そこでGitHubでnanoVDBのUnityでのレンダリングに成功しているC++&C#サンプルコードを発見！しかもUnityの最新版に対応している！これは外部パッケージではないので、MetaQuestでも読み込めるはずです。
+                    </p>
+                    <p class="timeline-description">
+                        nanoVDBは、NVIDIAが開発したOpenVDBのパフォーマンス最適化版で、本質的にはOpenVDBと同じデータ構造を持ちます。つまり、OpenVDBをnanoVDBに変換できれば解決できます。
+                    </p>
+                </div>
+                
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2024年12月下旬</div>
+                    <h3 class="timeline-title">vcpkgによる変換ツール構築<span class="status-badge status-success">成功</span></h3>
+                    <p class="timeline-description">
+                        vcpkgのOpenVDBモジュールに注目。調査すると、vcpkgのOpenVDBモジュールにはOpenVDBとnanoVDBを変換するシステムが含まれていることが判明！
+                    </p>
+                    <div class="code-block">
+                        <span class="comment">// vcpkgでOpenVDBモジュールをインストール</span><br>
+                        vcpkg install openvdb<br>
+                        <span class="comment">// OpenVDBからnanoVDBへの変換</span><br>
+                        nanovdb_convert input.vdb output.nvdb
+                    </div>
+                    <p class="timeline-description">
+                        vcpkg環境を構築し、変換ツールを動かすことに成功。OpenVDBファイルをnanoVDBファイルに変換できるようになりました。
+                    </p>
+                </div>
+                
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年1月</div>
+                    <h3 class="timeline-title">レンダリング成功・アニメーション実装<span class="status-badge status-success">現在の進捗</span></h3>
+                    <p class="timeline-description">
+                        得たnanoVDBファイルをサンプルコードにつなげて実行した結果、成功！ちゃんとレンダリングされました。Unity上で煙のシミュレーションデータを表示できるようになりました。
+                    </p>
+                    <p class="timeline-description">
+                        現状のシステムでは一つのnanoVDBしか表示できないため、C++とC#コードを編集・作成して、複数のnanoVDBをアニメーションのように表示させることができるようになりました。
+                    </p>
+                    <div class="code-block">
+                        <span class="keyword">public class</span> NanoVDBAnimator : MonoBehaviour<br>
+                        {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span> List&lt;NanoVDBData&gt; frames;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">private</span> <span class="keyword">int</span> currentFrame = 0;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// フレーム更新とレンダリング処理</span><br>
+                        }
+                    </div>
+                    <p class="timeline-description">
+                        <strong>現在の進捗:</strong> ここまでが完了しています。次の進展があったら、ここに順次追加されていく予定です。
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- 技術詳細 -->
+    <section class="section">
+        <h2 class="section-title fade-in">技術的な挑戦</h2>
+        <div class="tech-grid">
+            <div class="tech-card fade-in">
+                <div class="tech-icon">⚡</div>
+                <h3 class="tech-title">OpenVDB → nanoVDB変換</h3>
+                <p class="tech-description">Blenderで生成されたOpenVDBファイルをNVIDIA nanoVDBフォーマットに変換。メモリ効率とパフォーマンスを大幅に向上させ、VRデバイスでの実行を可能にしました。</p>
+            </div>
+            
+            <div class="tech-card fade-in">
+                <div class="tech-icon">🎮</div>
+                <h3 class="tech-title">Unity OpenXR統合</h3>
+                <p class="tech-description">MetaQuest3Sに対応したOpenXRパッケージを使用。外部パッケージに依存しない独自のレンダリングシステムを構築し、VRデバイスでの煙のシミュレーション表示を実現。</p>
+            </div>
+            
+            <div class="tech-card fade-in">
+                <div class="tech-icon">🌫️</div>
+                <h3 class="tech-title">体積レンダリング</h3>
+                <p class="tech-description">逆投影行列と体積分を使用したピクセルごとのアルファ値計算。リアルタイムで煙の密度分布を視覚化し、没入感のある火災シミュレーションを提供。</p>
+            </div>
+            
+            <div class="tech-card fade-in">
+                <div class="tech-icon">🔧</div>
+                <h3 class="tech-title">C++/C#統合</h3>
+                <p class="tech-description">C++で書かれたnanoVDBレンダリングコードをC#のUnityコードと統合。複数フレームのアニメーション機能を独自実装し、時系列的な煙の動きを再現。</p>
+            </div>
+        </div>
+    </section>
+    
+
+    
+    <!-- 技術的課題と解決策 -->
+    <section class="section">
+        <h2 class="section-title fade-in">技術的課題と解決策</h2>
+                 <div style="background: rgba(255, 255, 255, 0.8); padding: 50px; border-radius: 20px; border: 1px solid rgba(255, 107, 157, 0.2); backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
+                 <div>
+                     <h3 style="color: #ff6b9d; margin-bottom: 20px; font-size: 1.5rem;">❌ 発生した問題</h3>
+                     <ul style="color: #6c757d; line-height: 1.8;">
+                         <li>OpenVDBファイルの直接インポート不可</li>
+                         <li>旧バージョンパッケージの互換性問題</li>
+                         <li>外部VFXパッケージのOpenXR非対応</li>
+                         <li>リアルタイムシミュレーションの処理負荷</li>
+                         <li>VRデバイスでのパフォーマンス制約</li>
+                     </ul>
+                 </div>
+                 <div>
+                     <h3 style="color: #2da597; margin-bottom: 20px; font-size: 1.5rem;">✅ 採用した解決策</h3>
+                     <ul style="color: #6c757d; line-height: 1.8;">
+                         <li>vcpkgによるOpenVDB→nanoVDB変換</li>
+                         <li>独自のC++/C#レンダリングシステム</li>
+                         <li>Unity標準機能のみを使用</li>
+                         <li>プリレンダリングによるパフォーマンス最適化</li>
+                         <li>フレームベースアニメーション実装</li>
+                     </ul>
+                 </div>
+             </div>
+             <div style="text-align: center; padding-top: 30px; border-top: 1px solid rgba(255, 107, 157, 0.2);">
+                 <p style="color: #6c757d; font-size: 1.1rem; line-height: 1.8;">
+                     このプロジェクトを通じて、VRにおける流体シミュレーションの実装の難しさと、それを解決するための創意工夫の重要性を学びました。
+                     技術的な制約の中でも、最適な解決策を見つけ出すことができました。
+                 </p>
+             </div>
+         </div>
+    </section>
+    
+    <!-- 今後の展望 -->
+    <section class="section">
+        <h2 class="section-title fade-in">今後の展望</h2>
+                 <div style="background: rgba(255, 255, 255, 0.8); padding: 50px; border-radius: 20px; border: 1px solid rgba(255, 107, 157, 0.2); backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+                 <div style="text-align: center;">
+                     <h3 style="color: #ff6b9d; margin-bottom: 20px; font-size: 1.5rem;">🔥 避難訓練システム</h3>
+                     <p style="color: #6c757d; line-height: 1.8;">煙のシミュレーションを活用した実際の避難訓練システムを構築。MetaQuest3Sを使用して、リアルな火災状況での避難体験を提供します。</p>
+                 </div>
+                 <div style="text-align: center;">
+                     <h3 style="color: #2da597; margin-bottom: 20px; font-size: 1.5rem;">⚡ パフォーマンス最適化</h3>
+                     <p style="color: #6c757d; line-height: 1.8;">nanoVDBの圧縮技術とGPUアクセラレーションを活用して、より高解像度で滑らかな煙のシミュレーションを実現します。</p>
+                 </div>
+                 <div style="text-align: center;">
+                     <h3 style="color: #ff6b9d; margin-bottom: 20px; font-size: 1.5rem;">🌐 マルチユーザー対応</h3>
+                     <p style="color: #6c757d; line-height: 1.8;">複数のユーザーが同時に参加できる協調避難訓練システムを開発。チームワークを重視した防災教育を実現します。</p>
+                 </div>
+             </div>
+             <div style="margin-top: 40px; text-align: center; padding-top: 30px; border-top: 1px solid rgba(255, 107, 157, 0.2);">
+                 <p style="color: #6c757d; font-size: 1.1rem; line-height: 1.8;">
+                     <strong>次の進展があったら、このページに順次追加されていく予定です。</strong><br>
+                     開発の続きをお楽しみに！
+                 </p>
+             </div>
+         </div>
+    </section>
+    
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">ホーム</a>
+                <a href="index.html#metaverse">メタバース体験</a>
+                <a href="index.html#about">活動について</a>
+                <a href="index.html#news">お知らせ</a>
+            </div>
+            <p>&copy; 2025 松山南高校「ばーちゃるず」防災シミュレーション開発記録. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // パーティクルアニメーション
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 60;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                
+                // ランダムな色とサイズ
+                const colors = ['#ff6b9d', '#2da597', '#6f42c1', '#fd7e14'];
+                const sizes = [2, 3, 4];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const size = sizes[Math.floor(Math.random() * sizes.length)];
+                
+                particle.style.background = color;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.boxShadow = `0 0 ${size * 2}px ${color}40`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // マウス追従エフェクト
+        function createMouseTracker() {
+            const tracker = document.createElement('div');
+            tracker.style.position = 'fixed';
+            tracker.style.width = '20px';
+            tracker.style.height = '20px';
+            tracker.style.background = 'radial-gradient(circle, rgba(255, 107, 157, 0.3), transparent)';
+            tracker.style.borderRadius = '50%';
+            tracker.style.pointerEvents = 'none';
+            tracker.style.zIndex = '9999';
+            tracker.style.transition = 'all 0.1s ease';
+            document.body.appendChild(tracker);
+            
+            document.addEventListener('mousemove', (e) => {
+                tracker.style.left = e.clientX - 10 + 'px';
+                tracker.style.top = e.clientY - 10 + 'px';
+            });
+        }
+        
+        // スクロール進行バー
+        function createScrollProgress() {
+            const progressBar = document.createElement('div');
+            progressBar.style.position = 'fixed';
+            progressBar.style.top = '0';
+            progressBar.style.left = '0';
+            progressBar.style.width = '0%';
+            progressBar.style.height = '3px';
+            progressBar.style.background = 'linear-gradient(45deg, #ff6b9d, #2da597)';
+            progressBar.style.zIndex = '10000';
+            progressBar.style.transition = 'width 0.3s ease';
+            document.body.appendChild(progressBar);
+            
+            window.addEventListener('scroll', () => {
+                const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+                progressBar.style.width = scrollPercent + '%';
+            });
+        }
+        
+        // スクロールアニメーション
+        function handleScrollAnimations() {
+            const elements = document.querySelectorAll('.fade-in');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+        
+        // ナビゲーションスクロール効果
+        function handleNavScroll() {
+            const nav = document.querySelector('.nav-header');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(255, 255, 255, 0.98)';
+                nav.style.boxShadow = '0 5px 25px rgba(0,0,0,0.15)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            }
+        }
+        
+        // イベントリスナー
+        window.addEventListener('scroll', () => {
+            handleScrollAnimations();
+            handleNavScroll();
+        });
+        
+        // タイピングエフェクト
+        function typeWriter(element, text, speed = 50) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+        
+        // 波紋エフェクト
+        function createRipple(e) {
+            const ripple = document.createElement('div');
+            const rect = e.currentTarget.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.position = 'absolute';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.style.width = size + 'px';
+            ripple.style.height = size + 'px';
+            ripple.style.background = 'rgba(255, 107, 157, 0.3)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple-animation 0.6s ease-out';
+            ripple.style.pointerEvents = 'none';
+            
+            e.currentTarget.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+        
+        // 初期化
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            createMouseTracker();
+            createScrollProgress();
+            handleScrollAnimations();
+            
+            // タイピングエフェクトをヒーローセクションに適用
+            const heroTitle = document.querySelector('.hero-title');
+            const heroSubtitle = document.querySelector('.hero-subtitle');
+            
+            if (heroTitle) {
+                const titleText = heroTitle.textContent;
+                setTimeout(() => typeWriter(heroTitle, titleText, 100), 500);
+            }
+            
+            if (heroSubtitle) {
+                const subtitleText = heroSubtitle.textContent;
+                setTimeout(() => typeWriter(heroSubtitle, subtitleText, 50), 2000);
+            }
+            
+            // 波紋エフェクトをボタンに適用
+            const buttons = document.querySelectorAll('.timeline-content, .tech-card, .achievement-item');
+            buttons.forEach(button => {
+                button.style.position = 'relative';
+                button.style.overflow = 'hidden';
+                button.addEventListener('click', createRipple);
+            });
+        });
+    </script>
+</body>
+</html>

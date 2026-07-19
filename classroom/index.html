@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教室・階段メタバース - 松山南高校ばーちゃるず</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            overflow: hidden;
+        }
+
+        /* プリローダー */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.2s ease;
+            overflow: hidden;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .preloader.exit-animation {
+            opacity: 1;
+        }
+
+        .preloader-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 100px;
+        }
+
+        /* ばーちゃるず文字 */
+        .loader-logo {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-text {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
+            transition: all 0.2s ease;
+        }
+
+        .logo-text.exit-left {
+            transform: translateX(-100vw);
+            opacity: 0;
+        }
+
+        .logo-text.exit-right {
+            transform: translateX(100vw);
+            opacity: 0;
+        }
+
+        /* 文字の周りを回る線 */
+        .rotating-line {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            border: 2px solid transparent;
+            border-top: 2px solid #ff6b9d;
+            border-right: 2px solid #2da597;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: rotate-line 2s linear infinite;
+            transition: all 0.3s ease;
+        }
+
+        .rotating-line.exit-left {
+            transform: translate(-50%, -50%) translateX(-100vw);
+            opacity: 0;
+        }
+
+        .rotating-line.exit-right {
+            transform: translate(-50%, -50%) translateX(100vw);
+            opacity: 0;
+        }
+
+        /* 下の方のロードバー */
+        .load-bar-container {
+            position: relative;
+            width: 400px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            overflow: visible;
+        }
+
+        .load-bar-track {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+
+        .dna-ball {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            transition: none;
+            z-index: 2;
+        }
+
+        .dna-ball.red {
+            background: #ff6b9d;
+            box-shadow: 0 0 15px #ff6b9d, 0 0 25px rgba(255, 107, 157, 0.5);
+        }
+
+        .dna-ball.blue {
+            background: #2da597;
+            box-shadow: 0 0 15px #2da597, 0 0 25px rgba(45, 165, 151, 0.5);
+        }
+
+        .dna-trail-point {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            pointer-events: none;
+            transition: all 0.5s linear;
+            z-index: 1;
+            opacity: 0.8;
+        }
+
+        .dna-trail-point.red-trail {
+            background: rgba(255, 107, 157, 0.7);
+            box-shadow: 0 0 6px rgba(255, 107, 157, 0.5);
+        }
+
+        .dna-trail-point.blue-trail {
+            background: rgba(45, 165, 151, 0.7);
+            box-shadow: 0 0 6px rgba(45, 165, 151, 0.5);
+        }
+
+        .dna-trail-point.fade-out {
+            opacity: 0;
+            transform: scale(0.3);
+        }
+
+        .progress-percentage {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .progress-percentage.exit {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .dna-trail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .dna-trail::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(255, 107, 157, 0.3) 25%,
+                    rgba(45, 165, 151, 0.3) 50%,
+                    rgba(255, 107, 157, 0.3) 75%,
+                    transparent 100%);
+            transform: translateY(-50%);
+            opacity: 0.5;
+        }
+
+        .dna-path {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .dna-path svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .dna-path path {
+            fill: none;
+            stroke: rgba(255, 107, 157, 0.2);
+            stroke-width: 1;
+            stroke-dasharray: 3, 3;
+            animation: dna-path-flow 3s linear infinite;
+        }
+
+        .dna-path path:nth-child(2) {
+            stroke: rgba(45, 165, 151, 0.2);
+            animation-delay: 1.5s;
+        }
+
+        @keyframes dna-path-flow {
+            0% {
+                stroke-dashoffset: 0;
+            }
+
+            100% {
+                stroke-dashoffset: 20;
+            }
+        }
+
+        .dna-trail::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: repeating-linear-gradient(90deg,
+                    transparent 0px,
+                    rgba(255, 255, 255, 0.1) 10px,
+                    transparent 20px);
+            transform: translateY(-50%);
+            animation: dna-trail-flow 2s linear infinite;
+        }
+
+        @keyframes dna-trail-flow {
+            0% {
+                transform: translateY(-50%) translateX(0);
+            }
+
+            100% {
+                transform: translateY(-50%) translateX(20px);
+            }
+        }
+
+        .metaverse-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255, 107, 157, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(45, 165, 151, 0.1) 0%, transparent 50%);
+            animation: bg-shift 8s ease-in-out infinite;
+        }
+
+        .grid-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-move 10s linear infinite;
+        }
+
+        @keyframes rotate-line {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        @keyframes bg-shift {
+
+            0%,
+            100% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(180deg) scale(1.1);
+            }
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 32px;
+            }
+
+            .rotating-line {
+                width: 150px;
+                height: 150px;
+            }
+
+            .load-bar-container {
+                width: 300px;
+                height: 50px;
+            }
+
+            .dna-ball {
+                width: 10px;
+                height: 10px;
+            }
+
+            .dna-trail-point {
+                width: 4px;
+                height: 4px;
+            }
+
+            .progress-percentage {
+                font-size: 14px;
+                margin-top: 15px;
+            }
+        }
+
+        /* メインコンテンツ */
+        .main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .main-content.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .ui-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(40, 166, 153, 0.9);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: auto;
+            backdrop-filter: blur(10px);
+            z-index: 1001;
+        }
+
+        .header h1 {
+            color: white;
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .header .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            pointer-events: auto;
+        }
+
+        .control-btn {
+            background: rgba(40, 166, 153, 0.9);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .control-btn:hover {
+            background: rgba(40, 166, 153, 1);
+            transform: translateY(-2px);
+        }
+
+        .info-panel {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 300px;
+            pointer-events: auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-panel h3 {
+            margin: 0 0 10px 0;
+            color: #28a699;
+            font-size: 18px;
+        }
+
+        .info-panel p {
+            margin: 0;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .loading-spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #28a699;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .vr-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #28a699;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: auto;
+            transition: all 0.3s;
+        }
+
+        .vr-button:hover {
+            transform: scale(1.1);
+            background: #20948a;
+        }
+
+        .hotspot {
+            position: fixed;
+            background: rgba(40, 166, 153, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            pointer-events: auto;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid white;
+            animation: pulse 2s infinite;
+        }
+
+        .hotspot:hover {
+            background: rgba(40, 166, 153, 1);
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* ハンバーガーメニュー */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 3px;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 20px;
+            height: 2px;
+            background-color: white;
+            transition: 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            right: 0;
+            background: rgba(40, 166, 153, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 10px 0 0 10px;
+            padding: 20px;
+            z-index: 1002;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 16px;
+        }
+
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding-left: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .header .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .info-panel {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+                top: 60px;
+                transform: translateY(-100%);
+                transition: transform 0.3s ease;
+                z-index: 1003;
+            }
+
+            .info-panel.mobile-active {
+                transform: translateY(0);
+            }
+
+            .controls {
+                bottom: 10px;
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- プリローダー -->
+    <div class="preloader" id="preloader">
+        <div class="grid-lines"></div>
+        <div class="preloader-content">
+            <div class="loader-logo">
+                <div class="logo-text">ばーちゃるず</div>
+                <div class="rotating-line"></div>
+            </div>
+            <div class="load-bar-container">
+                <div class="red dna-ball"></div>
+                <div class="blue dna-ball"></div>
+            </div>
+            <div class="progress-percentage">0%</div>
+        </div>
+    </div>
+
+    <!-- メインコンテンツ -->
+    <div class="main-content" id="mainContent">
+        <div class="ui-overlay">
+            <div class="header">
+                <h1>教室・階段メタバース</h1>
+                <div class="nav-links">
+                    <a href="../">ホーム</a>
+                    <a href="#" onclick="resetCamera()">視点リセット</a>
+                    <a href="#" onclick="toggleInfo()">情報</a>
+                </div>
+                <div class="hamburger" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="../">ホーム</a>
+                <a href="#" onclick="resetCamera(); closeMobileMenu();">視点リセット</a>
+                <a href="#" onclick="toggleMobileInfo(); closeMobileMenu();">情報</a>
+            </div>
+
+            <div class="info-panel" id="infoPanel">
+                <h3>松山南高校 教室・階段</h3>
+                <p>134年の歴史を持つ松山南高校の思い出の詰まった教室と階段をメタバース化しました。生徒たちが日々過ごした空間をデジタル保存し、永遠に記憶に残します。</p>
+                <br>
+                <p><strong>3Dスキャン箇所：</strong><br>
+                    • 教室（机・椅子配置）<br>
+                    • 階段（手すり・踊り場）<br>
+                    • 廊下（窓際・掲示板）<br>
+                    • 思い出の品々</p>
+            </div>
+
+            <div class="loading" id="loadingScreen">
+                <div class="loading-spinner"></div>
+                <p>3Dモデルを読み込み中...</p>
+            </div>
+
+            <div class="controls">
+                <button class="control-btn" onclick="moveCamera('overview')">全体表示</button>
+                <button class="control-btn" onclick="moveCamera('classroom')">教室</button>
+                <button class="control-btn" onclick="moveCamera('stairs')">階段</button>
+                <button class="control-btn" onclick="moveCamera('corridor')">廊下</button>
+            </div>
+
+
+
+            <button class="vr-button" onclick="enterVR()" title="VR体験">
+                🥽
+            </button>
+        </div>
+
+        <a-scene vr-mode-ui="enabled: true" style="height: 100vh; width: 100vw;" background="color: #87CEEB"
+            fog="type: linear; color: #87CEEB; near: 20; far: 100" loading-screen="enabled: false">
+
+            <!-- アセット -->
+            <a-assets>
+                <a-asset-item id="classroom-model" src="../GLBs/classroom_2.glb"></a-asset-item>
+            </a-assets>
+
+            <!-- 環境光 -->
+            <a-light type="ambient" color="#ffffff" intensity="0.7"></a-light>
+
+            <!-- 方向光 -->
+            <a-light type="directional" position="15 25 15" color="#ffffff" intensity="0.9"
+                light="castShadow: true; shadowMapHeight: 2048; shadowMapWidth: 2048"></a-light>
+
+            <!-- 追加の光源（教室内を明るく） -->
+            <a-light type="point" position="0 3 0" color="#ffffff" intensity="0.5"></a-light>
+            <a-light type="point" position="-5 3 5" color="#ffffff" intensity="0.3"></a-light>
+            <a-light type="point" position="5 3 -5" color="#ffffff" intensity="0.3"></a-light>
+
+            <!-- 教室・階段3Dモデル -->
+            <a-entity id="classroom-entity" gltf-model="#classroom-model" position="0 0 0" rotation="0 0 0"
+                scale="1 1 1" shadow="cast: true; receive: true">
+            </a-entity>
+
+            <!-- 地面 -->
+            <a-plane position="0 -0.1 0" rotation="-90 0 0" width="100" height="100" color="#4a4a4a"
+                shadow="receive: true" material="roughness: 0.8">
+            </a-plane>
+
+            <!-- 3D ホットスポット -->
+            <a-sphere id="hotspot-1" position="2 1.5 3" radius="0.1" color="#28a699" opacity="0.8"
+                animation="property: scale; to: 1.2 1.2 1.2; dir: alternate; dur: 1000; loop: true">
+            </a-sphere>
+
+            <a-sphere id="hotspot-2" position="-3 2 -2" radius="0.1" color="#28a699" opacity="0.8"
+                animation="property: scale; to: 1.2 1.2 1.2; dir: alternate; dur: 1000; loop: true; delay: 500">
+            </a-sphere>
+
+            <!-- カメラリグ -->
+            <a-entity id="cameraRig" position="0 0 8">
+
+                <!-- カメラ -->
+                <a-camera id="camera" look-controls="pointerLockEnabled: false"
+                    wasd-controls="enabled: true; acceleration: 25" position="0 0 0">
+
+                    <!-- カーソル -->
+                    <a-cursor geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
+                        material="color: #28a699; shader: flat" position="0 0 -1"
+                        animation__click="property: scale; startEvents: click; from: 1 1 1; to: 0.8 0.8 0.8; dur: 150; dir: alternate; easing: easeInQuad">
+                    </a-cursor>
+                </a-camera>
+
+                <!-- VRコントローラー -->
+                <a-entity id="leftHand" hand-controls="hand: left; handModelStyle: lowPoly; color: #28a699">
+                </a-entity>
+                <a-entity id="rightHand" hand-controls="hand: right; handModelStyle: lowPoly; color: #28a699">
+                </a-entity>
+            </a-entity>
+        </a-scene>
+    </div>
+
+    <script>
+        // プリローダーアニメーション
+        function animatePreloader() {
+            const redBall = document.querySelector('.dna-ball.red');
+            const blueBall = document.querySelector('.dna-ball.blue');
+            const logoText = document.querySelector('.logo-text');
+            const rotatingLine = document.querySelector('.rotating-line');
+            const progressPercentage = document.querySelector('.progress-percentage');
+            const container = document.querySelector('.load-bar-container');
+
+            let progress = 0;
+            let trailPoints = [];
+
+            const createTrailPoint = (x, y, type) => {
+                const trailPoint = document.createElement('div');
+                trailPoint.className = `dna-trail-point ${type}-trail`;
+                trailPoint.style.left = (x - 3) + 'px';
+                trailPoint.style.top = (y - 3) + 'px';
+                container.appendChild(trailPoint);
+
+                setTimeout(() => {
+                    trailPoint.classList.add('fade-out');
+                    setTimeout(() => {
+                        if (trailPoint.parentNode) {
+                            trailPoint.parentNode.removeChild(trailPoint);
+                        }
+                    }, 200);
+                }, 200);
+
+                return trailPoint;
+            };
+
+            const animateProgress = () => {
+                if (progress <= 100) {
+                    const containerWidth = container.offsetWidth;
+                    const ballWidth = redBall.offsetWidth;
+                    const maxPosition = containerWidth - ballWidth;
+                    const xPosition = (progress / 100) * maxPosition;
+
+                    const angle = (progress / 100) * Math.PI * 10;
+                    const amplitude = 10;
+                    const centerY = 25;
+
+                    const redY = centerY + Math.sin(angle) * amplitude;
+                    redBall.style.left = xPosition + 'px';
+                    redBall.style.top = redY + 'px';
+
+                    const blueY = centerY + Math.sin(angle + Math.PI) * amplitude;
+                    blueBall.style.left = xPosition + 'px';
+                    blueBall.style.top = blueY + 'px';
+
+                    createTrailPoint(xPosition + ballWidth / 2, redY + ballWidth / 2, 'red');
+                    createTrailPoint(xPosition + ballWidth / 2, blueY + ballWidth / 2, 'blue');
+
+                    const rotateAngle = (progress / 100) * 360 * 16;
+                    redBall.style.transform = `rotate(${rotateAngle}deg)`;
+                    blueBall.style.transform = `rotate(${-rotateAngle}deg)`;
+
+                    const scale = 1 + 0.2 * Math.sin(angle * 10);
+                    redBall.style.transform += ` scale(${scale})`;
+                    blueBall.style.transform += ` scale(${scale})`;
+
+                    progressPercentage.textContent = Math.round(progress) + '%';
+
+                    progress += 1;
+                    setTimeout(animateProgress, 20);
+                } else {
+                    setTimeout(() => {
+                        startExitAnimation();
+                    }, 300);
+                }
+            };
+
+            const startExitAnimation = () => {
+                progressPercentage.classList.add('exit');
+
+                const text = logoText.textContent;
+                const leftText = text.slice(0, Math.ceil(text.length / 2));
+                const rightText = text.slice(Math.ceil(text.length / 2));
+
+                const originalStyle = window.getComputedStyle(logoText);
+
+                const leftSpan = document.createElement('div');
+                leftSpan.textContent = leftText;
+                leftSpan.style.cssText = `
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-100%, -50%);
+                    font-size: ${originalStyle.fontSize};
+                    font-weight: ${originalStyle.fontWeight};
+                    color: ${originalStyle.color};
+                    text-shadow: ${originalStyle.textShadow};
+                    transition: all 0.5s ease;
+                    z-index: 3;
+                `;
+
+                const rightSpan = document.createElement('div');
+                rightSpan.textContent = rightText;
+                rightSpan.style.cssText = `
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(0%, -50%);
+                    font-size: ${originalStyle.fontSize};
+                    font-weight: ${originalStyle.fontWeight};
+                    color: ${originalStyle.color};
+                    text-shadow: ${originalStyle.textShadow};
+                    transition: all 0.5s ease;
+                    z-index: 3;
+                `;
+
+                logoText.style.opacity = '0';
+
+                const logoContainer = logoText.parentNode;
+                logoContainer.appendChild(leftSpan);
+                logoContainer.appendChild(rightSpan);
+
+                setTimeout(() => {
+                    leftSpan.style.transform = 'translate(-200vw, -50%)';
+                    leftSpan.style.opacity = '0';
+                    rightSpan.style.transform = 'translate(200vw, -50%)';
+                    rightSpan.style.opacity = '0';
+                }, 100);
+
+                const leftLine = rotatingLine.cloneNode(true);
+                const rightLine = rotatingLine.cloneNode(true);
+
+                leftLine.style.cssText = rotatingLine.style.cssText + `
+                    transition: all 0.5s ease;
+                `;
+                rightLine.style.cssText = rotatingLine.style.cssText + `
+                    transition: all 0.5s ease;
+                `;
+
+                rotatingLine.parentNode.appendChild(leftLine);
+                rotatingLine.parentNode.appendChild(rightLine);
+                rotatingLine.style.opacity = '0';
+
+                setTimeout(() => {
+                    leftLine.style.transform = 'translate(-50%, -50%) translateX(-200vw)';
+                    leftLine.style.opacity = '0';
+                    rightLine.style.transform = 'translate(-50%, -50%) translateX(200vw)';
+                    rightLine.style.opacity = '0';
+                }, 100);
+
+                setTimeout(() => {
+                    hidePreloader();
+                }, 600);
+            };
+
+            setTimeout(animateProgress, 200);
+        }
+
+        function hidePreloader() {
+            const preloader = document.getElementById('preloader');
+            const mainContent = document.getElementById('mainContent');
+
+            preloader.classList.add('hidden');
+            mainContent.classList.add('show');
+
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        }
+
+        // カメラ位置の設定
+        const cameraPositions = {
+            overview: { position: "0 2 2", rotation: "-30 90 0" },
+            classroom: { position: "3 2 5", rotation: "0 -45 0" },
+            stairs: { position: "-2 3 -3", rotation: "-15 45 0" },
+            corridor: { position: "0 2 -6", rotation: "0 180 0" }
+        };
+
+        // 3Dモデルの読み込み状態管理
+        let modelLoaded = false;
+        const loadingScreen = document.getElementById('loadingScreen');
+        const classroomEntity = document.querySelector('#classroom-entity');
+
+        // モデル読み込み完了時の処理
+        classroomEntity.addEventListener('model-loaded', function () {
+            modelLoaded = true;
+            loadingScreen.style.display = 'none';
+            console.log('教室・階段3Dモデルの読み込みが完了しました');
+        });
+
+        // モデル読み込みエラー時の処理
+        classroomEntity.addEventListener('model-error', function (event) {
+            console.error('3Dモデルの読み込みに失敗しました:', event.detail);
+            loadingScreen.innerHTML = '<div class="loading-spinner"></div><p>モデルの読み込みに失敗しました</p>';
+        });
+
+        // カメラ移動関数
+        function moveCamera(position) {
+            if (!modelLoaded) return;
+
+            const cameraRig = document.querySelector('#cameraRig');
+            const camera = document.querySelector('#camera');
+
+            if (cameraPositions[position]) {
+                const pos = cameraPositions[position];
+
+                // スムーズな移動アニメーション
+                cameraRig.setAttribute('animation', {
+                    property: 'position',
+                    to: pos.position,
+                    dur: 1800,
+                    easing: 'easeInOutQuad'
+                });
+
+                camera.setAttribute('animation', {
+                    property: 'rotation',
+                    to: pos.rotation,
+                    dur: 1800,
+                    easing: 'easeInOutQuad'
+                });
+            }
+        }
+
+        // カメラリセット
+        function resetCamera() {
+            moveCamera('overview');
+        }
+
+        // 情報パネル表示切り替え
+        function toggleInfo() {
+            const infoPanel = document.getElementById('infoPanel');
+            if (infoPanel.style.display === 'none') {
+                infoPanel.style.display = 'block';
+            } else {
+                infoPanel.style.display = 'none';
+            }
+        }
+
+        // モバイルメニュー表示切り替え
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+
+            mobileMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        // モバイルメニューを閉じる
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+
+            mobileMenu.classList.remove('active');
+            hamburger.classList.remove('active');
+        }
+
+        // モバイル版情報表示切り替え
+        function toggleMobileInfo() {
+            const infoPanel = document.getElementById('infoPanel');
+
+            if (window.innerWidth <= 768) {
+                infoPanel.classList.toggle('mobile-active');
+            } else {
+                toggleInfo();
+            }
+        }
+
+        // 画面外クリックでモバイルメニューを閉じる
+        document.addEventListener('click', function (event) {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+
+            if (!mobileMenu.contains(event.target) && !hamburger.contains(event.target)) {
+                closeMobileMenu();
+            }
+        });
+
+        // ホットスポット情報表示
+        function showHotspotInfo(type) {
+            const hotspotInfo = {
+                desk: "教室の机と椅子。生徒たちが日々学習に取り組んだ場所です。",
+                window: "教室の窓から見える景色。四季を通じて変化する外の風景を楽しめました。",
+                stairs: "多くの生徒が上り下りした思い出の階段。手すりには長年の使用の跡が残っています。"
+            };
+
+            if (hotspotInfo[type]) {
+                alert(hotspotInfo[type]);
+            }
+        }
+
+        // VRモード切り替え
+        function enterVR() {
+            const scene = document.querySelector('a-scene');
+            if (scene.is('vr-mode')) {
+                scene.exitVR();
+            } else {
+                scene.enterVR();
+            }
+        }
+
+        // VRモード時のカメラ位置設定
+        const scene = document.querySelector('a-scene');
+        const cameraRig = document.querySelector('#cameraRig');
+
+        scene.addEventListener('enter-vr', function () {
+            // VRモード開始時にカメラを適切な位置に移動
+            if (cameraRig && modelLoaded) {
+                cameraRig.setAttribute('position', '0 1 0');
+                cameraRig.setAttribute('animation', {
+                    property: 'position',
+                    to: '0 1 0',
+                    dur: 500,
+                    easing: 'easeInOutQuad'
+                });
+            }
+        });
+
+        scene.addEventListener('exit-vr', function () {
+            // VRモード終了時にカメラを元の位置に戻す
+            if (cameraRig && modelLoaded) {
+                moveCamera('overview');
+            }
+        });
+
+        // 上下移動の状態管理
+        let isMovingUp = false;
+        let isMovingDown = false;
+        let moveInterval;
+
+        // キーボードショートカット
+        document.addEventListener('keydown', function (event) {
+            if (!modelLoaded) return;
+
+            const cameraRig = document.querySelector('#cameraRig');
+            const currentPosition = cameraRig.getAttribute('position');
+
+            switch (event.key) {
+                case '1':
+                    moveCamera('overview');
+                    break;
+                case '2':
+                    moveCamera('classroom');
+                    break;
+                case '3':
+                    moveCamera('stairs');
+                    break;
+                case '4':
+                    moveCamera('corridor');
+                    break;
+                case 'r':
+                case 'R':
+                    resetCamera();
+                    break;
+                case 'i':
+                case 'I':
+                    toggleInfo();
+                    break;
+                case 'v':
+                case 'V':
+                    enterVR();
+                    break;
+                case 'h':
+                case 'H':
+                    showHotspotInfo('desk');
+                    break;
+                case ' ':
+                    // スペースキーで上に移動開始
+                    event.preventDefault();
+                    if (!isMovingUp) {
+                        isMovingUp = true;
+                        moveInterval = setInterval(() => {
+                            const pos = cameraRig.getAttribute('position');
+                            const newY = Math.min(pos.y + 0.1, 20);
+                            cameraRig.setAttribute('position', {
+                                x: pos.x,
+                                y: newY,
+                                z: pos.z
+                            });
+                        }, 16); // 約60FPS
+                    }
+                    break;
+                case 'Shift':
+                    // Shiftキーで下に移動開始
+                    event.preventDefault();
+                    if (!isMovingDown) {
+                        isMovingDown = true;
+                        moveInterval = setInterval(() => {
+                            const pos = cameraRig.getAttribute('position');
+                            const newY = Math.max(pos.y - 0.1, 0.5);
+                            cameraRig.setAttribute('position', {
+                                x: pos.x,
+                                y: newY,
+                                z: pos.z
+                            });
+                        }, 16); // 約60FPS
+                    }
+                    break;
+            }
+        });
+
+        // キーを離した時の処理
+        document.addEventListener('keyup', function (event) {
+            if (!modelLoaded) return;
+
+            switch (event.key) {
+                case ' ':
+                    // スペースキーを離した時
+                    isMovingUp = false;
+                    if (moveInterval) {
+                        clearInterval(moveInterval);
+                        moveInterval = null;
+                    }
+                    break;
+                case 'Shift':
+                    // Shiftキーを離した時
+                    isMovingDown = false;
+                    if (moveInterval) {
+                        clearInterval(moveInterval);
+                        moveInterval = null;
+                    }
+                    break;
+            }
+        });
+
+        // 3Dホットスポットのクリックイベント
+        document.querySelector('#hotspot-1').addEventListener('click', function () {
+            showHotspotInfo('desk');
+        });
+
+        document.querySelector('#hotspot-2').addEventListener('click', function () {
+            showHotspotInfo('window');
+        });
+
+        // 初期化処理
+        document.addEventListener('DOMContentLoaded', function () {
+            // プリローダーアニメーション開始
+            animatePreloader();
+
+            // 初期カメラ位置を設定
+            setTimeout(() => {
+                moveCamera('overview');
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

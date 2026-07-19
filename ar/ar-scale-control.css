@@ -1,0 +1,92 @@
+/* ar/ar-scale-control.css — 画面端のモデルサイズスライダー */
+.ar-viewer-stage {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.ar-viewer-stage > .ar-viewer,
+.ar-viewer-stage > model-viewer.ar-viewer {
+    flex: 1;
+    min-width: 0;
+}
+
+.ar-scale-control {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 48px;
+    padding: 10px 6px;
+    padding-right: max(6px, env(safe-area-inset-right));
+    background: rgba(255, 255, 255, 0.94);
+    border-left: 1px solid rgba(45, 165, 151, 0.25);
+    pointer-events: auto;
+}
+
+.ar-scale-control__label {
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    color: #2da597;
+    writing-mode: vertical-rl;
+}
+
+.ar-scale-control__slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 140px;
+    height: 28px;
+    margin: 56px 0;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    cursor: pointer;
+    accent-color: #2da597;
+}
+
+.ar-scale-control__slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b9d, #2da597);
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(45, 165, 151, 0.35);
+}
+
+.ar-scale-control__slider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b9d, #2da597);
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(45, 165, 151, 0.35);
+}
+
+.ar-scale-control__value {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #ff6b9d;
+    text-align: center;
+    min-width: 2.5rem;
+}
+
+html[data-theme="dark"] .ar-scale-control {
+    background: rgba(17, 17, 17, 0.94);
+    border-left-color: rgba(0, 212, 255, 0.2);
+}
+
+html[data-theme="dark"] .ar-scale-control__label {
+    color: #a8e6cf;
+}
+
+html[data-theme="dark"] .ar-scale-control__value {
+    color: #00d4ff;
+}

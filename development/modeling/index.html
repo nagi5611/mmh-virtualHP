@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新校舎モデリング - 開発ポータル</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <nav>
+            <a class="brand" href="../index.html">開発ポータル</a>
+            <button class="nav-toggle" aria-expanded="false" aria-label="メニューを開く">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links">
+                <a href="../posters/">発表ポスター</a>
+                <a href="../simulation/">シミュレーション</a>
+                <a href="../app/">アプリ開発</a>
+                <a href="../modeling/" class="active">モデリング</a>
+                <a href="../../">TOPに戻る</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <p class="category-tag">3D Modeling</p>
+        <h1>松山南高校 新校舎モデリング</h1>
+        <p>高・中・低ポリ、その他の補助データをカテゴリー分けし、サムネイル付きでGLBをダウンロードできるようにしたプレースホルダーサイトです。</p>
+    </section>
+
+    <main class="container">
+        <div
+            style="background: #e3f2fd; padding: 20px; border-radius: 8px; margin-bottom: 40px; border-left: 4px solid #2196f3;">
+            <h3 style="margin-top: 0; color: #1565c0;">
+                <svg style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;" viewBox="0 0 24 24"
+                    fill="currentColor">
+                    <path
+                        d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z" />
+                </svg>
+                最新のモデリング状況について
+            </h3>
+            <p style="margin: 0;">
+                最新のモデリング状況や、まだこのページにアップロードされていないモデルは、<a href="https://tech.mmh-virtual.jp/" target="_blank"
+                    rel="noopener noreferrer" style="color: #1565c0; font-weight: 600;">ばーちゃるずプロジェクト一覧
+                    (tech.mmh-virtual.jp)</a> で確認できます。<br>
+                「<strong>ゲストとしてログイン</strong>」を選択して、最新のプロジェクトファイルやモデルデータをご覧いただけます。
+            </p>
+        </div>
+        <section>
+            <h2 class="section-title">モデルカテゴリ</h2>
+            <p class="section-subtitle">レンダリング用途やデバイス性能に応じてモデルを切り替えられるよう、解像度別に整理しています。</p>
+            <div class="card-grid">
+                <article class="card" role="button" tabindex="0" data-scroll-target="#high-poly">
+                    <span class="category-tag">High Poly</span>
+                    <h3>高ポリモデル</h3>
+                    <p>発表用レンダリングや静止画制作向け。建材・家具まで細かく再現した重厚データ。</p>
+                </article>
+                <article class="card" role="button" tabindex="0" data-scroll-target="#mid-poly">
+                    <span class="category-tag">Mid Poly</span>
+                    <h3>中ポリモデル</h3>
+                    <p>VR内覧やPCシミュレーション用。ルームスケールでの表示に最適化。</p>
+                </article>
+                <article class="card" role="button" tabindex="0" data-scroll-target="#low-poly">
+                    <span class="category-tag">Low Poly</span>
+                    <h3>低ポリモデル</h3>
+                    <p>MetaQuestなどスタンドアロンVRでの利用を想定した軽量バージョン。</p>
+                </article>
+                <article class="card" role="button" tabindex="0" data-scroll-target="#misc-models">
+                    <span class="category-tag">Extra</span>
+                    <h3>その他</h3>
+                    <p>備品、ランドマーク、テスト用プロップなど補助的なデータを格納。</p>
+                </article>
+            </div>
+        </section>
+
+        <section style="margin-top: 80px;">
+            <h2 class="section-title">モデル一覧</h2>
+
+            <h3 id="high-poly">高ポリ (High Poly)</h3>
+            <div id="high-poly-list" class="card-grid" style="margin-bottom: 60px;"></div>
+
+            <h3 id="mid-poly">中ポリ (Mid Poly)</h3>
+            <div id="mid-poly-list" class="card-grid" style="margin-bottom: 60px;"></div>
+
+            <h3 id="low-poly">低ポリ (Low Poly)</h3>
+            <div id="low-poly-list" class="card-grid" style="margin-bottom: 60px;"></div>
+
+            <h3 id="misc-models">その他 (Misc)</h3>
+            <div id="misc-models-list" class="card-grid"></div>
+
+        </section>
+    </main>
+
+    <div class="download-modal" id="download-modal" aria-hidden="true">
+        <div class="download-modal__backdrop" data-close-modal></div>
+        <div class="download-modal__body" role="dialog" aria-modal="true">
+            <button class="download-modal__close" type="button" aria-label="閉じる" data-close-modal>&times;</button>
+            <div class="download-modal__content">
+                <div class="download-modal__thumb-block">
+                    <img src="" alt="モデルサムネイル" id="modal-thumb">
+                    <p class="download-modal__title" id="modal-title"></p>
+                </div>
+                <div class="download-modal__details">
+                    <p class="download-modal__description" id="modal-description"></p>
+                    <label class="modal-checkbox">
+                        <input type="checkbox" id="download-agree">
+                        規約に合意します（<a href="../policy/" target="_blank" rel="noopener noreferrer">Policy / 規約</a>）
+                    </label>
+                    <div class="download-list" id="download-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <nav>
+            <a href="../index.html">ポータルTOP</a>
+            <a href="../simulation/">シミュレーション</a>
+            <a href="../app/">アプリ開発</a>
+            <a href="../posters/">資料一覧</a>
+        </nav>
+        <p>お問い合わせ: <a href="mailto:developer@mmh-virtual.jp">developer@mmh-virtual.jp</a></p>
+        <p>&copy; <span data-current-year></span> Matsuyama Minami Virtuals</p>
+    </footer>
+
+    <script src="../assets/scripts.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+[
+    {
+        "id": 1,
+        "contestName": "国際会議 ESD Youth Summit 2025",
+        "title": "国際会議 ESD Youth Summit 2025 ポスター",
+        "year": 2025,
+        "type": "ポスター",
+        "pdfPath": "development\/assets\/docs\/国際会議2025.pdf",
+        "description": "国内外の生徒が課題解決を協議し、持続可能な開発に向けた人材育成と理念共有を目指す国際会議。",
+        "order": 1,
+        "tags": [
+            "国際会議",
+            "ESD"
+        ],
+        "createdAt": "2025-01-31T00:00:00Z",
+        "updatedAt": "2025-01-31T00:00:00Z"
+    },
+    {
+        "id": 2,
+        "contestName": "自由すぎる研究 Expo2025",
+        "title": "自由すぎる研究 Expo2025 ポスター",
+        "year": 2025,
+        "type": "ポスター",
+        "pdfPath": "development\/assets\/docs\/自由すぎる研究.pdf",
+        "description": "分野を問わず「やりすぎ」「自由すぎる」若者研究や作品を全国から募集し、EXPO2025大阪で発表するイベント。独創性を重視し、多様な課題解決アイデアや研究が評価される。",
+        "order": 2,
+        "tags": [
+            "研究",
+            "Expo2025"
+        ],
+        "createdAt": "2025-01-31T00:00:00Z",
+        "updatedAt": "2025-01-31T00:00:00Z"
+    },
+    {
+        "id": 3,
+        "contestName": "日経STEAM シンポジウム2025",
+        "title": "日経STEAM シンポジウム スライド資料",
+        "year": 2025,
+        "type": "スライド資料",
+        "pdfPath": "development\/assets\/docs\/日経STEAM.pdf",
+        "description": "STEAM（科学・技術・工学・芸術・数学）教育の推進と社会実装をテーマとし、高校生・大学生等による課題解決型研究やアイデアの発表を行うシンポジウム。産学連携や未来志向の発表が特徴。",
+        "order": 3,
+        "tags": [
+            "STEAM",
+            "シンポジウム"
+        ],
+        "createdAt": "2025-01-31T00:00:00Z",
+        "updatedAt": "2025-01-31T00:00:00Z"
+    },
+    {
+        "id": 4,
+        "contestName": "SDGs甲子園2025",
+        "title": "SDGs甲子園 スライド資料",
+        "year": 2025,
+        "type": "スライド資料",
+        "pdfPath": "development\/assets\/docs\/SDGs甲子園.pdf",
+        "description": "持続可能な開発目標（SDGs）達成に向けた高校生の実践活動や提案を表彰する全国大会。地域課題や世界的なテーマに取組むプロジェクトを発表し、企業・自治体連携も重視される。",
+        "order": 4,
+        "tags": [
+            "SDGs",
+            "甲子園"
+        ],
+        "createdAt": "2025-01-31T00:00:00Z",
+        "updatedAt": "2025-01-31T00:00:00Z"
+    },
+    {
+        "id": 5,
+        "contestName": "未来社会課題の発掘コンテスト",
+        "title": "未来社会課題の発掘コンテスト スライド資料",
+        "year": 2025,
+        "type": "スライド資料",
+        "pdfPath": "development\/assets\/docs\/未来社会課題の発掘.pdf",
+        "description": "未来社会が抱える課題を発見し、その解決策を提案するコンテスト。",
+        "order": 5,
+        "tags": [
+            "未来社会",
+            "課題発掘"
+        ],
+        "createdAt": "2025-01-31T00:00:00Z",
+        "updatedAt": "2025-01-31T00:00:00Z"
+    }
+]

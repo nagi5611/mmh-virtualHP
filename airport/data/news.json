@@ -1,0 +1,50 @@
+[
+    {
+        "id": 3,
+        "date": "2026.07.02",
+        "datetime": "2026-07-02",
+        "link": "",
+        "text": {
+            "ja": "愛媛大学主催の「社会共創コンテスト2026」で奨励賞を受賞しました！",
+            "zh": "在爱媛大学主办的“社会共创大赛2026”中荣获鼓励奖！",
+            "zh-TW": "在愛媛大學主辦的「社會共創競賽2026」中榮獲鼓勵獎！",
+            "en": "We were awarded an Encouragement Award at the \"Social Co-creation Contest 2026\" hosted by Ehime University!",
+            "ko": "에히메 대학 주최 '사회 공창 콘테스트 2026'에서 장려상을 수상했습니다!"
+        },
+        "order": 0,
+        "createdAt": "2026-07-02T23:16:18+09:00",
+        "updatedAt": "2026-07-02T23:16:30+09:00"
+    },
+    {
+        "id": 2,
+        "date": "2026.06.18",
+        "datetime": "2026-06-18",
+        "link": "#diorama-ar",
+        "text": {
+            "ja": "ジオラマの体験にARモードが追加されました！",
+            "zh": "AR模式已添加到立体模型体验中！",
+            "zh-TW": "AR模式已新增至立體模型體驗！",
+            "en": "AR mode has been added to the diorama experience!",
+            "ko": "디오라마 체험에 AR 모드가 추가되었습니다!"
+        },
+        "order": 1,
+        "createdAt": "2026-07-02T23:15:33+09:00",
+        "updatedAt": "2026-07-02T23:15:33+09:00"
+    },
+    {
+        "id": 1,
+        "date": "2026.05.16",
+        "datetime": "2026-05-16",
+        "link": "",
+        "text": {
+            "ja": "公式ホームページがリニューアルされました！",
+            "zh": "官方网站已更新！",
+            "zh-TW": "官方網站已更新！",
+            "en": "The official website has been renewed!",
+            "ko": "공식 홈페이지가 새롭게 단장되었습니다!"
+        },
+        "order": 2,
+        "createdAt": "2026-05-16T01:28:23+09:00",
+        "updatedAt": "2026-05-16T01:28:23+09:00"
+    }
+]

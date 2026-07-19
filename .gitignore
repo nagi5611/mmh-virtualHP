@@ -1,0 +1,21 @@
+# 機密設定（本番用はサーバー上で配置）
+dev-admin-unified/config.php
+dev-admin-unified/gemini_config.php
+
+# サーバー固有
+.user.ini
+
+# エディタ・OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 100MB超の3Dモデル・動画（GitHub制限。デプロイは別途）
+GLBs/
+development/assets/docs/*.glb
+airport/files/awards/award-7-18b8af2a.mp4
+airport/images/metaverse_thumbnail.mp4
+
+# 依存関係
+node_modules/

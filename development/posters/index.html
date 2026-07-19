@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>発表ポスター / 論文一覧 - 開発ポータル</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav>
+            <a class="brand" href="../index.html">開発ポータル</a>
+            <button class="nav-toggle" aria-expanded="false" aria-label="メニューを開く">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links">
+                <a href="../posters/" class="active">発表ポスター</a>
+                <a href="../simulation/">シミュレーション</a>
+                <a href="../app/">アプリ開発</a>
+                <a href="../modeling/">モデリング</a>
+                <a href="../../">TOPに戻る</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <p class="category-tag">Research Archive</p>
+        <h1>発表ポスター / 論文アーカイブ</h1>
+        <p>過去に提出・発表したポスターや論文をコンテスト別に整理。すぐにダウンロードできるプレースホルダーを配置しています。</p>
+    </section>
+
+    <main class="container">
+        <section>
+            <h2 class="section-title">最新カテゴリー</h2>
+            <div class="card-grid" id="postersCategories">
+                <!-- ポスターカテゴリはJavaScriptで動的生成 -->
+            </div>
+        </section>
+
+        <section style="margin-top: 80px;">
+            <h2 class="section-title">ダウンロード</h2>
+            <div id="postersDownloads">
+                <!-- ダウンロードセクションはJavaScriptで動的生成 -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <nav>
+            <a href="../index.html">ポータルTOP</a>
+            <a href="../simulation/">シミュレーション</a>
+            <a href="../app/">アプリ開発</a>
+            <a href="../modeling/">モデリング</a>
+        </nav>
+        <p>お問い合わせ: <a href="mailto:developer@mmh-virtual.jp">developer@mmh-virtual.jp</a></p>
+        <p>&copy; <span data-current-year></span> Matsuyama Minami Virtuals</p>
+    </footer>
+
+    <script src="../assets/scripts.js"></script>
+    <script>
+        // ポスターデータを読み込んで表示
+        async function loadPosters() {
+            try {
+                const response = await fetch('../../data/posters.json');
+                let posters = await response.json();
+                
+                // orderの昇順でソート（orderが小さいほど新しい）
+                posters.sort((a, b) => {
+                    const orderA = a.order !== undefined ? a.order : 999999;
+                    const orderB = b.order !== undefined ? b.order : 999999;
+                    return orderA - orderB;
+                });
+                
+                // カテゴリカード生成
+                const categoriesContainer = document.getElementById('postersCategories');
+                const contestGroups = {};
+                
+                posters.forEach(poster => {
+                    // 最大4つのカテゴリーまで追加
+                    if (Object.keys(contestGroups).length < 4 && !contestGroups[poster.contestName]) {
+                        contestGroups[poster.contestName] = {
+                            name: poster.contestName,
+                            description: poster.description,
+                            id: poster.contestName.replace(/\s+/g, '-').toLowerCase()
+                        };
+                    }
+                });
+                
+                // 最新の4つのカテゴリーのみ表示
+                categoriesContainer.innerHTML = Object.values(contestGroups).slice(0, 4).map(contest => `
+                    <article class="card" role="button" tabindex="0" data-scroll-target="#${contest.id}">
+                        <span class="category-tag">Contest</span>
+                        <h3>${contest.name}</h3>
+                        <p>${contest.description}</p>
+                    </article>
+                `).join('');
+                
+                // ダウンロードセクション生成
+                const downloadsContainer = document.getElementById('postersDownloads');
+                const downloadsByContest = {};
+                
+                posters.forEach(poster => {
+                    if (!downloadsByContest[poster.contestName]) {
+                        downloadsByContest[poster.contestName] = [];
+                    }
+                    downloadsByContest[poster.contestName].push(poster);
+                });
+                
+                // 縦2列のグリッドレイアウト用のクラスを追加
+                downloadsContainer.style.display = 'grid';
+                downloadsContainer.style.gridTemplateColumns = '1fr 1fr';
+                downloadsContainer.style.gap = '40px';
+                
+                downloadsContainer.innerHTML = Object.entries(downloadsByContest).map(([contestName, items], index) => {
+                    const contestId = contestName.replace(/\s+/g, '-').toLowerCase();
+                    
+                    return `
+                        <div style="margin-bottom: 40px;" id="${contestId}">
+                            <h3>${contestName}</h3>
+                            ${items.map(item => `
+                                <div class="download-card" style="margin-top: 16px;">
+                                    <h4>${item.title}</h4>
+                                    <p class="download-meta">公開年: ${item.year} / 種別: ${item.type}</p>
+                                    <a class="btn btn-secondary" href="../../${item.pdfPath}" download>ダウンロード</a>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }).join('');
+                
+                // カードクリックイベント
+                document.querySelectorAll('[data-scroll-target]').forEach(card => {
+                    card.addEventListener('click', function() {
+                        const targetId = this.dataset.scrollTarget;
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                });
+                
+            } catch (error) {
+                console.error('ポスターデータの読み込みに失敗しました:', error);
+                document.getElementById('postersCategories').innerHTML = '<p>データの読み込みに失敗しました。</p>';
+            }
+        }
+        
+        // ページ読み込み時に実行
+        document.addEventListener('DOMContentLoaded', loadPosters);
+    </script>
+</body>
+</html>
+

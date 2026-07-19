@@ -1,0 +1,183 @@
+[
+    {
+        "id": 7,
+        "year": "2026",
+        "datetime": "2026-01-01",
+        "status": "nominated",
+        "featured": true,
+        "published": true,
+        "link": "",
+        "organization": {
+            "ja": "自由すぎる研究®EXPO",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "title": {
+            "ja": "自由すぎる研究®EXPO",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "result": {
+            "ja": "一次通過",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "description": {
+            "ja": "2026年6月15日株式会社トモノカイ主催の「自由すぎる研究®EXPO2026」の一次を通過しました！現在は二次審査中です",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "thumbnail": "images\/awards\/award-7-thumb-1783014429.png",
+        "thumbnailFrame": {
+            "width": 100,
+            "height": 0,
+            "cropLeft": 0,
+            "cropTop": 0,
+            "cropRight": 0,
+            "cropBottom": 0
+        },
+        "attachments": [
+            {
+                "id": 1783014412273,
+                "label": "自由すぎる研究",
+                "url": "files\/awards\/award-7-5095311a.pdf",
+                "type": "pdf",
+                "mime": "application\/pdf"
+            },
+            {
+                "id": 1783015230594,
+                "label": "自由すぎる_ジオラマ",
+                "url": "files\/awards\/award-7-18b8af2a.mp4",
+                "type": "video",
+                "mime": "video\/mp4"
+            }
+        ],
+        "order": 0,
+        "createdAt": "2026-07-03T02:42:09+09:00",
+        "updatedAt": "2026-07-03T03:00:35+09:00"
+    },
+    {
+        "id": 6,
+        "year": "2026",
+        "datetime": "2026-01-01",
+        "status": "nominated",
+        "featured": true,
+        "published": true,
+        "link": "",
+        "organization": {
+            "ja": "社会共創コンテスト",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "title": {
+            "ja": "社会共創コンテスト",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "result": {
+            "ja": "奨励賞",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "description": {
+            "ja": "2026年7月2日愛媛大学主催の「社会共創コンテスト」で奨励賞を受賞しました！",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "thumbnail": "images\/awards\/award-6-thumb-1783014586.png",
+        "thumbnailFrame": {
+            "width": 100,
+            "height": 0,
+            "cropLeft": 0,
+            "cropTop": 0,
+            "cropRight": 0,
+            "cropBottom": 0
+        },
+        "attachments": [
+            {
+                "id": 1783014596656,
+                "label": "社共_ジオラマ",
+                "url": "files\/awards\/award-6-0ebdd8c8.pdf",
+                "type": "pdf",
+                "mime": "application\/pdf"
+            }
+        ],
+        "order": 1,
+        "createdAt": "2026-07-03T02:23:20+09:00",
+        "updatedAt": "2026-07-03T02:49:57+09:00"
+    },
+    {
+        "id": 5,
+        "year": "2026",
+        "datetime": "2026-01-01",
+        "status": "nominated",
+        "featured": true,
+        "published": true,
+        "link": "",
+        "organization": {
+            "ja": "全国高校生プレゼン甲子園",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "title": {
+            "ja": "全国高校生プレゼン甲子園",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "result": {
+            "ja": "一次通過",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "description": {
+            "ja": "2026年6月22日全国高校生プレゼン甲子園実行委員会主催の「全国高校生プレゼン甲子園」で一次通過しました！現在は二次に向けて準備中です",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "thumbnail": "images\/awards\/award-5-thumb-1783014671.jpg",
+        "thumbnailFrame": {
+            "width": 100,
+            "height": 0,
+            "cropLeft": 0,
+            "cropTop": 0,
+            "cropRight": 0,
+            "cropBottom": 0
+        },
+        "attachments": [
+            {
+                "id": 1783015252521,
+                "label": "プレゼン甲子園",
+                "url": "files\/awards\/award-5-4f091593.mp4",
+                "type": "video",
+                "mime": "video\/mp4"
+            }
+        ],
+        "order": 2,
+        "createdAt": "2026-07-03T02:22:40+09:00",
+        "updatedAt": "2026-07-03T03:06:07+09:00"
+    }
+]

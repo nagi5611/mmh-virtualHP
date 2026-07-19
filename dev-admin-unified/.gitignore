@@ -1,0 +1,10 @@
+# Gemini API設定ファイル（機密情報）
+gemini_config.php
+
+# エディタ設定
+.vscode/
+.idea/
+
+# OS固有ファイル
+.DS_Store
+Thumbs.db

@@ -1,0 +1,8 @@
+AddType model/gltf-binary .glb
+AddType model/vnd.usdz+zip .usdz
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(glb|usdz)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>

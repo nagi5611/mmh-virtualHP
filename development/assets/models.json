@@ -1,0 +1,90 @@
+[
+    {
+        "id": 1,
+        "title": "新校舎1~4階モデル",
+        "category": "high",
+        "poly": "約5800万ポリ",
+        "fileSize": "GLB 3100MB",
+        "note": "テクスチャ無し",
+        "description": "",
+        "glbPath": "assets\/docs\/新校舎1-4_高ポリ.glb",
+        "thumbPath": "assets\/images\/新校舎1-4_高ポリ.png"
+    },
+    {
+        "id": 2,
+        "title": "新校舎1階モデル",
+        "category": "high",
+        "poly": "約1700万ポリ",
+        "fileSize": "GLB 1100MB",
+        "note": "テクスチャ無し",
+        "description": "",
+        "glbPath": "assets\/docs\/新校舎1階_高ポリ.glb",
+        "thumbPath": "assets\/images\/新校舎1_高ポリ.png"
+    },
+    {
+        "id": 3,
+        "title": "新校舎2階モデル",
+        "category": "high",
+        "poly": "約730万ポリ",
+        "fileSize": "GLB 310MB",
+        "note": "テクスチャ無し",
+        "description": "",
+        "glbPath": "assets\/docs\/新校舎2階_高ポリ.glb",
+        "thumbPath": "assets\/images\/新校舎2_高ポリ.png"
+    },
+    {
+        "id": 4,
+        "title": "新校舎3階モデル",
+        "category": "high",
+        "poly": "約1500万ポリ",
+        "fileSize": "GLB 790MB",
+        "note": "テクスチャ無し",
+        "description": "",
+        "glbPath": "assets\/docs\/新校舎3階_高ポリ.glb",
+        "thumbPath": "assets\/images\/新校舎3_高ポリ.png"
+    },
+    {
+        "id": 5,
+        "title": "新校舎4階モデル",
+        "category": "high",
+        "poly": "約1800万ポリ",
+        "fileSize": "GLB 1000MB",
+        "note": "テクスチャ無し",
+        "description": "",
+        "glbPath": "assets\/docs\/新校舎4階_高ポリ.glb",
+        "thumbPath": "assets\/images\/新校舎4_高ポリ.png"
+    },
+    {
+        "id": 1764490671,
+        "title": "上下式ホワイトボード",
+        "category": "misc",
+        "poly": "約40万ポリ",
+        "fileSize": "GLB 31MB",
+        "note": "テクスチャ無し",
+        "description": "",
+        "glbPath": "assets\/docs\/model_1764490671_31e77bbf.glb",
+        "thumbPath": "assets\/images\/thumb_1768181211_39870121.png"
+    },
+    {
+        "id": 1764492958,
+        "title": "生物講義机",
+        "category": "misc",
+        "poly": "約5.3万ポリ",
+        "fileSize": "GLB 4MB",
+        "note": "テクスチャ無し",
+        "description": "",
+        "glbPath": "assets\/docs\/model_1764492958_a83bbab3.glb",
+        "thumbPath": "assets\/images\/thumb_1768181202_f9f25a25.png"
+    },
+    {
+        "id": 1764493103,
+        "title": "薬品保管庫",
+        "category": "misc",
+        "poly": "約87万ポリ",
+        "fileSize": "GLB 69.6MB",
+        "note": "テクスチャ無し",
+        "description": "",
+        "glbPath": "assets\/docs\/model_1764493103_a0d661ac.glb",
+        "thumbPath": "assets\/images\/thumb_1768181191_a72c011c.png"
+    }
+]

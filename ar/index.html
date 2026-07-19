@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AR体験 — 松山南高校バーチャル博物館</title>
+    <link rel="stylesheet" href="ar.css">
+    <link rel="stylesheet" href="ar-scale-control.css">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    <script src="ar-scale-control.js" defer></script>
+    <script src="ar.js" defer></script>
+</head>
+<body class="ar-page">
+    <header class="ar-page__header">
+        <a class="ar-page__back" href="../index.html#ar-experience" data-i18n="arBackHome">トップへ戻る</a>
+        <p class="ar-page__title" data-i18n="arPageTitle">AR体験</p>
+    </header>
+    <main class="ar-page__main">
+        <p id="ar-preparing" class="ar-page__notice ar-page__notice--info" hidden data-i18n="arPreparing">
+            3Dモデルは現在準備中です。公開までしばらくお待ちください。
+        </p>
+        <p id="ar-unsupported" class="ar-page__notice" hidden data-i18n="arUnsupported">
+            この端末ではARをご利用いただけません。下の画面で3Dモデルをご覧いただけます。
+        </p>
+
+        <div id="ar-viewer-wrap" class="ar-viewer-wrap" hidden>
+            <div class="ar-viewer-stage">
+                <model-viewer
+                    id="diorama-viewer"
+                    class="ar-viewer"
+                    ar
+                    ar-modes="webxr scene-viewer quick-look"
+                    ar-placement="floor"
+                    ar-scale="auto"
+                    camera-controls
+                    touch-action="none"
+                    shadow-intensity="1"
+                    exposure="1"
+                    alt="AR体験用3Dモデル"
+                    data-i18n="arViewerAlt"
+                    data-i18n-attr="alt"
+                >
+                    <button slot="ar-button" class="ar-launch-btn" type="button">
+                        <span data-i18n="arBtnLaunch">ARで体験する</span>
+                    </button>
+                    <p class="ar-viewer__hint" slot="poster" data-i18n="arLoadingHint">モデルを読み込んでいます…</p>
+                </model-viewer>
+                <aside class="ar-scale-control" data-i18n="arScaleAria" data-i18n-attr="aria-label" aria-label="モデルの大きさ">
+                    <span class="ar-scale-control__label" data-i18n="arScaleLabel">サイズ</span>
+                    <input
+                        type="range"
+                        class="ar-scale-control__slider"
+                        min="0"
+                        max="1000"
+                        value="1000"
+                        step="1"
+                        aria-valuemin="0.1"
+                        aria-valuemax="100"
+                        aria-valuetext="100%"
+                        data-i18n="arScaleAria"
+                        data-i18n-attr="aria-label"
+                    >
+                    <output class="ar-scale-control__value" aria-hidden="true">100%</output>
+                </aside>
+            </div>
+        </div>
+
+        <div class="ar-page__howto">
+            <h1 class="ar-page__howto-title" data-i18n="arHowtoTitle">操作方法</h1>
+            <ol class="ar-page__steps">
+                <li data-i18n="arHowtoStep1">「ARで体験する」をタップし、カメラの使用を許可します。</li>
+                <li data-i18n="arHowtoStep2">スマホをゆっくり動かし、水平な面を認識させます。</li>
+                <li data-i18n="arHowtoStep3">画面をタップして3Dモデルを配置します。</li>
+                <li data-i18n="arHowtoStep4">AR中は2本指のピンチで拡大・縮小できます。</li>
+                <li data-i18n="arHowtoStep5">2本指でスライドしてオブジェクトを移動できます（Androidのブラウザ内ARではモデル上を1本指でドラッグ）。</li>
+                <li data-i18n="arHowtoStep6">右端のスライダーでモデルの大きさを調整できます（最小0.1%）。</li>
+            </ol>
+            <p class="ar-page__note" data-i18n="arMobileNote">明るい場所で、机や床などの水平な面の上でお試しください。</p>
+        </div>
+    </main>
+</body>
+</html>

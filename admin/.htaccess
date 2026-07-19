@@ -1,0 +1,6 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # admin.mmh-virtual.jp の全アクセスを本ドメインのログインへリダイレクト
+    RewriteRule ^(.*)$ https://mmh-virtual.jp/dev-admin-unified/login.php [R=302,L]
+</IfModule>

@@ -1,0 +1,57 @@
+<?php
+// public_html/dev-admin-unified/config.php.example
+// コピーして config.php を作成し、認証情報を設定してください。
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+const ADMIN_USERNAME = 'your-admin-username';
+const ADMIN_PASSWORD = 'your-secure-password';
+
+function admin_is_logged_in(): bool {
+    return !empty($_SESSION['admin_logged_in']);
+}
+
+function admin_require_login(): void {
+    if (!admin_is_logged_in()) {
+        header('Location: login.php');
+        exit;
+    }
+}
+
+function admin_login(string $username, string $password): bool {
+    if ($username === ADMIN_USERNAME && $password === ADMIN_PASSWORD) {
+        session_regenerate_id(true);
+        $_SESSION['admin_logged_in'] = true;
+        return true;
+    }
+    return false;
+}
+
+function admin_logout(): void {
+    $_SESSION = [];
+    if (ini_get('session.use_cookies')) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params['path'], $params['domain'],
+            $params['secure'], $params['httponly']
+        );
+    }
+    session_destroy();
+}
+
+function json_response($data, $statusCode = 200): void {
+    http_response_code($statusCode);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    exit;
+}
+
+function json_error($message, $statusCode = 400): void {
+    json_response(['error' => $message], $statusCode);
+}
+
+function json_success($data = [], $message = 'success'): void {
+    json_response(['status' => $message, 'data' => $data]);
+}

@@ -1,0 +1,4 @@
+<?php
+// gemini_config.php.example
+// コピーして gemini_config.php を作成し、APIキーを設定してください。
+define('GEMINI_API_KEY', 'your-gemini-api-key');

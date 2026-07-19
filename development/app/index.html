@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アプリ開発 - 松山南高校ばーちゃるず</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <nav>
+            <a class="brand" href="../index.html">開発ポータル</a>
+            <button class="nav-toggle" aria-expanded="false" aria-label="メニューを開く">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links">
+                <a href="../posters/">発表ポスター</a>
+                <a href="../simulation/">シミュレーション</a>
+                <a href="./" class="active">アプリ開発</a>
+                <a href="../modeling/">モデリング</a>
+                <a href="../../">TOPに戻る</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <p class="category-tag">App Development</p>
+        <h1>アプリ開発</h1>
+        <p>
+            各アプリプロジェクトの開発手順、技術仕様、および実装ガイドを整理しています。<br>
+            詳細を確認したいアプリを選択してください。
+        </p>
+    </section>
+
+    <main class="container">
+        <section class="featured-video-section" style="margin-bottom: 60px;">
+            <h2 class="section-title">デモ動画</h2>
+            <p class="section-subtitle">開発中のアプリの動作イメージです。</p>
+            <div class="featured-video">
+                <video src="../assets/videos/2026-07-20%2004-46-44.mp4" controls playsinline preload="metadata"></video>
+            </div>
+        </section>
+
+        <section id="app-projects">
+            <h2 class="section-title">アプリプロジェクト一覧</h2>
+            <div class="card-grid">
+                <article class="card">
+                    <span class="category-tag">VR Experience</span>
+                    <h3>VR体験</h3>
+                    <p>建物スキャンデータをVRゴーグルで閲覧するアプリ。スキャンから実装までの全ステップを掲載。</p>
+                    <a class="btn btn-secondary" href="../vr/">開発詳細を見る</a>
+                </article>
+
+                <article class="card">
+                    <span class="category-tag">FDS Experience</span>
+                    <h3>FDS体験アプリ</h3>
+                    <p>FDSの煙・火災データをVR／デスクトップで体験。避難訓練と酸素・視界の阻害を再現した防災体験アプリ。</p>
+                    <a class="btn btn-secondary" href="fds/">開発詳細を見る</a>
+                </article>
+
+                <article class="card">
+                    <span class="category-tag">Disaster Training</span>
+                    <h3>消火訓練アプリ</h3>
+                    <p>火災発生時の初期消火活動をVRで体験・学習するためのアプリ開発ガイド。</p>
+                    <a class="btn btn-secondary" href="firefight/">開発詳細を見る</a>
+                </article>
+
+                <article class="card">
+                    <span class="category-tag">Advanced Graphics</span>
+                    <h3>NanoVDBアプリ</h3>
+                    <p>OpenVDB/NanoVDBを用いた高品質な流体（煙）の描画と最適化に関する記録。</p>
+                    <a class="btn btn-secondary" href="nvdb/">開発詳細を見る</a>
+                </article>
+            </div>
+        </section>
+
+        <div style="text-align: center; margin-top: 60px;">
+            <a class="btn btn-primary" href="../index.html">開発トップに戻る</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <nav>
+            <a href="../posters/">発表ポスター</a>
+            <a href="../simulation/">シミュレーション</a>
+            <a href="../">ポータルTOP</a>
+        </nav>
+        <p>&copy; <span data-current-year></span> Matsuyama Minami Virtuals</p>
+    </footer>
+
+    <script src="../assets/scripts.js"></script>
+</body>
+
+</html>

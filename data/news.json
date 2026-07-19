@@ -1,0 +1,159 @@
+[
+    {
+        "id": 1,
+        "date": "2025.12.20",
+        "text": {
+            "ja": "「国際会議 ESD Youth Summit 2025」で活動成果を発表しました。",
+            "en": "Presented our activities at \"International Conference ESD Youth Summit 2025\".",
+            "zh": "在「国际会议 ESD Youth Summit 2025」上展示了我们的活动成果。"
+        },
+        "order": 4,
+        "tags": [
+            "国際会議",
+            "発表"
+        ],
+        "createdAt": "2025-12-20T00:00:00Z",
+        "updatedAt": "2025-12-20T00:00:00Z"
+    },
+    {
+        "id": 2,
+        "date": "2025.11.30",
+        "text": {
+            "ja": "開発者向けポータルサイトを公開しました。<a class=\"news-link\" href=\"development\/\" target=\"_blank\" rel=\"noopener\">開発ポータル<\/a>から最新情報をご覧いただけます。",
+            "en": "Launched the developer portal site. You can view the latest information from the <a class=\"news-link\" href=\"development\/\" target=\"_blank\" rel=\"noopener\">Developer Portal<\/a>.",
+            "zh": "发布了开发者门户网站。您可以从<a class=\"news-link\" href=\"development\/\" target=\"_blank\" rel=\"noopener\">开发者门户<\/a>查看最新信息。"
+        },
+        "order": 5,
+        "tags": [
+            "開発",
+            "サイト"
+        ],
+        "createdAt": "2025-11-30T00:00:00Z",
+        "updatedAt": "2025-11-30T00:00:00Z"
+    },
+    {
+        "id": 3,
+        "date": "2025.08.22",
+        "text": {
+            "ja": "「愛媛SDGs甲子園2025」で活動成果を発表しました。",
+            "en": "Presented our activities at \"Ehime SDGs Koshien 2025\".",
+            "zh": "在「爱媛SDGs甲子园2025」上展示了我们的活动成果。"
+        },
+        "order": 6,
+        "tags": [
+            "SDGs",
+            "発表"
+        ],
+        "createdAt": "2025-08-22T00:00:00Z",
+        "updatedAt": "2025-08-22T00:00:00Z"
+    },
+    {
+        "id": 4,
+        "date": "2025.08.08",
+        "text": {
+            "ja": "「Nikkei STEAMシンポジウム2025 私たちは問う、自由で豊かな未来とは？」で最優秀文部科学大臣賞を受賞しました。",
+            "en": "Won the Grand Prize (Minister of Education, Culture, Sports, Science and Technology Award) at \"Nikkei STEAM Symposium 2025: What is a Free and Rich Future?\".",
+            "zh": "在「Nikkei STEAM研讨会2025 我们问，自由而丰富的未来是什么？」中获得最优秀文部科学大臣奖。"
+        },
+        "order": 7,
+        "tags": [
+            "受賞",
+            "STEAM"
+        ],
+        "createdAt": "2025-08-08T00:00:00Z",
+        "updatedAt": "2025-08-08T00:00:00Z"
+    },
+    {
+        "id": 5,
+        "date": "2025.08.01",
+        "text": {
+            "ja": "SDGs甲子園本選に進出しました。",
+            "en": "Advanced to the final round of SDGs Koshien.",
+            "zh": "进入SDGs甲子园决赛。"
+        },
+        "order": 8,
+        "tags": [
+            "SDGs"
+        ],
+        "createdAt": "2025-08-01T00:00:00Z",
+        "updatedAt": "2025-08-01T00:00:00Z"
+    },
+    {
+        "id": 6,
+        "date": "2025.01.31",
+        "text": {
+            "ja": "NHK『ひめポン！ハイスクールめぐり』で活動が紹介されました。",
+            "en": "Our activities were featured on NHK's \"Himepon! High School Tour\".",
+            "zh": "我们的活动在NHK「ひめポン！高中巡游」中被介绍。"
+        },
+        "order": 9,
+        "tags": [
+            "メディア",
+            "NHK"
+        ],
+        "createdAt": "2025-01-31T00:00:00Z",
+        "updatedAt": "2025-01-31T00:00:00Z"
+    },
+    {
+        "id": 7,
+        "date": "2025.01.15",
+        "text": {
+            "ja": "「ソーシャルチャレンジグランプリ」で優秀校に選出されました。",
+            "en": "Selected as an excellent school at \"Social Challenge Grand Prix\".",
+            "zh": "在「社会挑战大奖赛」中被评为优秀学校。"
+        },
+        "order": 10,
+        "tags": [
+            "受賞"
+        ],
+        "createdAt": "2025-01-15T00:00:00Z",
+        "updatedAt": "2025-01-15T00:00:00Z"
+    },
+    {
+        "id": 8,
+        "date": "2024.11.17",
+        "text": {
+            "ja": "松山青年会議所「市民フォーラム」で活動成果を発表しました。",
+            "en": "Presented our activities at Matsuyama Junior Chamber \"Citizens Forum\".",
+            "zh": "在松山青年会议所「市民论坛」上展示了我们的活动成果。"
+        },
+        "order": 11,
+        "tags": [
+            "発表"
+        ],
+        "createdAt": "2024-11-17T00:00:00Z",
+        "updatedAt": "2024-11-17T00:00:00Z"
+    },
+    {
+        "id": 9,
+        "date": "2024.09.15",
+        "text": {
+            "ja": "愛媛デジタルツインフォーラムで活動発表を行いました。",
+            "en": "Presented our activities at Ehime Digital Twin Forum.",
+            "zh": "在爱媛数字孪生论坛上进行了活动发表。"
+        },
+        "order": 12,
+        "tags": [
+            "発表",
+            "デジタルツイン"
+        ],
+        "createdAt": "2024-09-15T00:00:00Z",
+        "updatedAt": "2024-09-15T00:00:00Z"
+    },
+    {
+        "id": 10,
+        "date": "2024.08.20",
+        "text": {
+            "ja": "「えひめSDGs甲子園2024」で協賛企業特別賞を受賞しました。",
+            "en": "Won the Special Corporate Sponsor Award at \"Ehime SDGs Koshien 2024\".",
+            "zh": "在「爱媛SDGs甲子园2024」中获得协赞企业特别奖。"
+        },
+        "order": 13,
+        "tags": [
+            "受賞",
+            "SDGs"
+        ],
+        "createdAt": "2024-08-20T00:00:00Z",
+        "updatedAt": "2024-08-20T00:00:00Z"
+    }
+]

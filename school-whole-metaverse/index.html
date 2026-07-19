@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校舎全体メタバース - 松山南高校ばーちゃるず</title>
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.155.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.155.0/examples/jsm/"
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            overflow: hidden;
+            color: white;
+        }
+        
+        #container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        #canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* プリローダー */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.2s ease;
+            overflow: hidden;
+        }
+        
+        .preloader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .preloader.exit-animation {
+            opacity: 1;
+        }
+        
+        .preloader-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 100px;
+        }
+        
+        /* ばーちゃるず文字 */
+        .loader-logo {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-text {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
+            transition: all 0.2s ease;
+        }
+        
+        .logo-text.exit-left {
+            transform: translateX(-100vw);
+            opacity: 0;
+        }
+        
+        .logo-text.exit-right {
+            transform: translateX(100vw);
+            opacity: 0;
+        }
+        
+        /* 文字の周りを回る線 */
+        .rotating-line {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            border: 2px solid transparent;
+            border-top: 2px solid #ff6b9d;
+            border-right: 2px solid #2da597;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: rotate-line 2s linear infinite;
+            transition: all 0.3s ease;
+        }
+        
+        .rotating-line.exit-left {
+            transform: translate(-50%, -50%) translateX(-100vw);
+            opacity: 0;
+        }
+        
+        .rotating-line.exit-right {
+            transform: translate(-50%, -50%) translateX(100vw);
+            opacity: 0;
+        }
+        
+        /* 下の方のロードバー */
+        .load-bar-container {
+            position: relative;
+            width: 400px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            overflow: visible;
+        }
+        
+        .load-bar-track {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+        
+        .dna-ball {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            transition: none;
+            z-index: 2;
+        }
+        
+        .dna-ball.red {
+            background: #ff6b9d;
+            box-shadow: 0 0 15px #ff6b9d, 0 0 25px rgba(255, 107, 157, 0.5);
+        }
+        
+        .dna-ball.blue {
+            background: #2da597;
+            box-shadow: 0 0 15px #2da597, 0 0 25px rgba(45, 165, 151, 0.5);
+        }
+        
+        .dna-trail-point {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            pointer-events: none;
+            transition: all 0.5s linear;
+            z-index: 1;
+            opacity: 0.8;
+        }
+        
+        .dna-trail-point.red-trail {
+            background: rgba(255, 107, 157, 0.7);
+            box-shadow: 0 0 6px rgba(255, 107, 157, 0.5);
+        }
+        
+        .dna-trail-point.blue-trail {
+            background: rgba(45, 165, 151, 0.7);
+            box-shadow: 0 0 6px rgba(45, 165, 151, 0.5);
+        }
+        
+        .dna-trail-point.fade-out {
+            opacity: 0;
+            transform: scale(0.3);
+        }
+        
+        .progress-percentage {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .progress-percentage.exit {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .metaverse-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 107, 157, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(45, 165, 151, 0.1) 0%, transparent 50%);
+            animation: bg-shift 8s ease-in-out infinite;
+        }
+        
+        .grid-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-move 10s linear infinite;
+        }
+        
+        @keyframes rotate-line {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes bg-shift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+        }
+        
+        @keyframes grid-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 32px;
+            }
+            
+            .rotating-line {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .load-bar-container {
+                width: 300px;
+                height: 50px;
+            }
+            
+            .dna-ball {
+                width: 10px;
+                height: 10px;
+            }
+            
+            .dna-trail-point {
+                width: 4px;
+                height: 4px;
+            }
+            
+            .progress-percentage {
+                font-size: 14px;
+                margin-top: 15px;
+            }
+        }
+        
+        /* メインコンテンツ */
+        .main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        
+        .main-content.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .ui-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .coordinates-display {
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 1001;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(40, 166, 153, 0.9);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: auto;
+            backdrop-filter: blur(10px);
+            z-index: 1001;
+        }
+        
+        .header h1 {
+            color: white;
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .header .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .header .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+        
+        .header .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .info-panel {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 300px;
+            pointer-events: auto;
+            backdrop-filter: blur(10px);
+            z-index: 1001;
+        }
+        
+        .info-panel h3 {
+            margin: 0 0 10px 0;
+            color: #28a699;
+            font-size: 18px;
+        }
+        
+        .info-panel p {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            pointer-events: none;
+            z-index: 1002;
+            min-width: 300px;
+        }
+        
+        .loading-spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #28a699;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        .loading-status {
+            font-size: 16px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .loading-progress-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 auto 10px;
+        }
+        
+        .loading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b9d 0%, #2da597 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .loading-percentage {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 5px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .instructions {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+            pointer-events: auto;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+            z-index: 1001;
+            cursor: pointer;
+        }
+        
+        #vrButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 18px;
+            }
+            
+            .header .nav-links {
+                display: none;
+            }
+            
+            .coordinates-display {
+                top: 60px;
+                left: 10px;
+                font-size: 11px;
+            }
+            
+            .info-panel {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+            
+            .instructions {
+                bottom: 20px;
+                left: 10px;
+                right: 10px;
+                transform: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 10px 15px;
+            }
+            
+            .header h1 {
+                font-size: 16px;
+            }
+            
+            .coordinates-display {
+                top: 50px;
+                left: 5px;
+                font-size: 10px;
+            }
+            
+            .info-panel {
+                top: 60px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- プリローダー -->
+    <div class="preloader" id="preloader">
+        <div class="metaverse-bg"></div>
+        <div class="grid-lines"></div>
+        <div class="preloader-content">
+            <div class="loader-logo">
+                <div class="logo-text">ばーちゃるず</div>
+                <div class="rotating-line"></div>
+            </div>
+            <div class="load-bar-container">
+                <div class="dna-trail"></div>
+                <div class="load-bar-track">
+                    <div class="dna-ball red"></div>
+                    <div class="dna-ball blue"></div>
+                </div>
+            </div>
+            <div class="progress-percentage">0%</div>
+        </div>
+    </div>
+
+    <!-- メインコンテンツ -->
+    <div class="main-content" id="mainContent">
+        <div id="container">
+            <canvas id="canvas"></canvas>
+            
+            <div class="ui-overlay">
+                <div class="header">
+                    <h1>校舎全体メタバース</h1>
+                    <div class="nav-links">
+                        <a href="../">ホーム</a>
+                        <a onclick="resetCamera()">視点リセット</a>
+                        <a onclick="toggleInfo()">情報</a>
+                    </div>
+                </div>
+                
+                <div class="coordinates-display" id="coordinatesDisplay">
+                    X: 0.00, Y: 0.00, Z: 0.00
+                </div>
+                
+                <div class="info-panel" id="infoPanel">
+                    <h3>松山南高校 校舎全体</h3>
+                    <p>134年の歴史を持つ松山南高校の校舎全体をメタバース化しました。本館、理科教棟、体育館、グラウンドなど、学校全体の空間をデジタル保存し、永遠に記憶に残します。</p>
+                    <p><strong>3Dスキャン箇所：</strong><br>
+                    • 本館（教室・廊下・階段）<br>
+                    • 理科教棟（実験室・設備）<br>
+                    • 体育館（アリーナ・器具室）<br>
+                    • 校庭・グラウンド<br>
+                    • 渡り廊下・外観</p>
+                    <p><strong>操作方法：</strong><br>
+                    • WASD：移動<br>
+                    • スペース：上昇<br>
+                    • Shift：下降<br>
+                    • マウスドラッグ：視点操作<br>
+                    • マウスホイール：ズーム<br>
+                    • クリック：ポインターロック開始<br>
+                    • ESC：ポインターロック解除</p>
+                </div>
+                
+                <div class="loading" id="loadingScreen">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-status" id="loadingStatus">モデルをダウンロード中...</div>
+                    <div class="loading-progress-container">
+                        <div class="loading-progress-bar" id="loadingProgressBar"></div>
+                    </div>
+                    <div class="loading-percentage" id="loadingPercentage">0%</div>
+                </div>
+                
+                <div class="instructions">
+                    <span>WASD: 移動 | マウスドラッグ: 視点操作 | ホイール: ズーム | スペース: 上昇 | Shift: 下降 | クリック: ポインターロック | ESC: 解除</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // プリローダーアニメーション
+        function animatePreloader() {
+            const redBall = document.querySelector('.dna-ball.red');
+            const blueBall = document.querySelector('.dna-ball.blue');
+            const logoText = document.querySelector('.logo-text');
+            const rotatingLine = document.querySelector('.rotating-line');
+            const progressPercentage = document.querySelector('.progress-percentage');
+            const container = document.querySelector('.load-bar-container');
+            
+            let progress = 0;
+            let trailPoints = [];
+            
+            const createTrailPoint = (x, y, type) => {
+                const trailPoint = document.createElement('div');
+                trailPoint.className = `dna-trail-point ${type}-trail`;
+                trailPoint.style.left = (x - 3) + 'px';
+                trailPoint.style.top = (y - 3) + 'px';
+                container.appendChild(trailPoint);
+                
+                setTimeout(() => {
+                    trailPoint.classList.add('fade-out');
+                    setTimeout(() => {
+                        if (trailPoint.parentNode) {
+                            trailPoint.parentNode.removeChild(trailPoint);
+                        }
+                    }, 200);
+                }, 200);
+                
+                return trailPoint;
+            };
+            
+            const animateProgress = () => {
+                if (progress <= 100) {
+                    const containerWidth = container.offsetWidth;
+                    const ballWidth = redBall.offsetWidth;
+                    const maxPosition = containerWidth - ballWidth;
+                    const xPosition = (progress / 100) * maxPosition;
+                    
+                    const angle = (progress / 100) * Math.PI * 10;
+                    const amplitude = 10;
+                    const centerY = 25;
+                    
+                    const redY = centerY + Math.sin(angle) * amplitude;
+                    redBall.style.left = xPosition + 'px';
+                    redBall.style.top = redY + 'px';
+                    
+                    const blueY = centerY + Math.sin(angle + Math.PI) * amplitude;
+                    blueBall.style.left = xPosition + 'px';
+                    blueBall.style.top = blueY + 'px';
+                    
+                    createTrailPoint(xPosition + ballWidth/2, redY + ballWidth/2, 'red');
+                    createTrailPoint(xPosition + ballWidth/2, blueY + ballWidth/2, 'blue');
+                    
+                    const rotateAngle = (progress / 100) * 360 * 16;
+                    redBall.style.transform = `rotate(${rotateAngle}deg)`;
+                    blueBall.style.transform = `rotate(${-rotateAngle}deg)`;
+                    
+                    const scale = 1 + 0.2 * Math.sin(angle * 10);
+                    redBall.style.transform += ` scale(${scale})`;
+                    blueBall.style.transform += ` scale(${scale})`;
+                    
+                    progressPercentage.textContent = Math.round(progress) + '%';
+                    
+                    progress += 1;
+                    setTimeout(animateProgress, 10);
+                } else {
+                    setTimeout(() => {
+                        startExitAnimation();
+                    }, 200);
+                }
+            };
+            
+            const startExitAnimation = () => {
+                progressPercentage.classList.add('exit');
+                
+                const text = logoText.textContent;
+                const leftText = text.slice(0, Math.ceil(text.length / 2));
+                const rightText = text.slice(Math.ceil(text.length / 2));
+                
+                const originalStyle = window.getComputedStyle(logoText);
+                
+                const leftSpan = document.createElement('div');
+                leftSpan.textContent = leftText;
+                leftSpan.style.cssText = `
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-100%, -50%);
+                    font-size: ${originalStyle.fontSize};
+                    font-weight: ${originalStyle.fontWeight};
+                    color: ${originalStyle.color};
+                    text-shadow: ${originalStyle.textShadow};
+                    transition: all 0.5s ease;
+                    z-index: 3;
+                `;
+                
+                const rightSpan = document.createElement('div');
+                rightSpan.textContent = rightText;
+                rightSpan.style.cssText = `
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(0%, -50%);
+                    font-size: ${originalStyle.fontSize};
+                    font-weight: ${originalStyle.fontWeight};
+                    color: ${originalStyle.color};
+                    text-shadow: ${originalStyle.textShadow};
+                    transition: all 0.5s ease;
+                    z-index: 3;
+                `;
+                
+                logoText.style.opacity = '0';
+                
+                const logoContainer = logoText.parentNode;
+                logoContainer.appendChild(leftSpan);
+                logoContainer.appendChild(rightSpan);
+                
+                setTimeout(() => {
+                    leftSpan.style.transform = 'translate(-200vw, -50%)';
+                    leftSpan.style.opacity = '0';
+                    rightSpan.style.transform = 'translate(200vw, -50%)';
+                    rightSpan.style.opacity = '0';
+                }, 100);
+                
+                const leftLine = rotatingLine.cloneNode(true);
+                const rightLine = rotatingLine.cloneNode(true);
+                
+                leftLine.style.cssText = rotatingLine.style.cssText + `
+                    transition: all 0.5s ease;
+                `;
+                rightLine.style.cssText = rotatingLine.style.cssText + `
+                    transition: all 0.5s ease;
+                `;
+                
+                rotatingLine.parentNode.appendChild(leftLine);
+                rotatingLine.parentNode.appendChild(rightLine);
+                rotatingLine.style.opacity = '0';
+                
+                setTimeout(() => {
+                    leftLine.style.transform = 'translate(-50%, -50%) translateX(-200vw)';
+                    leftLine.style.opacity = '0';
+                    rightLine.style.transform = 'translate(-50%, -50%) translateX(200vw)';
+                    rightLine.style.opacity = '0';
+                }, 100);
+                
+                setTimeout(() => {
+                    hidePreloader();
+                }, 600);
+            };
+            
+            setTimeout(animateProgress, 200);
+        }
+        
+        function hidePreloader() {
+            const preloader = document.getElementById('preloader');
+            const mainContent = document.getElementById('mainContent');
+            
+            preloader.classList.add('preloader-hidden');
+            mainContent.classList.add('show');
+            
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        }
+
+        // Three.js ES6モジュールインポート
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+        import { VRButton } from 'three/addons/webxr/VRButton.js';
+        
+        // Three.js変数
+        let scene, camera, renderer;
+        let schoolModel = null;
+        let modelLoaded = false;
+        let cameraSpotLight = null; // カメラ追従ライト
+        
+        // 移動制御（シンプルな方法）
+        let moveForward = false, moveBackward = false;
+        let moveLeft = false, moveRight = false;
+        let moveUp = false, moveDown = false;
+        
+        // カメラ制御
+        let isPointerLocked = false;
+        let mouse = new THREE.Vector2();
+        let euler = new THREE.Euler(0, 0, 0, 'YXZ');
+        let pitchObject = new THREE.Object3D();
+        let yawObject = new THREE.Object3D();
+        
+        // 移動設定
+        const moveSpeed = 15; // 校舎全体なので移動速度を少し上げる
+        const lookSpeed = 0.002;
+        
+        // カメラ位置設定（校舎全体に合わせて調整）
+        const cameraPositions = {
+            overview: { position: new THREE.Vector3(0, 20, 30), rotation: new THREE.Euler(-0.3, 0, 0) },
+            main_building: { position: new THREE.Vector3(10, 5, 15), rotation: new THREE.Euler(0, -0.3, 0) },
+            science_building: { position: new THREE.Vector3(-15, 5, 10), rotation: new THREE.Euler(0, 0.5, 0) },
+            gymnasium: { position: new THREE.Vector3(5, 8, -20), rotation: new THREE.Euler(-0.2, 0.8, 0) }
+        };
+        
+        // 初期化
+        function init() {
+            // レンダラー設定
+            const canvas = document.getElementById('canvas');
+            renderer = new THREE.WebGLRenderer({ 
+                canvas: canvas,
+                antialias: true,
+                alpha: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.shadowMap.enabled = false; // 影を無効化
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.0;
+            
+            // WebXR設定
+            renderer.xr.enabled = true;
+            
+            // VRボタンを追加
+            try {
+                document.body.appendChild(VRButton.createButton(renderer));
+                const vrButton = document.querySelector('#VRButton');
+                if (vrButton) {
+                    vrButton.id = 'vrButton';
+                }
+            } catch (error) {
+                console.warn('VRButton is not available. VR functionality will be limited.', error);
+            }
+            
+            // シーン作成
+            scene = new THREE.Scene();
+            scene.fog = new THREE.Fog(0x87CEEB, 50, 200);
+            scene.background = new THREE.Color(0x87CEEB);
+            
+            // カメラ作成
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            
+            // 照明設定
+            setupLights();
+            
+            // コントロール設定
+            setupControls();
+            
+            // 3Dモデル読み込み
+            loadSchoolModel();
+            
+            
+            // イベントリスナー設定
+            setupEventListeners();
+            
+            // レンダリング開始
+            animate();
+        }
+        
+        // 照明設定
+        function setupLights() {
+            // 環境光（全体的な明るさを確保）
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambientLight);
+            
+            // 太陽光のような方向光
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
+            directionalLight.position.set(50, 100, 50);
+            directionalLight.castShadow = false;
+            scene.add(directionalLight);
+            
+            // もう一つの方向光（反対方向から）
+            const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.6);
+            directionalLight2.position.set(-50, 80, -50);
+            directionalLight2.castShadow = false;
+            scene.add(directionalLight2);
+            
+            // カメラ追従スポットライト
+            cameraSpotLight = new THREE.SpotLight(0xffffff, 1.5, 30, Math.PI / 4, 0.3, 2);
+            cameraSpotLight.position.set(0, 0, 0);
+            cameraSpotLight.castShadow = false;
+            scene.add(cameraSpotLight);
+            scene.add(cameraSpotLight.target);
+            
+            // 校舎周辺の補助照明
+            const pointLight1 = new THREE.PointLight(0xffffff, 0.8, 50);
+            pointLight1.position.set(30, 20, 30);
+            scene.add(pointLight1);
+            
+            const pointLight2 = new THREE.PointLight(0xffffff, 0.8, 50);
+            pointLight2.position.set(-30, 20, -30);
+            scene.add(pointLight2);
+        }
+        
+        // シンプルなポインターロック制御
+        function setupControls() {
+            // ピッチ（上下）とヨー（左右）オブジェクトの設定
+            yawObject.add(pitchObject);
+            pitchObject.add(camera);
+            
+            // yawObjectの初期位置を設定（校舎全体に合わせて高く）
+            yawObject.position.set(71, 26, 10);
+            camera.position.set(0, 0, 0);
+            
+            console.log('カメラ階層設定完了:', {
+                yawPosition: yawObject.position,
+                cameraPosition: camera.position
+            });
+            
+            const instructions = document.querySelector('.instructions');
+            
+            // クリックイベントでポインターロック開始
+            instructions.addEventListener('click', () => {
+                console.log('ポインターロック開始');
+                document.body.requestPointerLock();
+            });
+            
+            // ポインターロック状態の監視
+            document.addEventListener('pointerlockchange', () => {
+                if (document.pointerLockElement === document.body) {
+                    console.log('ポインターロック有効');
+                    isPointerLocked = true;
+                    instructions.style.display = 'none';
+                } else {
+                    console.log('ポインターロック解除');
+                    isPointerLocked = false;
+                    instructions.style.display = 'block';
+                }
+            });
+            
+            // マウス移動でカメラ回転（ポインターロック用）
+            document.addEventListener('mousemove', (event) => {
+                if (isPointerLocked) {
+                    const movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+                    const movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+                    
+                    yawObject.rotation.y -= movementX * lookSpeed;
+                    pitchObject.rotation.x -= movementY * lookSpeed;
+                    
+                    // 上下回転の制限
+                    pitchObject.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, pitchObject.rotation.x));
+                }
+            });
+            
+            // 通常のマウスドラッグでもカメラ回転
+            let isMouseDown = false;
+            let lastMouseX = 0;
+            let lastMouseY = 0;
+            
+            document.addEventListener('mousedown', (event) => {
+                if (!isPointerLocked) {
+                    isMouseDown = true;
+                    lastMouseX = event.clientX;
+                    lastMouseY = event.clientY;
+                }
+            });
+            
+            document.addEventListener('mouseup', () => {
+                isMouseDown = false;
+            });
+            
+            document.addEventListener('mousemove', (event) => {
+                if (!isPointerLocked && isMouseDown) {
+                    const deltaX = event.clientX - lastMouseX;
+                    const deltaY = event.clientY - lastMouseY;
+                    
+                    yawObject.rotation.y -= deltaX * lookSpeed * 2;
+                    pitchObject.rotation.x -= deltaY * lookSpeed * 2;
+                    
+                    pitchObject.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, pitchObject.rotation.x));
+                    
+                    lastMouseX = event.clientX;
+                    lastMouseY = event.clientY;
+                }
+            });
+            
+            // マウスホイールでズーム
+            document.addEventListener('wheel', (event) => {
+                event.preventDefault();
+                const zoomSpeed = 0.1;
+                const newZ = camera.position.z + event.deltaY * 0.001 * zoomSpeed;
+                
+                if (newZ >= 0.5 && newZ <= 20) {
+                    camera.position.z = newZ;
+                }
+            });
+            
+            scene.add(yawObject);
+        }
+        
+        // 3Dモデル読み込み
+        function loadSchoolModel() {
+            try {
+                console.log('GLTFLoader利用可能、校舎全体3Dモデル読み込み開始');
+                
+                // ローディング画面を表示
+                const loadingScreen = document.getElementById('loadingScreen');
+                const loadingStatus = document.getElementById('loadingStatus');
+                const loadingProgressBar = document.getElementById('loadingProgressBar');
+                const loadingPercentage = document.getElementById('loadingPercentage');
+                
+                loadingScreen.style.display = 'block';
+                loadingStatus.textContent = 'モデルをダウンロード中...';
+                loadingProgressBar.style.width = '0%';
+                loadingPercentage.textContent = '0%';
+                
+                const dracoLoader = new DRACOLoader();
+                dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+                
+                const loader = new GLTFLoader();
+                loader.setDRACOLoader(dracoLoader);
+            
+                loader.load(
+                    '../GLBs/学校全体_低ポリ.glb',
+                    (gltf) => {
+                        // 読み込み開始
+                        loadingStatus.textContent = 'モデルを読み込み中...';
+                        loadingProgressBar.style.width = '89%';
+                        loadingPercentage.textContent = '89%';
+                        
+                        schoolModel = gltf.scene;
+                        schoolModel.position.set(0, 5, 0);
+                        schoolModel.scale.set(1, 1, 1);
+                        
+                        // シャドウ設定を無効化
+                        schoolModel.traverse((child) => {
+                            if (child.isMesh) {
+                                child.castShadow = false;
+                                child.receiveShadow = false;
+                            }
+                        });
+                        
+                        scene.add(schoolModel);
+                        modelLoaded = true;
+                        
+                        // 読み込み完了表示
+                        loadingStatus.textContent = '読み込み完了！';
+                        loadingProgressBar.style.width = '100%';
+                        loadingPercentage.textContent = '100%';
+                        
+                        console.log('校舎全体3Dモデルの読み込みが完了しました');
+                        
+                        // 少し待ってからローディング画面を非表示
+                        setTimeout(() => {
+                            loadingScreen.style.display = 'none';
+                        }, 500);
+                    },
+                    (progress) => {
+                        if (progress.total > 0) {
+                            const percent = (progress.loaded / progress.total) * 100;
+                            const roundedPercent = Math.round(percent);
+                            
+                            // 89%以上で読み込み中に切り替え
+                            if (roundedPercent >= 89) {
+                                loadingStatus.textContent = 'モデルを読み込み中...';
+                                loadingProgressBar.style.width = roundedPercent + '%';
+                                loadingPercentage.textContent = roundedPercent + '%';
+                            } else {
+                                // 89%未満はダウンロード中
+                                loadingStatus.textContent = 'モデルをダウンロード中...';
+                                loadingProgressBar.style.width = roundedPercent + '%';
+                                loadingPercentage.textContent = roundedPercent + '%';
+                            }
+                            
+                            console.log('読み込み進行状況:', roundedPercent + '%');
+                        } else {
+                            // total が取得できない場合
+                            loadingStatus.textContent = 'モデルを読み込み中...';
+                        }
+                    },
+                    (error) => {
+                        console.error('3Dモデルの読み込みに失敗しました:', error);
+                        loadingStatus.textContent = 'エラーが発生しました';
+                        loadingScreen.innerHTML = 
+                            '<div class="loading-spinner"></div>' +
+                            '<div class="loading-status">モデルの読み込みに失敗しました</div>' +
+                            '<p style="font-size: 14px; margin-top: 10px; color: rgba(255, 107, 157, 0.9);">' + 
+                            'Error: ' + (error.message || 'Unknown error') + '</p>';
+                    }
+                );
+            } catch (error) {
+                console.error('GLTFLoader is not available. Cannot load 3D model.', error);
+                const loadingScreen = document.getElementById('loadingScreen');
+                loadingScreen.innerHTML = 
+                    '<div class="loading-spinner"></div>' +
+                    '<div class="loading-status">GLTFLoaderが読み込まれていません</div>';
+            }
+        }
+        
+       
+        
+        // イベントリスナー設定
+        function setupEventListeners() {
+            document.addEventListener('keydown', onKeyDown);
+            document.addEventListener('keyup', onKeyUp);
+            window.addEventListener('resize', onWindowResize);
+        }
+        
+        // キーボードイベント
+        function onKeyDown(event) {
+            switch (event.code) {
+                case 'ArrowUp':
+                case 'KeyW':
+                    moveForward = true;
+                    break;
+                case 'ArrowLeft':
+                case 'KeyA':
+                    moveLeft = true;
+                    break;
+                case 'ArrowDown':
+                case 'KeyS':
+                    moveBackward = true;
+                    break;
+                case 'ArrowRight':
+                case 'KeyD':
+                    moveRight = true;
+                    break;
+                case 'Space':
+                    moveUp = true;
+                    event.preventDefault();
+                    break;
+                case 'ShiftLeft':
+                case 'ShiftRight':
+                    moveDown = true;
+                    event.preventDefault();
+                    break;
+                case 'Digit1':
+                    setCameraPosition('overview');
+                    break;
+                case 'Digit2':
+                    setCameraPosition('main_building');
+                    break;
+                case 'Digit3':
+                    setCameraPosition('science_building');
+                    break;
+                case 'Digit4':
+                    setCameraPosition('gymnasium');
+                    break;
+                case 'KeyR':
+                    resetCamera();
+                    break;
+                case 'KeyI':
+                    toggleInfo();
+                    break;
+                case 'Escape':
+                    document.exitPointerLock();
+                    break;
+            }
+        }
+        
+        function onKeyUp(event) {
+            switch (event.code) {
+                case 'ArrowUp':
+                case 'KeyW':
+                    moveForward = false;
+                    break;
+                case 'ArrowLeft':
+                case 'KeyA':
+                    moveLeft = false;
+                    break;
+                case 'ArrowDown':
+                case 'KeyS':
+                    moveBackward = false;
+                    break;
+                case 'ArrowRight':
+                case 'KeyD':
+                    moveRight = false;
+                    break;
+                case 'Space':
+                    moveUp = false;
+                    event.preventDefault();
+                    break;
+                case 'ShiftLeft':
+                case 'ShiftRight':
+                    moveDown = false;
+                    event.preventDefault();
+                    break;
+            }
+        }
+        
+        // ウィンドウリサイズ
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        // 移動更新
+        function updateMovement(delta) {
+            const moveDistance = moveSpeed * delta;
+            
+            if (moveForward) {
+                yawObject.translateZ(-moveDistance);
+            }
+            if (moveBackward) {
+                yawObject.translateZ(moveDistance);
+            }
+            if (moveLeft) {
+                yawObject.translateX(-moveDistance);
+            }
+            if (moveRight) {
+                yawObject.translateX(moveDistance);
+            }
+            if (moveUp) {
+                yawObject.position.y += moveDistance;
+            }
+            if (moveDown) {
+                yawObject.position.y -= moveDistance;
+            }
+            
+            // 高度制限
+            if (yawObject.position.y < -15) {
+                yawObject.position.y = 2;
+            }
+            if (yawObject.position.y > 50) {
+                yawObject.position.y = 50;
+            }
+        }
+        
+        // カメラ位置設定
+        function setCameraPosition(positionName) {
+            if (!modelLoaded) return;
+            
+            const position = cameraPositions[positionName];
+            if (position) {
+                yawObject.position.copy(position.position);
+                pitchObject.rotation.x = position.rotation.x;
+                yawObject.rotation.y = position.rotation.y;
+            }
+        }
+        
+        // カメラリセット
+        function resetCamera() {
+            setCameraPosition('overview');
+        }
+        
+        // 情報パネル表示切り替え
+        function toggleInfo() {
+            const infoPanel = document.getElementById('infoPanel');
+            if (infoPanel.style.display === 'none') {
+                infoPanel.style.display = 'block';
+            } else {
+                infoPanel.style.display = 'none';
+            }
+        }
+        
+        // カメラ座標表示の更新
+        function updateCoordinatesDisplay() {
+            const coordinatesDisplay = document.getElementById('coordinatesDisplay');
+            if (coordinatesDisplay) {
+                const x = yawObject.position.x.toFixed(2);
+                const y = yawObject.position.y.toFixed(2);
+                const z = yawObject.position.z.toFixed(2);
+                coordinatesDisplay.textContent = `X: ${x}, Y: ${y}, Z: ${z}`;
+            }
+        }
+        
+        // カメラ追従ライトの更新
+        function updateCameraLight() {
+            if (cameraSpotLight && yawObject && pitchObject) {
+                cameraSpotLight.position.copy(yawObject.position);
+                
+                const direction = new THREE.Vector3(0, 0, -1);
+                const pitchQuaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), pitchObject.rotation.x);
+                const yawQuaternion = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), yawObject.rotation.y);
+                
+                const combinedQuaternion = yawQuaternion.multiply(pitchQuaternion);
+                direction.applyQuaternion(combinedQuaternion);
+                
+                const targetPosition = yawObject.position.clone().add(direction.multiplyScalar(15));
+                cameraSpotLight.target.position.copy(targetPosition);
+                cameraSpotLight.target.updateMatrixWorld();
+            }
+        }
+        
+        // アニメーションループ
+        let prevTime = performance.now();
+        
+        function animate() {
+            renderer.setAnimationLoop(() => {
+                const time = performance.now();
+                const delta = (time - prevTime) / 1000;
+                
+                updateMovement(delta);
+                updateCoordinatesDisplay();
+                updateCameraLight();
+                
+                renderer.render(scene, camera);
+                prevTime = time;
+            });
+        }
+        
+        // HTMLのonclick属性からアクセスできるようにグローバルスコープに公開
+        window.setCameraPosition = setCameraPosition;
+        window.resetCamera = resetCamera;
+        window.toggleInfo = toggleInfo;
+        
+        // 初期化
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('校舎全体メタバース - Three.js ES6モジュールが読み込まれました');
+            // プリローダーアニメーション開始
+            animatePreloader();
+            
+            // プリローダー終了後にThree.js初期化
+            setTimeout(() => {
+                init();
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

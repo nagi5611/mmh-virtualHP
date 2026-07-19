@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FDS体験アプリ - 松山南高校ばーちゃるず</title>
+    <link rel="stylesheet" href="../../assets/styles.css">
+    <style>
+        .step-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step-block {
+            margin-bottom: 60px;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--accent, #0084ff);
+            padding-bottom: 10px;
+        }
+
+        .step-num {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent, #0084ff);
+            margin-right: 16px;
+            line-height: 1;
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 0.95rem;
+        }
+
+        .spec-table th,
+        .spec-table td {
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            text-align: left;
+        }
+
+        .spec-table th {
+            background: var(--bg-alt);
+            width: 36%;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .download-note {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="site-header">
+        <nav>
+            <a class="brand" href="../../index.html">開発ポータル</a>
+            <button class="nav-toggle" aria-expanded="false" aria-label="メニューを開く">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links">
+                <a href="../">アプリ開発一覧</a>
+                <a href="../../simulation/">シミュレーション</a>
+                <a href="../../../">TOPに戻る</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <p class="category-tag">FDS Experience App</p>
+        <h1>FDS体験アプリ</h1>
+        <p>
+            FDS（Fire Dynamics Simulator）の解析結果を粒子表示で可視化し、
+            煙・火災環境の中を歩きながら避難を体験できるVR／デスクトップアプリです。
+        </p>
+    </section>
+
+    <main class="container step-container">
+        <section class="step-block">
+            <div class="step-header">
+                <span class="step-num">01</span>
+                <h2 class="step-title">アプリの概要</h2>
+            </div>
+            <p>
+                FDS体験アプリ（Fire Simulation VR）は、火災動力学シミュレータ FDS で算出した
+                煙濃度（SOOT）と発熱量（HRRPUV）の時系列データを前処理し、Unity 上で粒子として描画します。
+                プレイヤーは建物内を一人称視点で移動し、煙の充満や酸素低下を体感しながら避難ゴールを目指します。
+            </p>
+            <p style="margin-top: 16px;">
+                教育・防災訓練向けに、シミュレーション結果を「見る」だけでなく「歩いて感じる」体験へ変換することを目的としています。
+            </p>
+        </section>
+
+        <section class="step-block">
+            <div class="step-header">
+                <span class="step-num">02</span>
+                <h2 class="step-title">主な機能</h2>
+            </div>
+            <ul class="developer-bio" style="list-style: disc; padding-left: 1.4em;">
+                <li><strong>FDSデータの可視化</strong> — 前処理済み粒子データをタイムステップごとに再生し、煙と火の広がりを表示</li>
+                <li><strong>避難体験ゲーム</strong> — 指定エリアへ到達するとクリア。生存時間や移動経路を記録</li>
+                <li><strong>酸素・煙吸入システム</strong> — 煙環境にいるほど酸素上限が下がり、息切れ・スプリントで酸素を消費</li>
+                <li><strong>視界・移動の阻害</strong> — 煙にさらされると視界が狭まり、移動速度や視点が不安定になる</li>
+                <li><strong>難易度選択</strong> — イージー／ハードで体験の厳しさを切り替え</li>
+                <li><strong>シナリオ選択</strong> — 複数の火災シナリオ（例: prod01）を切り替えて体験可能</li>
+                <li><strong>追加シナリオの取り込み</strong> — <code>.firesim</code> パックを所定フォルダに置くとシナリオを追加可能</li>
+            </ul>
+        </section>
+
+        <section class="step-block">
+            <div class="step-header">
+                <span class="step-num">03</span>
+                <h2 class="step-title">データの流れ</h2>
+            </div>
+            <ol class="developer-bio" style="list-style: decimal; padding-left: 1.4em;">
+                <li>FDS で火災シミュレーションを実行（SOOT・HRRPUV などの出力）</li>
+                <li>Python スクリプトでグリッドデータを粒子データへ変換（<code>fdstoraw.py</code> → <code>rawtoparticles.py</code>）</li>
+                <li>シナリオごとに ZIP 化し、アプリに同梱または別途配置</li>
+                <li>初回起動時に ZIP を展開し、ゲーム内で時系列再生</li>
+            </ol>
+            <p style="margin-top: 16px;">
+                シミュレーション本体の詳細は
+                <a href="../../simulation/">シミュレーション</a> カテゴリーを参照してください。
+            </p>
+        </section>
+
+        <section class="step-block">
+            <div class="step-header">
+                <span class="step-num">04</span>
+                <h2 class="step-title">対応プラットフォームと操作</h2>
+            </div>
+            <h3 style="margin-bottom: 8px;">Windows（デスクトップ）</h3>
+            <table class="spec-table">
+                <tbody>
+                    <tr><th>移動</th><td>W / A / S / D</td></tr>
+                    <tr><th>上下移動</th><td>Q（下） / E（上）</td></tr>
+                    <tr><th>視点</th><td>マウス（クリックでカーソル固定、Esc で解除）</td></tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin: 24px 0 8px;">Meta Quest 3S（VR）</h3>
+            <table class="spec-table">
+                <tbody>
+                    <tr><th>水平移動</th><td>左スティック</td></tr>
+                    <tr><th>上昇</th><td>左コントローラー前面トリガー</td></tr>
+                    <tr><th>下降</th><td>左コントローラー側面トリガー</td></tr>
+                </tbody>
+            </table>
+
+            <table class="spec-table" style="margin-top: 24px;">
+                <tbody>
+                    <tr><th>開発環境</th><td>Unity 2022.3 LTS（Built-in RP）</td></tr>
+                    <tr><th>VR</th><td>OpenXR（Meta Quest 3S 向けビルド対応）</td></tr>
+                    <tr><th>メインシーン</th><td><code>2D_template</code></td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="step-block" id="download">
+            <div class="step-header">
+                <span class="step-num">05</span>
+                <h2 class="step-title">配布・ダウンロード</h2>
+            </div>
+            <p>アプリ本体をダウンロードして体験できます。シミュレーションデータは容量が大きいため、初回起動時の展開または別途データの配置が必要な場合があります。</p>
+
+            <div class="download-grid" style="margin-top: 24px;">
+                <div class="download-card">
+                    <h3>Windows 版</h3>
+                    <p class="download-meta">対象: Windows 10 / 11（64bit）</p>
+                    <p>デスクトップ向けビルド。ZIP を解凍して <code>FireSimulation.exe</code> を実行してください。</p>
+                    <a class="btn btn-secondary" href="../../assets/downloads/FireSimulation-Windows.zip" download>ダウンロード（ZIP）</a>
+                </div>
+
+                <div class="download-card">
+                    <h3>Meta Quest 3S 版</h3>
+                    <p class="download-meta">対象: Meta Quest 3 / 3S</p>
+                    <p>APK をヘッドセットへ sideload してインストールします。大容量シナリオは <code>Download/FireSimulation/Simulations/</code> への配置が必要な場合があります。</p>
+                    <a class="btn btn-secondary" href="../../assets/downloads/FireSimulation-Quest3S.apk" download>ダウンロード（APK）</a>
+                </div>
+
+                <div class="download-card">
+                    <h3>シミュレーションデータ（prod01）</h3>
+                    <p class="download-meta">オプション / 大容量</p>
+                    <p>標準シナリオ prod01 のデータパック。アプリに同梱されていない場合に別途配置してください。</p>
+                    <a class="btn btn-secondary" href="../../assets/downloads/prod01.zip" download>ダウンロード（ZIP）</a>
+                </div>
+            </div>
+
+            <p class="download-note">
+                ※ 配布ファイルは順次公開予定です。リンクが有効にならない場合は、しばらくお待ちください。<br>
+                ※ Quest 版のデータ配置手順はアプリ同梱の README、または開発リポジトリの手順を参照してください。
+            </p>
+        </section>
+
+        <div style="text-align: center; margin-top: 60px;">
+            <a class="btn btn-primary" href="../">アプリ一覧に戻る</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <nav>
+            <a href="../../index.html">ポータルTOP</a>
+            <a href="../">アプリ開発</a>
+            <a href="../../simulation/">シミュレーション</a>
+        </nav>
+        <p>&copy; <span data-current-year></span> Matsuyama Minami Virtuals</p>
+    </footer>
+
+    <script src="../../assets/scripts.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaQuest 防災アプリ開発 - 開発ポータル</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav>
+            <a class="brand" href="../index.html">開発ポータル</a>
+            <button class="nav-toggle" aria-expanded="false" aria-label="メニューを開く">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links">
+                <a href="../posters/">発表ポスター</a>
+                <a href="../simulation/">シミュレーション</a>
+                <a href="../app/">アプリ開発</a>
+                <a href="../modeling/">モデリング</a>
+                <a href="../../">TOPに戻る</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <p class="category-tag">MetaQuest App</p>
+        <h1>防災VRアプリ開発ノート</h1>
+        <p>MetaQuest3S × Unity × OpenXRで防災訓練を再現するための試行錯誤とベストプラクティスをまとめています。</p>
+        <div class="hero-actions">
+            <a class="btn btn-primary" href="#summary" data-scroll>概要を見る</a>
+            <a class="btn btn-secondary" href="#timeline" data-scroll>詳細タイムライン</a>
+        </div>
+    </section>
+
+    <main class="container">
+        <section id="summary">
+            <h2 class="section-title">開発概要</h2>
+            <div class="grid-two">
+                <article class="card">
+                    <span class="category-tag">Goal</span>
+                    <h3>MetaQuest上での防災体験</h3>
+                    <p>煙の視覚化、避難ルート誘導、アナウンス演出を組み合わせた訓練環境を提供することが目的。</p>
+                </article>
+                <article class="card">
+                    <span class="category-tag">Stack</span>
+                    <h3>Unity + OpenXR</h3>
+                    <p>外部パッケージに依存せず、標準のOpenXR Interaction Toolkitと自作レンダラーを組み合わせて構築。</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="timeline" style="margin-top: 80px;">
+            <h2 class="section-title">開発タイムライン</h2>
+            <div class="timeline">
+                <article class="timeline-item">
+                    <div class="timeline-date">2024年11月初旬</div>
+                    <div class="timeline-card">
+                        <h3>OpenXR環境のセットアップ <span class="status-badge status-success">完了</span></h3>
+                        <p>MetaQuest3S向けにOpenXRパッケージを導入し、サンプルアプリのサイドロード・起動までを確認。</p>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <div class="timeline-date">2024年11月中旬</div>
+                    <div class="timeline-card">
+                        <h3>煙エフェクトの再現 <span class="status-badge status-problem">互換性課題</span></h3>
+                        <p>旧VFXパッケージ（ZibbraEffect等）がOpenXRプロジェクトで動作せず、標準環境のみで構築する必要が発生。</p>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <div class="timeline-date">2024年12月</div>
+                    <div class="timeline-card">
+                        <h3>nanoVDB読み込み <span class="status-badge status-progress">実装中</span></h3>
+                        <p>C++プラグインとC#スクリプトを連携させ、複数フレームをシーケンシャルに描画。Quest上でのメモリ管理を最適化。</p>
+                    </div>
+                </article>
+                <article class="timeline-item">
+                    <div class="timeline-date">2025年1月</div>
+                    <div class="timeline-card">
+                        <h3>UX整備 <span class="status-badge status-success">進行</span></h3>
+                        <p>ヘッドセット内で見やすいUI指標、避難ルートハイライト、操作ガイドを追加しユーザーテストを実施。</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section style="margin-top: 80px;">
+            <h2 class="section-title">技術メモ</h2>
+            <div class="grid-two">
+                <article class="list-card">
+                    <h3>対応済み</h3>
+                    <ul class="developer-bio">
+                        <li>OpenXR向けビルド設定テンプレート化</li>
+                        <li>nanoVDBアニメーションのC#ラッパー実装</li>
+                        <li>QuestでのGPU/CPUプロファイル取得フロー確立</li>
+                    </ul>
+                </article>
+                <article class="list-card">
+                    <h3>残タスク</h3>
+                    <ul class="developer-bio">
+                        <li>避難経路のナビゲーションメッシュ最適化</li>
+                        <li>UI音声ガイダンスの多言語化</li>
+                        <li>校舎モデルとの統合シーンの軽量化</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section style="margin-top: 80px;">
+            <h2 class="section-title">参照リンク</h2>
+            <div class="card-grid">
+                <article class="card">
+                    <span class="category-tag">Docs</span>
+                    <h3>OpenXR Interaction Toolkit</h3>
+                    <p>コントローラーマッピングとハンドトラッキングの設定手順をチーム内Wikiに集約。</p>
+                </article>
+                <article class="card">
+                    <span class="category-tag">Toolchain</span>
+                    <h3>サイドロード手順</h3>
+                    <p>Meta Quest Developer Hubとadbを併用し、ビルドからヘッドセットへの転送までを自動化。</p>
+                </article>
+                <article class="card">
+                    <span class="category-tag">Testing</span>
+                    <h3>ユーザーテストシナリオ</h3>
+                    <p>火災想定、煙充満、避難誘導など複数のシナリオを5分以内に体験できる構成で検証中。</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <nav>
+            <a href="../index.html">ポータルTOP</a>
+            <a href="../simulation/">煙シミュレーション</a>
+            <a href="../modeling/">モデリング</a>
+            <a href="../../">サイトTOP</a>
+        </nav>
+        <p>お問い合わせ: <a href="mailto:developer@mmh-virtual.jp">developer@mmh-virtual.jp</a></p>
+        <p>&copy; <span data-current-year></span> Matsuyama Minami Virtuals</p>
+    </footer>
+
+    <script src="../assets/scripts.js"></script>
+</body>
+</html>
+

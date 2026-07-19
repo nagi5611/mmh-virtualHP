@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 本文・構造の掲載元: https://airport.mmh-virtual.jp/ （再配布・改変の可否は権利者の条件に従ってください） -->
+  <title>松山南高校 松山空港ジオラマプロジェクト</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="images/plane.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" href="assets/styles.css" as="style">
+  <link rel="preload" href="css/theme.css?v=20260704n" as="style">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="css/theme.css?v=20260704n">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap"></noscript>
+  <script src="assets/i18n.js" defer></script>
+  <script src="assets/awards-carousel.js?v=20260704n" defer></script>
+  <script src="assets/main.js?v=20260704n" defer></script>
+</head>
+<body>
+  <div id="page-loader" class="page-loader" aria-live="polite" aria-busy="true">
+    <div class="page-loader__inner">
+      <div class="page-loader__spinner" aria-hidden="true"></div>
+      <p class="page-loader__text" data-i18n="loader.text">読み込み中…</p>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <nav>
+      <a class="brand brand--with-icon" href="index.html">
+        <span class="brand__icon" aria-hidden="true">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+        </span>
+        <span data-i18n="brand.schoolShort">松山南高校</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" data-i18n="aria.menuOpen" data-i18n-attr="aria-label" aria-label="メニューを開く">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="#about" data-i18n="nav.about">活動紹介</a>
+        <a href="#achievements" data-i18n="nav.achievements">実績</a>
+        <a href="#awards" data-i18n="nav.awards">受賞歴</a>
+        <a href="#members" data-i18n="nav.members">メンバー</a>
+        <a href="#virtual" data-i18n="nav.virtual">バーチャル空間</a>
+        <div class="lang-switch" data-lang-switch>
+          <button type="button" class="lang-switch__toggle" id="lang-switch-toggle" aria-expanded="false" aria-haspopup="listbox" aria-controls="lang-switch-list" data-i18n="lang.menuButtonAria" data-i18n-attr="aria-label" aria-label="言語を選ぶ">
+            <svg class="lang-switch__globe" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span class="lang-switch__code" data-lang-current>JA</span>
+            <span class="lang-switch__caret" aria-hidden="true"></span>
+          </button>
+          <ul class="lang-switch__list" id="lang-switch-list" role="listbox" aria-labelledby="lang-switch-toggle" hidden>
+            <li class="lang-switch__item" role="none"><button type="button" class="lang-switch__option" role="option" data-set-locale="ja"><span data-i18n="lang.optJa">日本語 (JA/JP)</span></button></li>
+            <li class="lang-switch__item" role="none"><button type="button" class="lang-switch__option" role="option" data-set-locale="zh"><span data-i18n="lang.optZh">中文（简体）(ZH)</span></button></li>
+            <li class="lang-switch__item" role="none"><button type="button" class="lang-switch__option" role="option" data-set-locale="zh-TW"><span data-i18n="lang.optZhTw">中文（繁體・台灣）(ZH-TW)</span></button></li>
+            <li class="lang-switch__item" role="none"><button type="button" class="lang-switch__option" role="option" data-set-locale="en"><span data-i18n="lang.optEn">English (EN)</span></button></li>
+            <li class="lang-switch__item" role="none"><button type="button" class="lang-switch__option" role="option" data-set-locale="ko"><span data-i18n="lang.optKo">한국어 (KO)</span></button></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero hero--split">
+    <div class="hero--split__bg" aria-hidden="true"></div>
+    <div class="hero--split__inner container container--hero">
+      <div class="hero--split__text" data-scroll-animate="fade-right">
+        <p class="eyebrow" data-i18n="hero.eyebrow">松山南高校 自然科学部 プロジェクト</p>
+        <h1 class="hero--split__title" data-i18n="hero.titleHtml" data-i18n-html>触れて、歩いて、<br>松山空港を体験する。</h1>
+        <p class="hero--split__lead" data-i18n="hero.lead">3Dプリンタで再現したジオラマと、誰でもアクセスできるバーチャル空間。視覚障がいのある生徒や、世界中の旅行者に、松山の魅力を新しい方法で届けます。</p>
+        <div class="hero-actions hero-actions--left">
+          <a class="btn btn-primary btn-lg" href="#virtual" data-scroll><span data-i18n="hero.btnVirtual">バーチャル空間へ</span><svg class="icon-inline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          <a class="btn btn-secondary btn-lg" href="#about" data-scroll><span data-i18n="hero.btnAbout">プロジェクトについて</span></a>
+        </div>
+      </div>
+      <div class="hero--split__media" data-scroll-animate="fade-left">
+        <img
+          src="images/hero-airport-diorama-800w.webp"
+          srcset="images/hero-airport-diorama-600w.webp 600w, images/hero-airport-diorama-800w.webp 800w"
+          sizes="(max-width: 720px) 100vw, 45vw"
+          width="800"
+          height="533"
+          fetchpriority="high"
+          decoding="async"
+          alt="松山空港ジオラマ"
+          class="rounded-xl shadow-lg"
+          data-i18n="img.heroAlt"
+          data-i18n-attr="alt">
+      </div>
+    </div>
+  </section>
+
+  <section id="news" class="news-section" aria-labelledby="news-title">
+    <div class="container news-section__container">
+      <h2 id="news-title" class="news-section__heading" data-scroll-animate="fade-up" data-i18n="news.title">お知らせ</h2>
+      <div class="news-block" data-scroll-animate="fade-up">
+        <div id="news-viewport" class="news-viewport" role="region" aria-live="polite" data-i18n="aria.newsList" data-i18n-attr="aria-label" aria-label="お知らせ一覧"></div>
+        <div class="news-toolbar">
+          <button type="button" class="news-nav-btn" id="news-prev" data-i18n="aria.newsPrev" data-i18n-attr="aria-label" aria-label="前のページ">‹</button>
+          <nav class="news-pager" id="news-pager" data-i18n="aria.newsPager" data-i18n-attr="aria-label" aria-label="お知らせのページ"></nav>
+          <button type="button" class="news-nav-btn" id="news-next" data-i18n="aria.newsNext" data-i18n-attr="aria-label" aria-label="次のページ">›</button>
+        </div>
+      </div>
+      <!-- お知らせは data/news.json を読み込み生成（編集は /diorama/dev/）。一覧は1ページ最大5件でページ切替 -->
+      <ul id="news-source" class="news-source" hidden></ul>
+    </div>
+  </section>
+
+  <main>
+    <section id="about" class="section-block section-block--white">
+      <div class="container">
+        <div class="section-intro section-intro--left" data-scroll-animate="fade-up">
+          <p class="eyebrow" data-i18n="about.eyebrow">About the project</p>
+          <h2 class="section-title" data-i18n="about.title">活動紹介</h2>
+          <p class="section-subtitle" data-i18n="about.subtitle">松山市からの依頼を受け、特別支援学校の修学旅行支援として、松山の観光名所をジオラマで「触察」してもらう活動に取り組んでいます。</p>
+        </div>
+
+        <div class="grid-two grid-two--align-start section-stack">
+          <div>
+            <h3 class="subsection-title" data-scroll-animate="fade-up" data-i18n="process.sectionTitle">制作プロセス</h3>
+            <div class="process-list" data-scroll-animate="fade-up" data-scroll-stagger>
+              <div class="process-step">
+                <div class="process-step__num">01</div>
+                <div>
+                  <h4 class="process-step__title" data-i18n="process.s1Title">Blenderで3Dモデリング</h4>
+                  <p class="muted" data-i18n="process.s1Body">松山空港の建築を詳細にモデリング。3Dプリント対応の簡略版と、バーチャル空間用の詳細版の両方を制作します。</p>
+                </div>
+              </div>
+              <div class="process-step">
+                <div class="process-step__num">02</div>
+                <div>
+                  <h4 class="process-step__title" data-i18n="process.s2Title">3Dプリンターで出力</h4>
+                  <p class="muted" data-i18n="process.s2Body">モデルを3Dプリンターで印刷。視覚障がい者が触察しやすいように、適切なサイズと質感を実現します。</p>
+                </div>
+              </div>
+              <div class="process-step">
+                <div class="process-step__num">03</div>
+                <div>
+                  <h4 class="process-step__title" data-i18n="process.s3Title">バーチャル空間で公開</h4>
+                  <p class="muted" data-i18n="process.s3Body">詳細にモデリングしたバージョンをバーチャル空間に展開。外国人観光客も松山空港の構造を理解できます。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div data-scroll-animate="fade-left">
+            <img
+              src="images/blender-3d-workflow-400w.webp"
+              srcset="images/blender-3d-workflow-400w.webp 400w, images/blender-3d-workflow-800w.webp 800w"
+              sizes="(max-width: 720px) 100vw, 340px"
+              width="400"
+              height="267"
+              loading="lazy"
+              decoding="async"
+              alt="Blender 3D制作ワークフロー"
+              class="thumb"
+              data-i18n="img.blenderAlt"
+              data-i18n-attr="alt">
+          </div>
+        </div>
+
+        <div class="purpose-panel" data-scroll-animate="fade-up">
+          <h3 class="subsection-title" data-i18n="purpose.title">プロジェクトの目的</h3>
+          <div class="grid-two">
+            <div class="purpose-item">
+              <span class="purpose-dot purpose-dot--primary" aria-hidden="true"></span>
+              <div>
+                <h4 class="process-step__title" data-i18n="purpose.item1Title">視覚障がい者への配慮</h4>
+                <p class="muted" data-i18n="purpose.item1Body">特別支援学校の生徒が触察を通じて松山空港の構造を理解し、修学旅行の学習をサポートします。</p>
+              </div>
+            </div>
+            <div class="purpose-item">
+              <span class="purpose-dot purpose-dot--secondary" aria-hidden="true"></span>
+              <div>
+                <h4 class="process-step__title" data-i18n="purpose.item2Title">外国人観光客への情報提供</h4>
+                <p class="muted" data-i18n="purpose.item2Body">バーチャル空間を通じて、言語の壁を越えて松山空港の魅力を世界に発信します。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="achievements" class="section-block section-block--white">
+      <div class="container">
+        <div class="section-intro section-intro--left" data-scroll-animate="fade-up">
+          <p class="eyebrow" data-i18n="achievements.eyebrow">Track record</p>
+          <h2 class="section-title" id="achievements-heading" data-i18n="achievements.title">これまでの活動</h2>
+          <p class="section-subtitle" data-i18n="achievements.subtitle">松山市の観光支援事業の一環として、これまでに3つのジオラマプロジェクトを制作してきました。</p>
+        </div>
+        <div class="achv-timeline" aria-labelledby="achievements-heading">
+          <div class="achv-timeline__headers">
+            <span class="achv-timeline__header achv-timeline__header--past" data-i18n="timeline.past">これまで</span>
+            <span class="achv-timeline__header achv-timeline__header--axis" aria-hidden="true"></span>
+            <span class="achv-timeline__header achv-timeline__header--now" data-i18n="timeline.ongoing">進行中</span>
+          </div>
+          <div class="achv-timeline__list-wrap">
+            <span class="achv-timeline__plane" aria-hidden="true">
+              <svg class="achv-timeline__plane-svg" width="33" height="33" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+            </span>
+          <ol class="achv-timeline__list">
+            <li class="achv-timeline__row achv-timeline__row--past">
+              <p class="achv-timeline__group-label achv-timeline__group-label--past" data-i18n="timeline.past">これまで</p>
+              <div class="achv-timeline__slot achv-timeline__slot--left">
+                <article class="achv-card">
+                  <div class="achv-card__body">
+                    <h3 class="achv-card__title" id="achv-card-1" data-i18n="achv1.title">松山城ジオラマ</h3>
+                    <p class="achv-card__desc" data-i18n="achv1.desc">プロジェクトの第一弾。松山市の象徴である松山城を3Dプリンターで制作し、特別支援学校の生徒の触察体験に活用しました。</p>
+                  </div>
+                  <p class="achv-card__year"><time datetime="2023"><span data-i18n="achv1.year">令和5年度</span></time></p>
+                </article>
+              </div>
+              <div class="achv-timeline__axis" aria-hidden="true">
+                <span class="achv-timeline__dot"></span>
+              </div>
+              <div class="achv-timeline__slot achv-timeline__slot--right"></div>
+            </li>
+            <li class="achv-timeline__row achv-timeline__row--past">
+              <div class="achv-timeline__slot achv-timeline__slot--left">
+                <article class="achv-card">
+                  <div class="achv-card__body">
+                    <h3 class="achv-card__title" id="achv-card-2" data-i18n="achv2.title">道後温泉ジオラマ</h3>
+                    <p class="achv-card__desc" data-i18n="achv2.desc">第二弾として、より複雑な建築構造を持つ道後温泉本館に挑戦。形状の再現精度を大きく向上させました。</p>
+                  </div>
+                  <p class="achv-card__year"><time datetime="2024"><span data-i18n="achv2.year">令和6年度</span></time></p>
+                </article>
+              </div>
+              <div class="achv-timeline__axis" aria-hidden="true">
+                <span class="achv-timeline__dot"></span>
+              </div>
+              <div class="achv-timeline__slot achv-timeline__slot--right"></div>
+            </li>
+            <li class="achv-timeline__row achv-timeline__row--now">
+              <p class="achv-timeline__group-label achv-timeline__group-label--now" data-i18n="timeline.ongoing">進行中</p>
+              <div class="achv-timeline__slot achv-timeline__slot--left"></div>
+              <div class="achv-timeline__axis" aria-hidden="true">
+                <span class="achv-timeline__dot achv-timeline__dot--current"></span>
+              </div>
+              <div class="achv-timeline__slot achv-timeline__slot--right">
+                <article class="achv-card achv-card--current">
+                  <div class="achv-card__body">
+                    <h3 class="achv-card__title" id="achv-card-3" data-i18n="achv3.title">松山空港ジオラマ</h3>
+                    <p class="achv-card__tagline" data-i18n="achv3.tagline">with バーチャル空間</p>
+                    <p class="achv-card__desc" data-i18n="achv3.desc">第三弾。ジオラマに加えて、誰でもアクセスできるバーチャル空間も同時展開し、外国人観光客にも松山の魅力を発信します。</p>
+                  </div>
+                  <p class="achv-card__year"><time datetime="2025"><span data-i18n="achv3.year">令和7年度</span></time></p>
+                </article>
+              </div>
+            </li>
+          </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="awards" class="section-block section-block--tint" hidden>
+      <div class="container">
+        <div class="section-intro section-intro--left" data-scroll-animate="fade-up">
+          <p class="eyebrow" data-i18n="awards.eyebrow">Awards</p>
+          <h2 class="section-title" id="awards-heading" data-i18n="awards.title">受賞歴</h2>
+          <p class="section-subtitle" data-i18n="awards.subtitle">大会やコンテストでの主な受賞・選考結果をご紹介します。</p>
+        </div>
+        <div class="award-orbs-carousel" data-award-carousel>
+          <p class="award-orbs-hint" data-award-hint hidden data-i18n="awards.carouselHint">ドラッグまたは矢印で切り替え</p>
+          <div id="awards-orbs" class="award-orbs-track award-orbs" role="list" aria-labelledby="awards-heading"
+               data-scroll-animate="fade-up"></div>
+          <div class="award-orbs-caption" data-award-caption hidden>
+            <div class="award-orbs-caption__body" data-award-caption-body>
+              <p class="award-orbs-caption__line">
+                <span class="award-orbs-caption__result" data-award-caption-result></span>
+                <span class="award-orbs-caption__sep" data-award-caption-sep-result aria-hidden="true">｜</span>
+                <span class="award-orbs-caption__org" data-award-caption-org></span>
+                <span class="award-orbs-caption__sep" data-award-caption-sep-year aria-hidden="true">｜</span>
+                <span class="award-orbs-caption__year" data-award-caption-year></span>
+              </p>
+              <button type="button" class="award-orbs-caption__more" data-award-caption-more data-i18n="awards.detailMore">↑ 詳しく</button>
+            </div>
+          </div>
+          <div class="award-orbs-nav" data-award-nav aria-label="受賞歴の位置" hidden>
+            <div class="award-orbs-dots" role="tablist"></div>
+            <span class="award-orbs-counter" data-award-counter hidden aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+      <div class="award-orbs-arrows" data-award-arrows aria-label="受賞歴のスクロール" hidden>
+        <button type="button" class="award-orbs-arrow award-orbs-arrow--prev" data-award-prev aria-label="前の受賞">
+          <svg class="award-orbs-arrow__icon" viewBox="0 0 32 8" width="32" height="8" aria-hidden="true">
+            <path fill="currentColor" d="M0 4 L7 0 L7 8 Z"/>
+            <rect x="7" y="3.1" width="25" height="1.8" fill="currentColor"/>
+          </svg>
+        </button>
+        <button type="button" class="award-orbs-arrow award-orbs-arrow--next" data-award-next aria-label="次の受賞">
+          <svg class="award-orbs-arrow__icon" viewBox="0 0 32 8" width="32" height="8" aria-hidden="true">
+            <rect x="0" y="3.1" width="25" height="1.8" fill="currentColor"/>
+            <path fill="currentColor" d="M32 4 L25 0 L25 8 Z"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <div id="award-detail" class="award-detail" hidden aria-hidden="true">
+      <div class="award-detail__overlay" data-award-detail-close tabindex="-1"></div>
+      <div class="award-detail__panel" role="dialog" aria-modal="true" aria-labelledby="award-detail-title">
+        <button type="button" class="award-detail__close" data-award-detail-close aria-label="閉じる">&times;</button>
+        <h3 id="award-detail-title" class="award-detail__title visually-hidden"></h3>
+        <div class="award-detail__thumb-wrap">
+          <div id="award-detail-thumb-viewport" class="award-thumb-viewport">
+            <img id="award-detail-thumb" class="award-detail__thumb" src="" alt="" hidden>
+          </div>
+          <div id="award-detail-thumb-placeholder" class="award-detail__thumb-placeholder" data-i18n="awards.thumbPlaceholder">サムネ画像</div>
+        </div>
+        <div class="award-detail__body">
+          <div class="award-detail__desc-wrap">
+            <p id="award-detail-desc" class="award-detail__desc"></p>
+          </div>
+          <div class="award-detail__files-wrap">
+            <p class="award-detail__files-label" data-i18n="awards.attachmentsLabel">資料</p>
+            <ul id="award-detail-files" class="award-detail__files"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="section-block section-block--white touch-learning">
+      <div class="container">
+        <div class="grid-two grid-two--align-center">
+          <div class="touch-learning__figure" data-scroll-animate="fade-right">
+            <img
+              src="images/accessibility-touch-exploration-400w.webp"
+              srcset="images/accessibility-touch-exploration-400w.webp 400w, images/accessibility-touch-exploration-800w.webp 800w"
+              sizes="(max-width: 720px) 100vw, 340px"
+              width="400"
+              height="267"
+              loading="lazy"
+              decoding="async"
+              alt="触察体験"
+              class="thumb"
+              data-i18n="img.touchAlt"
+              data-i18n-attr="alt">
+          </div>
+          <div class="touch-learning__copy">
+            <h2 class="section-title" data-scroll-animate="fade-left" data-i18n="touch.title">触察を通じた学習</h2>
+            <p class="section-subtitle" style="margin-bottom: 24px;" data-scroll-animate="fade-left" data-i18n="touch.subtitle">このプロジェクトは、視覚障がい者が手で触れることで、建築物の構造や空間配置を直感的に理解できるように設計されています。</p>
+            <ul class="bar-list" data-scroll-animate="fade-up" data-scroll-stagger>
+              <li class="bar-list__item">
+                <span class="bar-list__bar" aria-hidden="true"></span>
+                <div>
+                  <h3 class="process-step__title" data-i18n="touch.b1Title">直感的な理解</h3>
+                  <p class="muted" data-i18n="touch.b1Body">視覚情報に頼らず、触覚を通じて空間を認識できます。</p>
+                </div>
+              </li>
+              <li class="bar-list__item">
+                <span class="bar-list__bar" aria-hidden="true"></span>
+                <div>
+                  <h3 class="process-step__title" data-i18n="touch.b2Title">修学旅行の事前学習</h3>
+                  <p class="muted" data-i18n="touch.b2Body">実際に訪問する前に、ジオラマで松山の観光名所を学べます。</p>
+                </div>
+              </li>
+              <li class="bar-list__item">
+                <span class="bar-list__bar" aria-hidden="true"></span>
+                <div>
+                  <h3 class="process-step__title" data-i18n="touch.b3Title">インクルーシブな体験</h3>
+                  <p class="muted" data-i18n="touch.b3Body">すべての人が等しく松山の魅力を体験できる環境を実現します。</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="members" class="section-block section-block--white">
+      <div class="container">
+        <div class="section-intro section-intro--left" data-scroll-animate="fade-up">
+          <p class="eyebrow" data-i18n="members.eyebrow">Team</p>
+          <h2 class="section-title" data-i18n="members.title">メンバー紹介</h2>
+          <p class="section-subtitle" data-i18n="members.subtitle">松山南高校自然科学部の生徒たちが、それぞれの担当領域でプロジェクトを推進しています。</p>
+        </div>
+        <div class="member-showcase" data-member-showcase>
+          <svg class="member-showcase__frame" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <rect class="member-showcase__rect" x="0.75" y="0.75" width="98.5" height="98.5" rx="1.6" ry="1.6" fill="none" stroke="var(--primary)" stroke-width="1.25" pathLength="100" vector-effect="non-scaling-stroke" />
+          </svg>
+          <div class="card-grid card-grid--3 member-showcase__grid">
+          <article class="card member-card">
+            <div class="member-card__icon">
+              <img class="member-card__avatar" src="images/kzy.png" alt="" width="40" height="40" loading="lazy" decoding="async">
+            </div>
+            <h3 class="member-card__name">田村和也</h3>
+            <p class="member-card__role" data-i18n="members.m1role">リーダー、モデリング、印刷担当</p>
+          </article>
+          <article class="card member-card">
+            <div class="member-card__icon">
+              <img class="member-card__avatar" src="images/hjw.png" alt="" width="40" height="40" loading="lazy" decoding="async">
+            </div>
+            <h3 class="member-card__name">藤原遥馬</h3>
+            <p class="member-card__role" data-i18n="members.m2role">モデリング、メタバースサーバー・ファイル共有システム構築担当</p>
+          </article>
+          <article class="card member-card">
+            <div class="member-card__icon">
+              <img class="member-card__avatar" src="images/canada.png" alt="" width="40" height="40" loading="lazy" decoding="async">
+            </div>
+            <h3 class="member-card__name">金田直人</h3>
+            <p class="member-card__role" data-i18n="members.m3role">モデリング、メタバース化、印刷担当</p>
+          </article>
+          <article class="card member-card">
+            <div class="member-card__icon">
+              <img class="member-card__avatar" src="images/kurumi.png" alt="" width="40" height="40" loading="lazy" decoding="async">
+            </div>
+            <h3 class="member-card__name">高松胡桃</h3>
+            <p class="member-card__role" data-i18n="members.m4role">空港のスキャン、撮影担当</p>
+          </article>
+          <article class="card member-card">
+            <div class="member-card__icon">
+              <img class="member-card__avatar" src="images/tomoki.png" alt="" width="40" height="40" loading="lazy" decoding="async">
+            </div>
+            <h3 class="member-card__name">大野智己</h3>
+            <p class="member-card__role" data-i18n="members.m5role">空港のスキャン、撮影担当</p>
+          </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block section-block--white">
+      <div class="container">
+        <div class="section-intro section-intro--left" data-scroll-animate="fade-up">
+          <p class="eyebrow" data-i18n="partner.eyebrow">Partners</p>
+          <h2 class="section-title" data-i18n="partner.title">協力者・パートナー</h2>
+          <p class="section-subtitle" data-i18n="partner.subtitle">このプロジェクトは、松山市および関連機関のご協力により実現しています。</p>
+        </div>
+        <!-- TODO: 協力者ロゴ・リンク一時非表示（復元時はコメントを外す） -->
+        <div class="partner-grid" data-scroll-animate="fade-up" data-scroll-stagger>
+          <article class="card partner-card">
+            <div class="partner-card__icon" aria-hidden="true">
+              <img class="partner-card__favicon" src="images/partners/matsuyama-city.png" alt="" decoding="async" loading="lazy">
+            </div>
+            <div>
+              <h3 class="partner-card__name"><a class="partner-card__link" href="https://www.city.matsuyama.ehime.jp/shisei/kakukaichiran/sangyoukeizaibu/kankokokusai.html" target="_blank" rel="noopener noreferrer"><span data-i18n="partner.p1Name">松山市産業経済部</span></a></h3>
+              <p class="partner-card__role" data-i18n="partner.roleMain">事業主体・支援</p>
+              <p class="muted" data-i18n="partner.p1desc">松山市からの依頼を受け、観光支援事業の一環としてプロジェクトを推進しています。</p>
+            </div>
+          </article>
+          <article class="card partner-card">
+            <!-- <div class="partner-card__icon" aria-hidden="true">
+              <img class="partner-card__favicon" src="images/partners/matsuyama-airport.png" alt="" decoding="async" loading="lazy">
+            </div> -->
+            <div>
+              <h3 class="partner-card__name"><!-- <a class="partner-card__link" href="https://www.matsuyama-airport.co.jp/" target="_blank" rel="noopener noreferrer"> --><span data-i18n="partner.p2Name">松山空港ビル株式会社</span><!-- </a> --></h3>
+              <p class="partner-card__role" data-i18n="partner.roleFacility">施設協力・情報提供</p>
+              <p class="muted" data-i18n="partner.p2desc">松山空港の詳細な建築情報や施設情報を提供。バーチャル空間での正確な再現をサポートしています。</p>
+            </div>
+          </article>
+          <article class="card partner-card partner-card--compact">
+            <!-- <div class="partner-card__icon" aria-hidden="true">
+              <img class="partner-card__favicon" src="images/partners/ana-air-matsuyama.png" alt="" decoding="async" loading="lazy">
+            </div> -->
+            <div>
+              <h3 class="partner-card__name"><!-- <a class="partner-card__link" href="https://www.asmyj.ana-g.com/" target="_blank" rel="noopener noreferrer"> --><span data-i18n="partner.p3Name">ANAエアサービス松山</span><!-- </a> --></h3>
+              <p class="partner-card__role" data-i18n="partner.roleCoop">協力</p>
+            </div>
+          </article>
+          <article class="card partner-card partner-card--compact">
+            <!-- <div class="partner-card__icon" aria-hidden="true">
+              <img class="partner-card__favicon" src="images/partners/jal.png" alt="" decoding="async" loading="lazy">
+            </div> -->
+            <div>
+              <h3 class="partner-card__name"><!-- <a class="partner-card__link" href="https://www.jal.co.jp/jp/ja/dom/airport/myj/" target="_blank" rel="noopener noreferrer"> --><span data-i18n="partner.p4Name">日本航空 松山空港所</span><!-- </a> --></h3>
+              <p class="partner-card__role" data-i18n="partner.roleCoop">協力</p>
+            </div>
+          </article>
+          <article class="card partner-card partner-card--compact">
+            <!-- <div class="partner-card__icon" aria-hidden="true">
+              <img class="partner-card__favicon" src="images/partners/anafesta.png" alt="" decoding="async" loading="lazy">
+            </div> -->
+            <div>
+              <h3 class="partner-card__name"><!-- <a class="partner-card__link" href="https://www.anafesta.com/" target="_blank" rel="noopener noreferrer"> --><span data-i18n="partner.p5Name">ANAFESTA松山店</span><!-- </a> --></h3>
+              <p class="partner-card__role" data-i18n="partner.roleCoop">協力</p>
+            </div>
+          </article>
+          <article class="card partner-card partner-card--compact">
+            <!-- <div class="partner-card__icon" aria-hidden="true">
+              <img class="partner-card__favicon" src="images/partners/imabaritowel-logo.svg" alt="" decoding="async" loading="lazy">
+            </div> -->
+            <div>
+              <h3 class="partner-card__name"><!-- <a class="partner-card__link" href="https://www.imabaritowel.jp/" target="_blank" rel="noopener noreferrer"> --><span data-i18n="partner.p6Name">今治タオル 松山エアポートストア</span><!-- </a> --></h3>
+              <p class="partner-card__role" data-i18n="partner.roleCoop">協力</p>
+            </div>
+          </article>
+          <article class="card partner-card partner-card--compact">
+            <!-- <div class="partner-card__icon" aria-hidden="true">
+              <img class="partner-card__favicon" src="images/partners/iyotetsu-commerce.ico" alt="" decoding="async" loading="lazy">
+            </div> -->
+            <div>
+              <h3 class="partner-card__name"><!-- <a class="partner-card__link" href="https://iyotetsu-commerce.jp/" target="_blank" rel="noopener noreferrer"> --><span data-i18n="partner.p7Name">伊予鉄商事</span><!-- </a> --></h3>
+              <p class="partner-card__role" data-i18n="partner.roleCoop">協力</p>
+            </div>
+          </article>
+          <article class="card partner-card partner-card--compact">
+            <!-- <div class="partner-card__icon" aria-hidden="true">
+              <img class="partner-card__favicon" src="images/partners/wakobs-logo.gif" alt="" decoding="async" loading="lazy">
+            </div> -->
+            <div>
+              <h3 class="partner-card__name"><!-- <a class="partner-card__link" href="http://wakobs.net/" target="_blank" rel="noopener noreferrer"> --><span data-i18n="partner.p8Name">株式会社 和光ビルサービス</span><!-- </a> --></h3>
+              <p class="partner-card__role" data-i18n="partner.roleCoop">協力</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block section-block--tint">
+      <div class="container">
+        <div class="grid-two grid-two--align-center">
+          <div>
+            <h2 class="section-title" data-scroll-animate="fade-right" data-i18n="activity.title">活動について</h2>
+            <p class="section-subtitle" style="margin-bottom: 24px;" data-scroll-animate="fade-right" data-i18n="activity.subtitle">このプロジェクトの透明性と安全性についてご説明します。</p>
+            <ul class="bar-list" data-scroll-animate="fade-up" data-scroll-stagger>
+              <li class="bar-list__item">
+                <span class="bar-list__bar" aria-hidden="true"></span>
+                <div>
+                  <h3 class="process-step__title" data-i18n="activity.b1Title">公式な活動腕章</h3>
+                  <p class="muted" data-i18n="activity.b1Body">松山南高校の生徒は、このプロジェクトの公式な活動を示す腕章を着用して活動しています。松山空港での撮影活動は、松山市および松山空港ビル株式会社の協力のもと、許可を得て実施されています。</p>
+                </div>
+              </li>
+              <li class="bar-list__item">
+                <span class="bar-list__bar" aria-hidden="true"></span>
+                <div>
+                  <h3 class="process-step__title" data-i18n="activity.b2Title">プライバシーと安全性の配慮</h3>
+                  <p class="muted" data-i18n="activity.b2Body">撮影活動では、個人が特定されるような撮影は行いません。また、保安区域の撮影も厳密に禁止されており、安全保障上の配慮を最優先としています。</p>
+                </div>
+              </li>
+              <li class="bar-list__item">
+                <span class="bar-list__bar" aria-hidden="true"></span>
+                <div>
+                  <h3 class="process-step__title" data-i18n="activity.b3Title">教育的な意義</h3>
+                  <p class="muted" data-i18n="activity.b3Body">このプロジェクトは、特別支援学校の生徒や外国人観光客に松山の魅力を伝えるための、純粋な教育的活動です。ご理解とご協力をお願いいたします。</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div data-scroll-animate="fade-left" class="activity-about__media">
+            <img src="images/wristband-activity-680w.webp" width="680" height="252" alt="活動用腕章" class="thumb" loading="lazy" decoding="async" data-i18n="img.wristbandAlt" data-i18n-attr="alt">
+            <p class="caption muted" data-i18n="activity.capWristband">松山南高校 空ジオラマプロジェクトの活動腕章</p>
+            <img src="images/プラカード.png" alt="空ジオプロジェクトの活動プラカード" class="thumb thumb--below-placard" loading="lazy" decoding="async" data-i18n="img.placardAlt" data-i18n-attr="alt">
+            <p class="caption muted" data-i18n="activity.capPlacard">松山南高校 空ジオラマプロジェクトの活動プラカード</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="virtual" class="section-block section-block--white">
+      <div class="container">
+        <div class="grid-two grid-two--align-center">
+          <div data-scroll-animate="fade-right">
+            <h2 class="section-title" data-i18n="virtual.title">バーチャル空間で体験</h2>
+            <p class="section-subtitle" style="margin-bottom: 24px;" data-i18n="virtual.subtitle">詳細にモデリングした松山空港をバーチャル空間に展開。世界中どこからでも、3D空間で松山空港を探索できます。</p>
+            <ul class="check-list">
+              <li class="check-list__item">
+                <span class="check-list__mark" aria-hidden="true">✓</span>
+                <div>
+                  <h3 class="process-step__title" data-i18n="virtual.f1Title">3D空間での自由な探索</h3>
+                  <p class="muted" data-i18n="virtual.f1Body">松山空港の内部構造を360度自由に観察できます。</p>
+                </div>
+              </li>
+              <li class="check-list__item">
+                <span class="check-list__mark" aria-hidden="true">✓</span>
+                <div>
+                  <h3 class="process-step__title" data-i18n="virtual.f2Title">多言語対応</h3>
+                  <p class="muted" data-i18n="virtual.f2Body">外国人観光客も松山空港の情報を理解しやすくなります。</p>
+                </div>
+              </li>
+              <li class="check-list__item">
+                <span class="check-list__mark" aria-hidden="true">✓</span>
+                <div>
+                  <h3 class="process-step__title" data-i18n="virtual.f3Title">インタラクティブな体験</h3>
+                  <p class="muted" data-i18n="virtual.f3Body">チャット、スタンプ、ビデオ通話など、コミュニケーション機能も搭載。</p>
+                </div>
+              </li>
+            </ul>
+            <div class="howto-box">
+              <p class="eyebrow" data-i18n="virtual.controlsEyebrow">Controls</p>
+              <h3 class="howto-box__title" data-i18n="virtual.howtoTitle">操作方法</h3>
+              <dl class="howto-keys">
+                <div class="howto-keys__row"><dt><kbd><span data-i18n="virtual.kbdMouse">マウス</span></kbd></dt><dd data-i18n="virtual.howtoRow1">視点変更</dd></div>
+                <div class="howto-keys__row"><dt><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></dt><dd data-i18n="virtual.howtoRow2Html" data-i18n-html>移動（<kbd>Shift</kbd>+<kbd>W</kbd>でダッシュ）</dd></div>
+                <div class="howto-keys__row"><dt><kbd>Space</kbd></dt><dd data-i18n="virtual.howtoRow3">ジャンプ</dd></div>
+                <div class="howto-keys__row"><dt><kbd>Esc</kbd></dt><dd data-i18n="virtual.howtoRow4">カーソル表示</dd></div>
+                <div class="howto-keys__row"><dt data-i18n="virtual.howtoRow5dtHtml" data-i18n-html>設定 ⚙</dt><dd data-i18n="virtual.howtoRow5dd">一人称 / 三人称の切替</dd></div>
+              </dl>
+            </div>
+            <a class="btn btn-accent btn-lg btn-block" href="https://metair.mmh-virtual.jp" target="_blank" rel="noopener noreferrer"><span data-i18n="virtual.btnAccess">バーチャル空間へアクセス</span><svg class="icon-inline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+            <a class="btn btn-secondary btn-lg btn-block" href="https://metair.mmh-virtual.jp/?world=airport" target="_blank" rel="noopener noreferrer"><span data-i18n="virtual.btnSimulator">航空機シミュレーターへアクセス</span><svg class="icon-inline" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+          </div>
+          <div class="virtual-showcase-stack" data-scroll-animate="fade-left">
+            <div
+              class="virtual-showcase"
+              data-virtual-showcase
+              data-showcase-initial="1"
+              data-i18n="virtual.galleryRegionRow1Aria"
+              data-i18n-attr="aria-label"
+            >
+              <div class="virtual-showcase__stage">
+                <div class="virtual-showcase__main-slot">
+                  <img
+                    class="virtual-showcase__media virtual-showcase__media--image"
+                    data-showcase-main-img
+                    src="images/metaverse_thumbnail1.png"
+                    alt=""
+                    width="960"
+                    height="600"
+                    decoding="async"
+                    fetchpriority="high"
+                  />
+                  <div class="virtual-showcase__video-booth" data-showcase-video-booth hidden>
+                    <video
+                      class="virtual-showcase__media virtual-showcase__media--video"
+                      data-showcase-main-video
+                      playsinline
+                      preload="metadata"
+                    ></video>
+                    <button
+                      type="button"
+                      class="virtual-showcase__play"
+                      data-showcase-play-btn
+                      data-i18n="virtual.galleryPlayVideo"
+                      data-i18n-attr="aria-label"
+                    >
+                      <svg class="virtual-showcase__play-icon" width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                        <circle cx="24" cy="24" r="22" fill="rgba(255,255,255,0.95)" stroke="currentColor" stroke-width="1.5" />
+                        <path d="M19 16 L34 24 L19 32 Z" fill="currentColor" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="virtual-showcase__rail"
+                  role="group"
+                  data-i18n="virtual.galleryRailAria"
+                  data-i18n-attr="aria-label"
+                >
+                  <button
+                    type="button"
+                    class="virtual-showcase__pick"
+                    data-showcase-index="0"
+                    data-showcase-type="video"
+                    data-showcase-src="images/metaverse_thumbnail.mp4"
+                    aria-pressed="false"
+                    data-i18n="virtual.galleryAltMeta"
+                    data-i18n-attr="aria-label"
+                  >
+                    <span class="virtual-showcase__pick-frame">
+                      <video src="images/metaverse_thumbnail.mp4" muted playsinline preload="metadata" aria-hidden="true"></video>
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    class="virtual-showcase__pick is-active"
+                    data-showcase-index="1"
+                    data-showcase-type="image"
+                    data-showcase-src="images/metaverse_thumbnail1.png"
+                    aria-pressed="true"
+                    data-i18n="virtual.galleryAlt1"
+                    data-i18n-attr="aria-label"
+                  >
+                    <span class="virtual-showcase__pick-frame">
+                      <img src="images/metaverse_thumbnail1.png" alt="" loading="lazy" decoding="async" />
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    class="virtual-showcase__pick"
+                    data-showcase-index="2"
+                    data-showcase-type="image"
+                    data-showcase-src="images/metaverse_thumbnail2.png"
+                    aria-pressed="false"
+                    data-i18n="virtual.galleryAlt2"
+                    data-i18n-attr="aria-label"
+                  >
+                    <span class="virtual-showcase__pick-frame">
+                      <img src="images/metaverse_thumbnail2.png" alt="" loading="lazy" decoding="async" />
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              class="virtual-showcase"
+              data-virtual-showcase
+              data-showcase-initial="0"
+              data-i18n="virtual.galleryRegionRow2Aria"
+              data-i18n-attr="aria-label"
+            >
+              <div class="virtual-showcase__stage">
+                <div class="virtual-showcase__main-slot">
+                  <img
+                    class="virtual-showcase__media virtual-showcase__media--image"
+                    data-showcase-main-img
+                    src="images/metaverse_thumbnail3.png"
+                    alt=""
+                    width="960"
+                    height="600"
+                    decoding="async"
+                    loading="lazy"
+                  />
+                  <div class="virtual-showcase__video-booth" data-showcase-video-booth hidden>
+                    <video
+                      class="virtual-showcase__media virtual-showcase__media--video"
+                      data-showcase-main-video
+                      playsinline
+                      preload="metadata"
+                    ></video>
+                    <button
+                      type="button"
+                      class="virtual-showcase__play"
+                      data-showcase-play-btn
+                      data-i18n="virtual.galleryPlayVideo"
+                      data-i18n-attr="aria-label"
+                    >
+                      <svg class="virtual-showcase__play-icon" width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                        <circle cx="24" cy="24" r="22" fill="rgba(255,255,255,0.95)" stroke="currentColor" stroke-width="1.5" />
+                        <path d="M19 16 L34 24 L19 32 Z" fill="currentColor" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="virtual-showcase__rail"
+                  role="group"
+                  data-i18n="virtual.galleryRailAria"
+                  data-i18n-attr="aria-label"
+                >
+                  <button
+                    type="button"
+                    class="virtual-showcase__pick is-active"
+                    data-showcase-index="0"
+                    data-showcase-type="image"
+                    data-showcase-src="images/metaverse_thumbnail3.png"
+                    aria-pressed="true"
+                    data-i18n="virtual.galleryAlt3"
+                    data-i18n-attr="aria-label"
+                  >
+                    <span class="virtual-showcase__pick-frame">
+                      <img src="images/metaverse_thumbnail3.png" alt="" loading="lazy" decoding="async" />
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    class="virtual-showcase__pick"
+                    data-showcase-index="1"
+                    data-showcase-type="image"
+                    data-showcase-src="images/metaverse_thumbnail4.png"
+                    aria-pressed="false"
+                    data-i18n="virtual.galleryAlt4"
+                    data-i18n-attr="aria-label"
+                  >
+                    <span class="virtual-showcase__pick-frame">
+                      <img src="images/metaverse_thumbnail4.png" alt="" loading="lazy" decoding="async" />
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    class="virtual-showcase__pick"
+                    data-showcase-index="2"
+                    data-showcase-type="image"
+                    data-showcase-src="images/metaverse_thumbnail5.png"
+                    aria-pressed="false"
+                    data-i18n="virtual.galleryAlt5"
+                    data-i18n-attr="aria-label"
+                  >
+                    <span class="virtual-showcase__pick-frame">
+                      <img src="images/metaverse_thumbnail5.png" alt="" loading="lazy" decoding="async" />
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    class="virtual-showcase__pick"
+                    data-showcase-index="3"
+                    data-showcase-type="video"
+                    data-showcase-src="images/metaverse_thumbnail6.mp4"
+                    aria-pressed="false"
+                    data-i18n="virtual.galleryAlt6"
+                    data-i18n-attr="aria-label"
+                  >
+                    <span class="virtual-showcase__pick-frame">
+                      <video src="images/metaverse_thumbnail6.mp4" muted playsinline preload="metadata" aria-hidden="true"></video>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="diorama-ar" class="section-block section-block--tint">
+      <div class="container">
+        <div class="grid-two grid-two--align-center">
+          <div>
+            <h2 class="section-title" data-scroll-animate="fade-right" data-i18n="arDiorama.title">ジオラマを体験</h2>
+            <p class="section-subtitle" style="margin-bottom: 24px;" data-scroll-animate="fade-right" data-i18n="arDiorama.subtitle">スマートフォンから、松山空港ジオラマをARで机の上に表示できます。実物のジオラマの雰囲気を、手のひらサイズでお試しください。</p>
+            <ul class="check-list" data-scroll-animate="fade-up" data-scroll-stagger>
+              <li class="check-list__item">
+                <span class="check-list__mark" aria-hidden="true">✓</span>
+                <div>
+                  <h3 class="process-step__title" data-i18n="arDiorama.f1Title">机の上に配置</h3>
+                  <p class="muted" data-i18n="arDiorama.f1Body">カメラで水平な面を認識し、タップしてジオラマを置けます。</p>
+                </div>
+              </li>
+              <li class="check-list__item">
+                <span class="check-list__mark" aria-hidden="true">✓</span>
+                <div>
+                  <h3 class="process-step__title" data-i18n="arDiorama.f2Title">スマートフォン専用</h3>
+                  <p class="muted" data-i18n="arDiorama.f2Body">iPhone・Android のスマートフォンでご利用いただけます（カメラ許可が必要です）。</p>
+                </div>
+              </li>
+            </ul>
+            <p class="muted" style="margin-bottom: 16px; font-size: 0.9375rem;" data-i18n="arDiorama.mobileNote">明るい場所で、机や床などの水平な面の上でお試しください。</p>
+            <a class="btn btn-primary btn-lg btn-block" href="ar/" data-i18n="arDiorama.btnLaunch">ARでジオラマを体験</a>
+          </div>
+          <div data-scroll-animate="fade-left">
+            <img
+              src="images/hero-airport-diorama-800w.webp"
+              srcset="images/hero-airport-diorama-600w.webp 600w, images/hero-airport-diorama-800w.webp 800w"
+              sizes="(max-width: 720px) 100vw, 340px"
+              width="800"
+              height="533"
+              loading="lazy"
+              decoding="async"
+              alt="松山空港ジオラマ"
+              class="thumb rounded-xl shadow-lg"
+              data-i18n="arDiorama.previewAlt"
+              data-i18n-attr="alt">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <section id="contact" class="contact-strip" aria-labelledby="contact-title">
+    <div class="container contact-strip__inner" data-scroll-animate="fade-up">
+      <h2 id="contact-title" class="contact-strip__title" data-i18n="contact.title">お問い合わせはこちら</h2>
+      <p class="contact-strip__lead muted" data-i18n="contact.lead">ご質問・ご協力のお申し出などは、下記メールアドレスまでご連絡ください。</p>
+      <a class="contact-strip__mail" href="mailto:diorama@mmh-virtual.jp">diorama@mmh-virtual.jp</a>
+    </div>
+  </section>
+
+  <footer class="footer footer--extended">
+    <div class="container container--footer">
+      <div class="footer-grid" data-scroll-animate="fade-up" data-scroll-stagger>
+        <div>
+          <h3 class="footer-heading" data-i18n="footer.col1Title">松山南高校</h3>
+          <p class="muted" data-i18n="footer.col1Body">愛媛県松山市にある高等学校。自然科学部が中心となって、松山の観光支援プロジェクトに取り組んでいます。</p>
+        </div>
+        <div>
+          <h3 class="footer-heading" data-i18n="footer.col2Title">プロジェクト</h3>
+          <ul class="footer-links">
+            <li><a href="#about" data-scroll data-i18n="nav.about">活動紹介</a></li>
+            <li><a href="#achievements" data-scroll data-i18n="nav.achievements">実績</a></li>
+            <li><a href="#awards" data-scroll data-i18n="nav.awards">受賞歴</a></li>
+            <li><a href="#members" data-scroll data-i18n="nav.members">メンバー</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-heading" data-i18n="footer.col3Title">リンク</h3>
+          <ul class="footer-links">
+            <li><a href="https://matsuyamaminami-h.esnet.ed.jp/" target="_blank" rel="noopener noreferrer" class="link-external"><span data-i18n="footer.schoolHp">学校ホームページ</span><svg class="icon-inline icon-inline--sm" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></li>
+            <li><a href="https://metair.mmh-virtual.jp" target="_blank" rel="noopener noreferrer" class="link-external"><span data-i18n="footer.virtualSpace">バーチャル空間</span><svg class="icon-inline icon-inline--sm" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></li>
+            <li><a href="https://www.instagram.com/mmh_airport_diorama/" target="_blank" rel="noopener noreferrer" class="link-external"><span data-i18n="footer.officialInstagram">公式 Instagram</span><svg class="icon-inline icon-inline--sm" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer-copy" data-scroll-animate="fade-up"><span data-i18n="footer.copyrightBefore">© </span><span data-current-year>2026</span><span data-i18n="footer.copyrightAfter"> 松山南高校 自然科学部. All rights reserved.</span></p>
+    </div>
+    <nav class="footer-nav-quick" data-i18n="aria.footerNav" data-i18n-attr="aria-label" aria-label="フッターナビ">
+      <a href="#about" data-scroll data-i18n="nav.about">活動紹介</a>
+      <a href="#achievements" data-scroll data-i18n="nav.achievements">実績</a>
+      <a href="#awards" data-scroll data-i18n="nav.awards">受賞歴</a>
+      <a href="#members" data-scroll data-i18n="nav.members">メンバー</a>
+      <a href="#virtual" data-scroll data-i18n="nav.virtual">バーチャル空間</a>
+      <a href="#diorama-ar" data-scroll data-i18n="nav.dioramaAr">ARジオラマ</a>
+    </nav>
+  </footer>
+
+</body>
+</html>

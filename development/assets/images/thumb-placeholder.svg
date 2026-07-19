@@ -1,0 +1,15 @@
+<svg width="320" height="200" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="thumb" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d1ecff"/>
+      <stop offset="100%" stop-color="#a3d2ff"/>
+    </linearGradient>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <rect width="20" height="20" fill="none" stroke="#ffffff" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="320" height="200" rx="20" fill="url(#thumb)"/>
+  <rect x="16" y="16" width="288" height="168" rx="16" fill="url(#grid)" opacity="0.4"/>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="24" fill="#4a4a4a">MODEL PREVIEW</text>
+</svg>
+
