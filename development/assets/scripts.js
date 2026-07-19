@@ -98,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const hero = document.querySelector('.demo-video-hero');
         if (!video || !hero) return;
 
-        const playBtn = document.getElementById('demoPlayBtn');
         const playPauseBtn = document.getElementById('demoPlayPauseBtn');
         const controls = document.getElementById('demoVideoControls');
         const progress = document.getElementById('demoVideoProgress');
@@ -122,11 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const setPlayingState = isPlaying => {
             playPauseBtn.textContent = isPlaying ? '⏸' : '▶';
-            if (playBtn) {
-                playBtn.innerHTML = isPlaying
-                    ? '<span class="hp-btn__icon" aria-hidden="true">⏸</span>一時停止'
-                    : '<span class="hp-btn__icon" aria-hidden="true">▶</span>デモを再生';
-            }
         };
 
         const showControls = () => {
@@ -153,15 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 setPlayingState(false);
             }
         };
-
-        playBtn?.addEventListener('click', () => {
-            if (video.paused) {
-                startPlayback();
-            } else {
-                video.pause();
-                setPlayingState(false);
-            }
-        });
 
         playPauseBtn?.addEventListener('click', togglePlay);
 
