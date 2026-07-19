@@ -29,15 +29,182 @@
         <p class="category-tag">FDS Simulation</p>
         <h1>FDSシミュレーション</h1>
         <p>
-            NIST製の火災動力学シミュレータ（Fire Dynamics Simulator）を用いた、火災・煙の挙動解析の記録ページです。
+            火災動力学シミュレータ（FDS）を使った解析の記録です。<br>
+            モデル作成から計算環境の壁、そして富岳での並列処理までの流れをまとめています。
         </p>
+        <div class="hero-actions">
+            <a class="btn btn-primary" href="#fds-intro" data-scroll>FDSとは</a>
+            <a class="btn btn-secondary" href="#story" data-scroll>開発ストーリー</a>
+        </div>
     </section>
 
     <main class="container">
-        <section>
-            <h2 class="section-title">概要</h2>
-            <div class="muted-box">
-                <p>このページは現在準備中です。FDSシミュレーションの設定、解析結果、検証内容などを今後追加予定です。</p>
+        <section id="fds-intro">
+            <h2 class="section-title">FDS（Fire Dynamics Simulator）とは</h2>
+            <div class="grid-two">
+                <article class="card">
+                    <span class="category-tag">Overview</span>
+                    <h3>火災・煙の挙動を数値解析</h3>
+                    <p>
+                        FDSは米国NIST（国立標準技術研究所）が開発した火災動力学シミュレータです。
+                        建物内の火災発生、煙の拡散、温度分布、避難に影響する視界の変化などを、
+                        計算流体力学（CFD）で再現できます。
+                    </p>
+                </article>
+                <article class="card">
+                    <span class="category-tag">Our Use</span>
+                    <h3>防災メタバースへの活用</h3>
+                    <p>
+                        本校舎をモデル化し、火災シナリオごとの煙の動きを解析。
+                        得られたデータはVR体験アプリや避難訓練のシミュレーション素材として利用しています。
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section id="story" style="margin-top: 80px;">
+            <h2 class="section-title">開発ストーリー</h2>
+            <p class="section-subtitle">モデル作成から富岳での大規模計算まで、試行錯誤の記録です。</p>
+
+            <div class="timeline">
+                <article class="timeline-item">
+                    <div class="timeline-date">STEP 1</div>
+                    <div class="timeline-card">
+                        <h3>Blender for FDSでモデルを作成 <span class="status-badge status-success">完了</span></h3>
+                        <p>
+                            まずは<strong>Blender for FDS</strong>を使い、校舎の3DモデルからFDS用の入力ファイルを作成しました。
+                            壁・開口部・火源の配置など、シミュレーションに必要な設定までここまでは自力で進められました。
+                        </p>
+                    </div>
+                </article>
+
+                <article class="timeline-item">
+                    <div class="timeline-date">STEP 2</div>
+                    <div class="timeline-card">
+                        <h3>ローカルPCで計算したら…40時間以上！ <span class="status-badge status-problem">ボトルネック</span></h3>
+                        <p>
+                            いざ計算を回してみると、手元のローカルPCでは1ケースあたり<strong>40時間以上</strong>かかる見込みに。
+                            高性能なマシンでも、FDSの大規模解析には限界がありました。
+                        </p>
+                        <table class="spec-table">
+                            <tbody>
+                                <tr><th>CPU</th><td>AMD Ryzen 9 8940HX</td></tr>
+                                <tr><th>メモリ</th><td>32 GB DDR5</td></tr>
+                                <tr><th>ストレージ</th><td>SSD 3 TB</td></tr>
+                                <tr><th>GPU</th><td>NVIDIA GeForce RTX 5070 Laptop</td></tr>
+                                <tr><th>見込み計算時間</th><td>1ケースあたり 40時間以上</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+
+                <article class="timeline-item">
+                    <div class="timeline-date">STEP 3</div>
+                    <div class="timeline-card">
+                        <h3>地元・愛媛大学の高性能PCは？ <span class="status-badge status-problem">工数的に厳しい</span></h3>
+                        <p>
+                            次に考えたのは、地元の<strong>愛媛大学</strong>にある高性能PCの活用です。
+                            工学部の方々にも相談しましたが、使わせていただける時間や工数的な面から、
+                            今回の規模・本数の計算を任せるのは難しい状況でした。
+                        </p>
+                    </div>
+                </article>
+
+                <article class="timeline-item">
+                    <div class="timeline-date">STEP 4</div>
+                    <div class="timeline-card">
+                        <h3>そうだ、「富岳」使おう！ <span class="status-badge status-progress">転換点</span></h3>
+                        <p>
+                            ローカルでは時間がかかりすぎる。大学のマシンも工数的に厳しい——。
+                            そこで思い切って、世界最速クラスのスーパーコンピュータ<strong>「富岳」</strong>の利用を検討することにしました。
+                        </p>
+                        <p class="story-quote">「そうだ、富岳使おう！」</p>
+                        <p>
+                            富岳の利用申請の手続きを進め、計算資源の正式な利用枠を申請しました。
+                        </p>
+                    </div>
+                </article>
+
+                <article class="timeline-item">
+                    <div class="timeline-date">STEP 5</div>
+                    <div class="timeline-card">
+                        <h3>高校生で初の正式採択！ <span class="status-badge status-highlight">歴史的達成</span></h3>
+                        <p>
+                            申請の結果、<strong>高校生として初めて富岳の正式採択</strong>を受けました。
+                            これまで個人や学校単位では手の届きにくかった大規模計算に、
+                            ようやく本格的にアクセスできる段階まで来ました。
+                        </p>
+                    </div>
+                </article>
+
+                <article class="timeline-item">
+                    <div class="timeline-date">STEP 6</div>
+                    <div class="timeline-card">
+                        <h3>10ノードクラスタで並列分散処理 <span class="status-badge status-success">高速化</span></h3>
+                        <p>
+                            採択後は<strong>10ノードを接続したクラスタ構成</strong>で並列分散処理を実行。
+                            1台のPCで延々と回すのではなく、複数ノードに計算を分割することで、
+                            待ち時間を大幅に短縮できました。
+                        </p>
+                    </div>
+                </article>
+
+                <article class="timeline-item">
+                    <div class="timeline-date">STEP 7</div>
+                    <div class="timeline-card">
+                        <h3>約5時間で10パターン完了！ <span class="status-badge status-success">やったね！</span></h3>
+                        <p>
+                            結果、<strong>約5時間</strong>で計算が完了。<strong>10パターン分</strong>のシミュレーションを一気に終わらせることができました。
+                            ローカルPCなら400時間以上かかっていた計算量が、富岳の並列処理で現実的な時間に収まりました。
+                        </p>
+                        <div class="story-highlight">
+                            <h3>やったね！</h3>
+                            <p>40時間超 × 10パターンの壁を、富岳の力で突破しました。</p>
+                            <div class="story-stats">
+                                <div class="story-stat">
+                                    <strong>10</strong>
+                                    <span>ノード並列</span>
+                                </div>
+                                <div class="story-stat">
+                                    <strong>約5h</strong>
+                                    <span>計算完了</span>
+                                </div>
+                                <div class="story-stat">
+                                    <strong>10</strong>
+                                    <span>パターン分</span>
+                                </div>
+                                <div class="story-stat">
+                                    <strong>40h+</strong>
+                                    <span>→ 大幅短縮</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section style="margin-top: 80px;">
+            <h2 class="section-title">関連ページ</h2>
+            <div class="card-grid">
+                <article class="card">
+                    <span class="category-tag">App</span>
+                    <h3>FDS体験アプリ</h3>
+                    <p>解析結果をVR・デスクトップで体験できるアプリの開発記録です。</p>
+                    <a class="hp-btn hp-btn--card" href="../app/fds/">詳細を見る</a>
+                </article>
+                <article class="card">
+                    <span class="category-tag">VR</span>
+                    <h3>VR体験</h3>
+                    <p>シミュレーション結果をメタバース空間で再現するためのVR開発ガイド。</p>
+                    <a class="hp-btn hp-btn--card" href="../vr/">詳細を見る</a>
+                </article>
+                <article class="card">
+                    <span class="category-tag">Graphics</span>
+                    <h3>NanoVDBアプリ</h3>
+                    <p>煙データの可視化・最適化に関する技術記録。</p>
+                    <a class="hp-btn hp-btn--card" href="../app/nvdb/">詳細を見る</a>
+                </article>
             </div>
         </section>
     </main>
