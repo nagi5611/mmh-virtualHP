@@ -93,6 +93,115 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     initNavMenus();
 
+    const initDemoVideoHero = () => {
+        const video = document.getElementById('demoVideo');
+        const hero = document.querySelector('.demo-video-hero');
+        if (!video || !hero) return;
+
+        const playBtn = document.getElementById('demoPlayBtn');
+        const playPauseBtn = document.getElementById('demoPlayPauseBtn');
+        const controls = document.getElementById('demoVideoControls');
+        const progress = document.getElementById('demoVideoProgress');
+        const progressBar = document.getElementById('demoVideoProgressBar');
+        const timeDisplay = document.getElementById('demoVideoTime');
+        const volumeBtn = document.getElementById('demoVolumeBtn');
+        const scrollHint = hero.querySelector('.demo-video-hero__scroll-hint');
+
+        const formatTime = seconds => {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        };
+
+        const updateProgress = () => {
+            if (!video.duration) return;
+            const percent = (video.currentTime / video.duration) * 100;
+            progressBar.style.width = `${percent}%`;
+            timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+        };
+
+        const setPlayingState = isPlaying => {
+            playPauseBtn.textContent = isPlaying ? '⏸' : '▶';
+            if (playBtn) {
+                playBtn.innerHTML = isPlaying
+                    ? '<span class="hp-btn__icon" aria-hidden="true">⏸</span>一時停止'
+                    : '<span class="hp-btn__icon" aria-hidden="true">▶</span>デモを再生';
+            }
+        };
+
+        const showControls = () => {
+            controls?.classList.add('is-visible');
+        };
+
+        const startPlayback = () => {
+            video.muted = false;
+            video.loop = false;
+            showControls();
+            video.play().then(() => {
+                setPlayingState(true);
+            }).catch(() => {
+                video.muted = true;
+                video.play();
+            });
+        };
+
+        const togglePlay = () => {
+            if (video.paused) {
+                startPlayback();
+            } else {
+                video.pause();
+                setPlayingState(false);
+            }
+        };
+
+        playBtn?.addEventListener('click', () => {
+            if (video.paused) {
+                startPlayback();
+            } else {
+                video.pause();
+                setPlayingState(false);
+            }
+        });
+
+        playPauseBtn?.addEventListener('click', togglePlay);
+
+        video.addEventListener('timeupdate', updateProgress);
+        video.addEventListener('loadedmetadata', updateProgress);
+        video.addEventListener('ended', () => {
+            setPlayingState(false);
+            video.loop = true;
+            video.muted = true;
+            video.currentTime = 0;
+            video.play();
+            controls?.classList.remove('is-visible');
+        });
+
+        progress?.addEventListener('click', event => {
+            if (!video.duration) return;
+            const rect = progress.getBoundingClientRect();
+            const ratio = (event.clientX - rect.left) / rect.width;
+            video.currentTime = ratio * video.duration;
+            updateProgress();
+        });
+
+        volumeBtn?.addEventListener('click', () => {
+            video.muted = !video.muted;
+            volumeBtn.textContent = video.muted ? '🔇' : '🔊';
+        });
+
+        scrollHint?.addEventListener('click', () => {
+            const target = scrollHint.getAttribute('data-scroll');
+            if (target) scrollToSelector(target);
+        });
+
+        hero.addEventListener('mouseenter', () => {
+            if (!video.paused && !video.muted) {
+                showControls();
+            }
+        });
+    };
+    initDemoVideoHero();
+
     const startDownload = url => {
         if (!url) return;
         const tempLink = document.createElement('a');
