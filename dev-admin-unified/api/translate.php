@@ -29,6 +29,31 @@ if (empty($input['text'])) {
 $sourceText = $input['text'];
 $targetLangs = $input['targetLangs'] ?? ['en', 'zh'];
 
+/**
+ * Gemini API レスポンスから表示用テキストを抽出する
+ */
+function extract_gemini_text(array $result): array {
+    $candidate = $result['candidates'][0] ?? null;
+    if (!$candidate) {
+        return ['text' => '', 'finishReason' => null];
+    }
+
+    $text = '';
+    foreach ($candidate['content']['parts'] ?? [] as $part) {
+        if (!empty($part['thought'])) {
+            continue;
+        }
+        if (isset($part['text'])) {
+            $text .= $part['text'];
+        }
+    }
+
+    return [
+        'text' => trim($text),
+        'finishReason' => $candidate['finishReason'] ?? null,
+    ];
+}
+
 // Gemini API呼び出し（モデル ID: https://ai.google.dev/gemini-api/docs/models ）
 function translate_with_gemini(string $text, array $targetLangs): array {
     $apiKey = GEMINI_API_KEY;
@@ -56,7 +81,10 @@ function translate_with_gemini(string $text, array $targetLangs): array {
                 'temperature' => 0.3,
                 'topK' => 40,
                 'topP' => 0.95,
-                'maxOutputTokens' => 128,
+                'maxOutputTokens' => 256,
+                'thinkingConfig' => [
+                    'thinkingBudget' => 0,
+                ],
             ]
         ];
         
@@ -95,10 +123,14 @@ function translate_with_gemini(string $text, array $targetLangs): array {
         }
         
         $result = json_decode($response, true);
-        
-        if (isset($result['candidates'][0]['content']['parts'][0]['text'])) {
-            $translatedText = trim($result['candidates'][0]['content']['parts'][0]['text']);
-            $translations[$lang] = $translatedText;
+        $extracted = extract_gemini_text($result);
+
+        if ($extracted['text'] !== '') {
+            if ($extracted['finishReason'] === 'MAX_TOKENS') {
+                $translations[$lang] = ['error' => 'Translation truncated: output token limit reached'];
+                continue;
+            }
+            $translations[$lang] = $extracted['text'];
         } else {
             // エラー情報があれば取得
             $errorMsg = 'Translation failed';

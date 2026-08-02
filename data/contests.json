@@ -1,0 +1,112 @@
+[
+    {
+        "id": 9,
+        "name": "SDGs甲子園2026",
+        "description": "持続可能な開発目標（SDGs）達成に向けた高校生の実践活動や提案を表彰する全国大会。地域課題や世界的なテーマに取組むプロジェクトを発表し、企業・自治体連携も重視される。",
+        "year": 2026,
+        "url": "https:\/\/sdgs.edu-npo.com\/",
+        "thumbPath": "development\/assets\/images\/contest_1785604592_07340187.png",
+        "order": 0,
+        "createdAt": "2026-08-02T02:16:32+09:00",
+        "updatedAt": "2026-08-02T02:16:32+09:00"
+    },
+    {
+        "id": 8,
+        "name": "「STI for SDGs」アワード",
+        "description": "科学技術・イノベーション（STI）を用いて社会課題を解決し、SDGs達成に貢献する優れた取り組みを表彰する制度です。",
+        "year": 2026,
+        "url": "https:\/\/www.jst.go.jp\/ristex\/sdgs-award\/",
+        "thumbPath": "development\/assets\/images\/contest_1785604468_837cd1e5.png",
+        "order": 1,
+        "createdAt": "2026-08-02T02:14:28+09:00",
+        "updatedAt": "2026-08-02T02:14:58+09:00"
+    },
+    {
+        "id": 7,
+        "name": "自由すぎる研究 Expo2026",
+        "description": "分野を問わず「やりすぎ」「自由すぎる」若者研究や作品を全国から募集し、EXPO2025大阪で発表するイベント。独創性を重視し、多様な課題解決アイデアや研究が評価される。",
+        "year": 2026,
+        "url": "https:\/\/tankyu-skill.com\/expo\/irexpo\/",
+        "thumbPath": "development\/assets\/images\/contest_1785604368_0eea775f.png",
+        "order": 2,
+        "createdAt": "2026-08-02T02:12:48+09:00",
+        "updatedAt": "2026-08-02T02:13:00+09:00"
+    },
+    {
+        "id": 11,
+        "name": "日経STEAM シンポジウム2026 「DiS STEAMゼミ」",
+        "description": "ICTの普及により、学びのシーンはどう変わるべきか？GIGAスクール構想により変わりつつある学び方をブラッシュアップし、令和のスタンダードモデルとして発表するコンテストです。",
+        "year": 0,
+        "url": "",
+        "thumbPath": "development\/assets\/images\/contest_1785608428_c0af44f7.jpg",
+        "order": 3,
+        "createdAt": "2026-08-02T03:20:28+09:00",
+        "updatedAt": "2026-08-02T03:20:28+09:00"
+    },
+    {
+        "id": 10,
+        "name": "日経STEAM シンポジウム2026 「私たちは問う 自由で豊かな未来のために発表コンテスト」",
+        "description": "自分たちが生きる未来社会。「自由」「豊か」とはどのような社会か、また何が必要なのかチームで「問い」を立て、その実現までのストーリーを発表いただくコンテストです。",
+        "year": 0,
+        "url": "",
+        "thumbPath": "development\/assets\/images\/contest_1785607962_8af20093.jpg",
+        "order": 4,
+        "createdAt": "2026-08-02T03:12:42+09:00",
+        "updatedAt": "2026-08-02T03:12:42+09:00"
+    },
+    {
+        "id": 1,
+        "name": "国際会議 ESD Youth Summit 2025",
+        "description": "国内外の生徒が課題解決を協議し、持続可能な開発に向けた人材育成と理念共有を目指す国際会議。",
+        "year": 2025,
+        "url": "https:\/\/shikoku.esdcenter.jp\/2025\/12\/11\/esd-youth-summit-2025\/",
+        "thumbPath": "development\/assets\/images\/contest_1785603272_164c3815.png",
+        "order": 5,
+        "createdAt": "2025-01-31T00:00:00Z",
+        "updatedAt": "2026-08-02T01:56:11+09:00"
+    },
+    {
+        "id": 2,
+        "name": "自由すぎる研究 Expo2025",
+        "description": "分野を問わず「やりすぎ」「自由すぎる」若者研究や作品を全国から募集し、EXPO2025大阪で発表するイベント。独創性を重視し、多様な課題解決アイデアや研究が評価される。",
+        "year": 2025,
+        "url": "https:\/\/tankyu-skill.com\/expo\/irexpo\/",
+        "thumbPath": "development\/assets\/images\/contest_1785603351_8fd3fcc3.png",
+        "order": 6,
+        "createdAt": "2025-01-31T00:00:00Z",
+        "updatedAt": "2026-08-02T02:12:56+09:00"
+    },
+    {
+        "id": 3,
+        "name": "日経STEAM シンポジウム2025",
+        "description": "STEAM（科学・技術・工学・芸術・数学）教育の推進と社会実装をテーマとし、高校生・大学生等による課題解決型研究やアイデアの発表を行うシンポジウム。産学連携や未来志向の発表が特徴。",
+        "year": 2025,
+        "url": "https:\/\/steam.nikkei.com\/",
+        "thumbPath": "development\/assets\/images\/contest_1785603647_518ffc0d.png",
+        "order": 7,
+        "createdAt": "2025-01-31T00:00:00Z",
+        "updatedAt": "2026-08-02T02:10:26+09:00"
+    },
+    {
+        "id": 4,
+        "name": "SDGs甲子園2025",
+        "description": "持続可能な開発目標（SDGs）達成に向けた高校生の実践活動や提案を表彰する全国大会。地域課題や世界的なテーマに取組むプロジェクトを発表し、企業・自治体連携も重視される。",
+        "year": 2025,
+        "url": "https:\/\/sdgs.edu-npo.com\/",
+        "thumbPath": "development\/assets\/images\/contest_1785603804_f9326876.png",
+        "order": 8,
+        "createdAt": "2025-01-31T00:00:00Z",
+        "updatedAt": "2026-08-02T02:16:01+09:00"
+    },
+    {
+        "id": 5,
+        "name": "未来社会課題の発掘コンテスト",
+        "description": "未来社会が抱える課題を発見し、その解決策を提案するコンテスト。",
+        "year": 2025,
+        "url": "https:\/\/www.ehime-u.ac.jp\/data_event\/ev_20250711_presentation\/",
+        "thumbPath": "development\/assets\/images\/contest_1785604102_591fadd0.png",
+        "order": 9,
+        "createdAt": "2025-01-31T00:00:00Z",
+        "updatedAt": "2026-08-02T02:08:22+09:00"
+    }
+]

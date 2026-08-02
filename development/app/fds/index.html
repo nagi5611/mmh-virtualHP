@@ -6,73 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FDS体験アプリ - 松山南高校ばーちゃるず</title>
     <link rel="stylesheet" href="../../assets/styles.css">
-    <style>
-        .step-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .step-block {
-            margin-bottom: 60px;
-            padding: 24px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 12px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .step-header {
-            display: flex;
-            align-items: baseline;
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--accent, #0084ff);
-            padding-bottom: 10px;
-        }
-
-        .step-num {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--accent, #0084ff);
-            margin-right: 16px;
-            line-height: 1;
-        }
-
-        .step-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 0;
-        }
-
-        .spec-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 16px;
-            font-size: 0.95rem;
-        }
-
-        .spec-table th,
-        .spec-table td {
-            border: 1px solid var(--border);
-            padding: 10px 14px;
-            text-align: left;
-        }
-
-        .spec-table th {
-            background: var(--bg-alt);
-            width: 36%;
-        }
-
-        .download-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
-
-        .download-note {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: var(--muted);
-        }
-    </style>
 </head>
 
 <body>
@@ -140,7 +73,7 @@
             </div>
             <ol class="developer-bio" style="list-style: decimal; padding-left: 1.4em;">
                 <li>FDS で火災シミュレーションを実行（SOOT・HRRPUV などの出力）</li>
-                <li>Python スクリプトでグリッドデータを粒子データへ変換（<code>fdstoraw.py</code> → <code>rawtoparticles.py</code>）</li>
+                <li>Python スクリプトでグリッドデータを粒子データへ変換（<code>fdstoraw.py</code> &rarr; <code>rawtoparticles.py</code>）</li>
                 <li>シナリオごとに ZIP 化し、アプリに同梱または別途配置</li>
                 <li>初回起動時に ZIP を展開し、ゲーム内で時系列再生</li>
             </ol>
@@ -194,21 +127,21 @@
                     <h3>Windows 版</h3>
                     <p class="download-meta">対象: Windows 10 / 11（64bit）</p>
                     <p>デスクトップ向けビルド。ZIP を解凍して <code>FireSimulation.exe</code> を実行してください。</p>
-                    <a class="btn btn-secondary" href="../../assets/downloads/FireSimulation-Windows.zip" download>ダウンロード（ZIP）</a>
+                    <a class="btn btn-secondary" href="../../assets/downloads/FireSimulation-Windows.zip" download data-asset-optional>ダウンロード（ZIP）</a>
                 </div>
 
                 <div class="download-card">
                     <h3>Meta Quest 3S 版</h3>
                     <p class="download-meta">対象: Meta Quest 3 / 3S</p>
                     <p>APK をヘッドセットへ sideload してインストールします。大容量シナリオは <code>Download/FireSimulation/Simulations/</code> への配置が必要な場合があります。</p>
-                    <a class="btn btn-secondary" href="../../assets/downloads/FireSimulation-Quest3S.apk" download>ダウンロード（APK）</a>
+                    <a class="btn btn-secondary" href="../../assets/downloads/FireSimulation-Quest3S.apk" download data-asset-optional>ダウンロード（APK）</a>
                 </div>
 
                 <div class="download-card">
-                    <h3>シミュレーションデータ（prod01）</h3>
+                    <h3>シミュレーションデータ（prod01〜prod10）</h3>
                     <p class="download-meta">オプション / 大容量</p>
-                    <p>標準シナリオ prod01 のデータパック。アプリに同梱されていない場合に別途配置してください。</p>
-                    <a class="btn btn-secondary" href="../../assets/downloads/prod01.zip" download>ダウンロード（ZIP）</a>
+                    <p>火災シナリオごとのデータパック。アプリに同梱されていない場合は別途配置してください。</p>
+                    <a class="btn btn-secondary" href="../../simulation/#simulation-data">データ一覧へ</a>
                 </div>
             </div>
 
@@ -218,7 +151,7 @@
             </p>
         </section>
 
-        <div style="text-align: center; margin-top: 60px;">
+        <div class="page-actions">
             <a class="btn btn-primary" href="../">アプリ一覧に戻る</a>
         </div>
     </main>

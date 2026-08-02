@@ -4,9 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>開発ポータル - 松山南高校ばーちゃるず</title>
+    <style>
+        body.portal-home { background: #f5f7fb; }
+        body.portal-home.is-loading { overflow: hidden; }
+        .portal-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f7fb;
+        }
+        .portal-loader__bar { width: 0%; }
+    </style>
     <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body>
+<body class="portal-home is-loading">
+    <div class="portal-loader" id="portal-loader" role="status" aria-live="polite" aria-label="ページを読み込んでいます">
+        <div class="portal-loader__panel">
+            <p class="portal-loader__eyebrow">松山南高校 ばーちゃるず</p>
+            <p class="portal-loader__title">開発ポータル</p>
+            <div class="portal-loader__track" aria-hidden="true">
+                <div class="portal-loader__bar" id="portal-loader-bar"></div>
+            </div>
+            <p class="portal-loader__percent" id="portal-loader-percent">0%</p>
+        </div>
+    </div>
+
     <header class="site-header">
         <nav>
             <a class="brand" href="index.html">開発ポータル</a>
@@ -25,116 +50,233 @@
         </nav>
     </header>
 
-    <section class="hero">
-        <p class="category-tag">MetaQuest × Unity × Simulation</p>
-        <h1>松山南高校「ばーちゃるず」の開発ハブ</h1>
-        <p>
-            FDSシミュレーション、VRアプリ開発、新校舎3Dモデル、発表ポスターまで。
-            研究開発の進捗と成果物を一元的に共有するためのポータルです。
-        </p>
-        <div class="hero-actions">
-            <a class="btn btn-primary" href="#categories" data-scroll>カテゴリーを確認</a>
-            <a class="btn btn-secondary" href="#developers" data-scroll>開発者を見る</a>
+    <section class="portal-desk" aria-labelledby="portal-title">
+        <div class="portal-desk__masthead">
+            <p class="portal-eyebrow">松山南高校 ばーちゃるず</p>
+            <h1 id="portal-title">開発ポータル</h1>
+            <p class="portal-lead">
+                FDS解析・VRアプリ・3Dモデル・発表資料を、研究の過程ごと記録しています。
+            </p>
+            <dl class="portal-stats" aria-label="プロジェクト概要">
+                <div class="portal-stats__item">
+                    <dt>領域</dt>
+                    <dd>4</dd>
+                </div>
+                <div class="portal-stats__item">
+                    <dt>メンバー</dt>
+                    <dd>11</dd>
+                </div>
+                <div class="portal-stats__item">
+                    <dt>活動</dt>
+                    <dd>2024–</dd>
+                </div>
+            </dl>
+            <nav class="portal-jump" aria-label="ページ内リンク">
+                <a href="#news" data-scroll>お知らせ</a>
+                <a href="#developers" data-scroll>開発者一覧</a>
+                <a href="#updates" data-scroll>更新情報</a>
+                <a href="../">公式サイトへ</a>
+            </nav>
+        </div>
+
+        <div class="portal-desk__catalog" id="categories">
+            <header class="portal-catalog__head">
+                <h2>カテゴリー索引</h2>
+                <p>記録・成果物ページへの入口</p>
+            </header>
+            <ol class="portal-catalog">
+                <li class="portal-catalog__item portal-catalog__item--lead">
+                    <a class="portal-catalog__link" href="simulation/">
+                        <span class="portal-catalog__index" aria-hidden="true">01</span>
+                        <div class="portal-catalog__main">
+                            <div class="portal-catalog__title-row">
+                                <h3>FDSシミュレーション</h3>
+                                <span class="portal-catalog__status">継続更新</span>
+                            </div>
+                            <p>火災・煙の流体解析。Blender for FDS から富岳での並列計算まで。</p>
+                            <p class="portal-catalog__note">最新: 校舎モデルの煙拡散シナリオを検証中</p>
+                            <ul class="portal-catalog__tags" aria-label="関連技術">
+                                <li>FDS</li>
+                                <li>CFD</li>
+                                <li>富岳</li>
+                            </ul>
+                        </div>
+                        <span class="portal-catalog__arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="portal-catalog__item">
+                    <a class="portal-catalog__link" href="app/">
+                        <span class="portal-catalog__index" aria-hidden="true">02</span>
+                        <div class="portal-catalog__main">
+                            <div class="portal-catalog__title-row">
+                                <h3>アプリ開発</h3>
+                                <span class="portal-catalog__status">4プロジェクト</span>
+                            </div>
+                            <p>VR体験・FDS体験・消火訓練・NanoVDB。デモ動画と実装ガイド付き。</p>
+                            <ul class="portal-catalog__tags" aria-label="関連技術">
+                                <li>Unity</li>
+                                <li>Meta Quest</li>
+                                <li>C#</li>
+                            </ul>
+                        </div>
+                        <span class="portal-catalog__arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="portal-catalog__item">
+                    <a class="portal-catalog__link" href="modeling/">
+                        <span class="portal-catalog__index" aria-hidden="true">03</span>
+                        <div class="portal-catalog__main">
+                            <div class="portal-catalog__title-row">
+                                <h3>新校舎モデリング</h3>
+                                <span class="portal-catalog__status">GLB配布</span>
+                            </div>
+                            <p>高・中・低ポリと LOD 別アセット。用途に応じてダウンロード。</p>
+                            <ul class="portal-catalog__tags" aria-label="関連技術">
+                                <li>Blender</li>
+                                <li>GLB</li>
+                                <li>LOD</li>
+                            </ul>
+                        </div>
+                        <span class="portal-catalog__arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="portal-catalog__item">
+                    <a class="portal-catalog__link" href="posters/">
+                        <span class="portal-catalog__index" aria-hidden="true">04</span>
+                        <div class="portal-catalog__main">
+                            <div class="portal-catalog__title-row">
+                                <h3>発表ポスター / 論文</h3>
+                                <span class="portal-catalog__status">公開中</span>
+                            </div>
+                            <p>コンテストごとにポスター・論文・提出動画などの資料を整理。</p>
+                            <ul class="portal-catalog__tags" aria-label="関連技術">
+                                <li>PDF</li>
+                                <li>ポスター</li>
+                            </ul>
+                        </div>
+                        <span class="portal-catalog__arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+            </ol>
         </div>
     </section>
 
-    <main class="container">
-        <section id="categories">
-            <h2 class="section-title">開発カテゴリー</h2>
-            <p class="section-subtitle">共通スタイルでシンプルに構成された各ページから、詳細な記録・資料・データを確認できます。</p>
-            <div class="card-grid">
-                <article class="card">
-                    <span class="category-tag">Research</span>
-                    <h3>発表ポスター / 論文</h3>
-                    <p>これまでの発表資料、ポスター、論文をコンテスト別に一覧。ダウンロードリンクで簡単に共有できます。</p>
-                    <a class="btn btn-secondary" href="posters/">資料一覧へ</a>
-                </article>
-                <article class="card">
-                    <span class="category-tag">Simulation</span>
-                    <h3>シミュレーション</h3>
-                    <p>FDS（Fire Dynamics Simulator）を用いた火災・煙の流体シミュレーションの記録と検証結果をまとめています。</p>
-                    <a class="btn btn-secondary" href="simulation/">シミュレーションへ</a>
-                </article>
-                <article class="card">
-                    <span class="category-tag">App Dev</span>
-                    <h3>アプリ開発</h3>
-                    <p>VR体験、FDS体験アプリ、消火訓練アプリ、NanoVDBアプリなど、各プロジェクトの開発記録を掲載。</p>
-                    <a class="btn btn-secondary" href="app/">アプリ一覧へ</a>
-                </article>
-                <article class="card">
-                    <span class="category-tag">3D Assets</span>
-                    <h3>モデリング</h3>
-                    <p>新校舎の高ポリから低ポリまで用途別の3Dモデルを整理し、サムネイルとファイルダウンロードを提供。</p>
-                    <a class="btn btn-secondary" href="modeling/">モデルギャラリーへ</a>
-                </article>
-            </div>
+    <main class="container container--after-desk">
+        <section id="news" class="section-spaced">
+            <h2 class="section-title">お知らせ</h2>
+            <ul class="portal-news-list" id="portalNewsList" aria-live="polite"></ul>
         </section>
 
-        <section id="developers" style="margin-top: 80px;">
+        <section id="developers" class="section-spaced">
             <h2 class="section-title">開発者一覧</h2>
-            <p class="section-subtitle">プロジェクトを支えるメンバー。各自の専門領域と担当を簡潔に記載しています。</p>
-            <div class="developer-grid">
-                <article class="developer-card">
-                    <img src="assets/images/avatar-placeholder.svg" alt="開発者1アイコン">
-                    <div>
-                        <h3>藤原 遥馬</h3>
-                        <p class="developer-role">プロジェクトリーダー</p>
-                        <p class="developer-bio">
-                            各プロジェクトの進捗管理を担当。<br>
-                            モデリング・シミュレーション・アプリ開発を担当。
-                        </p>
-                    </div>
-                </article>
-                <article class="developer-card">
-                    <img src="assets/images/avatar-placeholder.svg" alt="開発者2アイコン">
-                    <div>
-                        <h3>小林 桂輔</h3>
-                        <p class="developer-role">モデリング・アプリ開発担当</p>
-                        <p class="developer-bio">
-                            校舎モデルのポリゴン設計とLODを管理。<br>
-                            防災アプリの開発を担当。
-                        </p>
-                    </div>
-                </article>
-                <article class="developer-card">
-                    <img src="assets/images/avatar-placeholder.svg" alt="開発者3アイコン">
-                    <div>
-                        <h3>高松 胡桃</h3>
-                        <p class="developer-role">モデリング担当</p>
-                        <p class="developer-bio">
-                            校舎モデルの中ポリモデルの作成を担当。<br>
-                            校舎モデルの低ポリモデルの作成を担当。
-                        </p>
-                    </div>
-                </article>
+
+            <div class="developer-year">
+                <h3 class="developer-year__title">3年生</h3>
+                <div class="developer-grid developer-grid--solo">
+                    <article class="developer-card">
+                        <img src="assets/images/avatar-placeholder.svg" alt="藤原 遥馬">
+                        <div>
+                            <h3>藤原 遥馬</h3>
+                            <p class="developer-role">理数科</p>
+                            <p class="developer-bio">３年生最後の生き残りとして引き継ぎを頑張ります！</p>
+                        </div>
+                    </article>
+                </div>
             </div>
-            <div class="developer-grid" style="margin-top: 15px;">
-                <article class="developer-card">
-                    <img src="assets/images/avatar-placeholder.svg" alt="開発者2アイコン">
-                    <div>
-                        <h3>石田 仁瑚</h3>
-                        <p class="developer-role">モデリング担当</p>
-                        <p class="developer-bio">
-                            校舎モデルのポリゴン設計とLODを管理。<br>
-                            校舎モデルの中ポリモデルの作成を担当。
-                        </p>
-                    </div>
-                </article>
-                <article class="developer-card">
-                    <img src="assets/images/avatar-placeholder.svg" alt="開発者2アイコン">
-                    <div>
-                        <h3>中村 南瑠</h3>
-                        <p class="developer-role">モデリング担当</p>
-                        <p class="developer-bio">
-                            校舎モデルのポリゴン設計とLODを管理。<br>
-                            校舎モデルの中ポリモデルの作成を担当。
-                        </p>
-                    </div>
-                </article>
+
+            <div class="developer-year">
+                <h3 class="developer-year__title">2年生</h3>
+                <div class="developer-grid developer-grid--pair">
+                    <article class="developer-card developer-card--lead">
+                        <img src="assets/images/avatar-placeholder.svg" alt="大野 智己">
+                        <div>
+                            <h3>大野 智己</h3>
+                            <p class="developer-role">リーダー · 理数科</p>
+                            <p class="developer-bio">ばーちゃるずのリーダーで日程調整や防災アプリの開発をしています。チームリーダーとしてみんなを引っ張っていきます！</p>
+                        </div>
+                    </article>
+                    <article class="developer-card">
+                        <img src="assets/images/avatar-placeholder.svg" alt="石田 仁瑚">
+                        <div>
+                            <h3>石田 仁瑚</h3>
+                            <p class="developer-role">普通科</p>
+                            <p class="developer-bio">最近は縄跳びにハマっています！ハヤブサのやり方がわかりません！</p>
+                        </div>
+                    </article>
+                    <article class="developer-card">
+                        <img src="assets/images/avatar-placeholder.svg" alt="高松 胡桃">
+                        <div>
+                            <h3>高松 胡桃</h3>
+                            <p class="developer-role">普通科</p>
+                            <p class="developer-bio">2年の夏から勉強するって決めてるので、あんまり仕事したくないです</p>
+                        </div>
+                    </article>
+                    <article class="developer-card">
+                        <img src="assets/images/avatar-placeholder.svg" alt="中村 南瑠">
+                        <div>
+                            <h3>中村 南瑠</h3>
+                            <p class="developer-role">普通科</p>
+                            <p class="developer-bio">根からの文系です。</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <div class="developer-year">
+                <h3 class="developer-year__title">1年生</h3>
+                <div class="developer-grid developer-grid--pair">
+                    <article class="developer-card">
+                        <img src="assets/images/avatar-placeholder.svg" alt="上村 祐生">
+                        <div>
+                            <h3>上村 祐生</h3>
+                            <p class="developer-role">理数科</p>
+                            <p class="developer-bio">モデリング技術を向上させ、より良いメタバース制作に貢献したいです。</p>
+                        </div>
+                    </article>
+                    <article class="developer-card">
+                        <img src="assets/images/avatar-placeholder.svg" alt="葛川 蓮介">
+                        <div>
+                            <h3>葛川 蓮介</h3>
+                            <p class="developer-role">理数科</p>
+                            <p class="developer-bio">パソコン触るのが小学生の時から大好きだったのでこれからも積極的に頑張ります！</p>
+                        </div>
+                    </article>
+                    <article class="developer-card">
+                        <img src="assets/images/avatar-placeholder.svg" alt="髙須賀 彩乃">
+                        <div>
+                            <h3>髙須賀 彩乃</h3>
+                            <p class="developer-role">理数科</p>
+                        </div>
+                    </article>
+                    <article class="developer-card">
+                        <img src="assets/images/avatar-placeholder.svg" alt="乗松 紘明">
+                        <div>
+                            <h3>乗松 紘明</h3>
+                            <p class="developer-role">理数科</p>
+                            <p class="developer-bio">何事にも精一杯頑張ります。</p>
+                        </div>
+                    </article>
+                    <article class="developer-card">
+                        <img src="assets/images/avatar-placeholder.svg" alt="松添 晴仁">
+                        <div>
+                            <h3>松添 晴仁</h3>
+                            <p class="developer-role">理数科</p>
+                            <p class="developer-bio">最近は四コマ漫画を翻訳して読む練習とサクランボを育てることをしています</p>
+                        </div>
+                    </article>
+                    <article class="developer-card">
+                        <img src="assets/images/avatar-placeholder.svg" alt="山住 奏斗">
+                        <div>
+                            <h3>山住 奏斗</h3>
+                            <p class="developer-role">理数科</p>
+                            <p class="developer-bio">ゲーム好きをこじらせて気づいたらばーちゃるずに入ってました</p>
+                        </div>
+                    </article>
+                </div>
             </div>
         </section>
 
-        <section id="updates" style="margin-top: 80px;">
+        <section id="updates" class="section-spaced">
             <h2 class="section-title">活動アップデート</h2>
             <div class="grid-two">
                 <div class="list-card">
@@ -151,8 +293,8 @@
                 </div>
                 <div class="muted-box">
                     <h3>最新メモ</h3>
-                    <p>2025年11月: 新校舎高ポリ1~4階完成。</p>
-                    <p style="margin-top: 16px;">2025年12月: 校舎モデルのLODとテクスチャ差し替えを計画中。軽量バージョンのGLB書き出しを整備予定。</p>
+                    <p>2026年7月に校舎内での煙避難アプリプレビュー版開発完了</p>
+                    <p class="update-note">2026年8月に後者本館のモデリング・テクスチャリング開始</p>
                 </div>
             </div>
         </section>
@@ -161,6 +303,7 @@
     <footer class="footer">
         <nav>
             <a href="#categories" data-scroll>カテゴリー</a>
+            <a href="#news" data-scroll>お知らせ</a>
             <a href="#developers" data-scroll>開発者</a>
             <a href="#updates" data-scroll>更新情報</a>
             <a href="../">トップへ</a>

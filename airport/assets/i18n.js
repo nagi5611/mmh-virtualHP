@@ -130,7 +130,7 @@
       achievements: {
         eyebrow: "Track record",
         title: "これまでの活動",
-        subtitle: "松山市の観光支援事業の一環として、これまでに3つのジオラマプロジェクトを制作してきました。",
+        subtitle: "松山市のユニバーサルツーリズム事業の一環として、これまでに3つのジオラマプロジェクトを制作してきました。",
       },
       awards: {
         eyebrow: "Awards",
@@ -197,7 +197,7 @@
         roleMain: "事業主体・支援",
         roleFacility: "施設協力・情報提供",
         roleCoop: "協力",
-        p1Name: "松山市産業経済部",
+        p1Name: "松山市観光・国際交流課",
         p2Name: "松山空港ビル株式会社",
         p3Name: "ANAエアサービス松山",
         p4Name: "日本航空 松山空港所",
@@ -206,7 +206,7 @@
         p7Name: "伊予鉄商事",
         p8Name: "株式会社 和光ビルサービス",
         p1desc:
-          "松山市からの依頼を受け、観光支援事業の一環としてプロジェクトを推進しています。",
+          "松山市からの依頼を受け、ユニバーサルツーリズム事業の一環としてプロジェクトを推進しています。",
         p2desc:
           "松山空港の詳細な建築情報や施設情報を提供。バーチャル空間での正確な再現をサポートしています。",
       },
@@ -215,7 +215,7 @@
         subtitle: "このプロジェクトの透明性と安全性についてご説明します。",
         b1Title: "公式な活動腕章",
         b1Body:
-          "松山南高校の生徒は、このプロジェクトの公式な活動を示す腕章を着用して活動しています。松山空港での撮影活動は、松山市および松山空港ビル株式会社の協力のもと、許可を得て実施されています。",
+          "松山南高校の生徒は、このプロジェクトの公式な活動を示す腕章を着用して活動しています。松山空港での撮影活動は、松山空港ビル株式会社の協力のもと、許可を得て実施されています。",
         b2Title: "プライバシーと安全性の配慮",
         b2Body:
           "撮影活動では、個人が特定されるような撮影は行いません。また、保安区域の撮影も厳密に禁止されており、安全保障上の配慮を最優先としています。",
@@ -294,7 +294,7 @@
       footer: {
         col1Title: "松山南高校",
         col1Body:
-          "愛媛県松山市にある高等学校。自然科学部が中心となって、松山の観光支援プロジェクトに取り組んでいます。",
+          "愛媛県松山市にある高等学校。自然科学部が中心となって、松山のユニバーサルツーリズムプロジェクトに取り組んでいます。",
         col2Title: "プロジェクト",
         col3Title: "リンク",
         schoolHp: "学校ホームページ",
@@ -379,7 +379,7 @@
       achievements: {
         eyebrow: "成果记录",
         title: "以往活动",
-        subtitle: "作为松山市旅游支援事业的一部分，至今已制作三个立体模型项目。",
+        subtitle: "作为松山市无障碍旅游事业的一部分，至今已制作三个立体模型项目。",
       },
       awards: {
         eyebrow: "Awards",
@@ -444,7 +444,7 @@
         roleMain: "主办·支持",
         roleFacility: "设施合作·信息提供",
         roleCoop: "合作",
-        p1Name: "松山市产业经济部",
+        p1Name: "松山市观光·国际交流课",
         p2Name: "松山机场大楼株式会社",
         p3Name: "ANA航空服务松山",
         p4Name: "日本航空松山机场办事处",
@@ -452,7 +452,7 @@
         p6Name: "今治毛巾松山机场店",
         p7Name: "伊予铁商事",
         p8Name: "和光楼宇服务株式会社",
-        p1desc: "受松山市委托，作为旅游支援事业的一环推进项目。",
+        p1desc: "受松山市委托，作为无障碍旅游事业的一环推进项目。",
         p2desc: "提供松山机场详细建筑与设施信息，支持在虚拟空间中准确还原。",
       },
       activity: {
@@ -460,7 +460,7 @@
         subtitle: "说明本项目的透明度与安全保障。",
         b1Title: "官方活动臂章",
         b1Body:
-          "松山南高中学生佩戴表明本项目官方活动的臂章。在机场的拍摄活动在松山市与松山机场大楼株式会社的协助下获得许可后进行。",
+          "松山南高中学生佩戴表明本项目官方活动的臂章。在机场的拍摄活动在松山机场大楼株式会社的协助下获得许可后进行。",
         b2Title: "隐私与安全",
         b2Body:
           "拍摄避免可识别个人身份的画面；严禁拍摄保安区域，将安全置于首位。",
@@ -536,7 +536,7 @@
       },
       footer: {
         col1Title: "松山南高中",
-        col1Body: "位于爱媛县松山市的高中。自然科学部主导开展松山旅游支援项目。",
+        col1Body: "位于爱媛县松山市的高中。自然科学部主导开展松山无障碍旅游项目。",
         col2Title: "项目",
         col3Title: "链接",
         schoolHp: "学校官网",
@@ -621,7 +621,7 @@
       achievements: {
         eyebrow: "成果紀錄",
         title: "以往活動",
-        subtitle: "作為松山市旅遊支援事業的一部分，至今已製作三個立體模型專案。",
+        subtitle: "作為松山市無障礙旅遊事業的一部分，至今已製作三個立體模型專案。",
       },
       awards: {
         eyebrow: "Awards",
@@ -686,7 +686,7 @@
         roleMain: "主辦・支援",
         roleFacility: "設施合作・資訊提供",
         roleCoop: "合作",
-        p1Name: "松山市產業經濟部",
+        p1Name: "松山市觀光·國際交流課",
         p2Name: "松山機場大樓株式會社",
         p3Name: "ANA航空服務松山",
         p4Name: "日本航空松山機場辦事處",
@@ -694,7 +694,7 @@
         p6Name: "今治毛巾松山機場店",
         p7Name: "伊予鐵商事",
         p8Name: "株式會社 和光大樓服務",
-        p1desc: "受松山市委託，作為旅遊支援事業的一環推進專案。",
+        p1desc: "受松山市委託，作為無障礙旅遊事業的一環推進專案。",
         p2desc: "提供松山機場詳細建築與設施資訊，支援在虛擬空間中準確還原。",
       },
       activity: {
@@ -702,7 +702,7 @@
         subtitle: "說明本專案的透明度與安全保障。",
         b1Title: "官方活動臂章",
         b1Body:
-          "松山南高中學生佩戴表明本專案官方活動的臂章。在機場的拍攝活動在松山市與松山機場大樓株式會社的協助下獲得許可後進行。",
+          "松山南高中學生佩戴表明本專案官方活動的臂章。在機場的拍攝活動在松山機場大樓株式會社的協助下獲得許可後進行。",
         b2Title: "隱私與安全",
         b2Body:
           "拍攝避免可識別個人身分的畫面；嚴禁拍攝保安區域，將安全置於首位。",
@@ -778,7 +778,7 @@
       },
       footer: {
         col1Title: "松山南高中",
-        col1Body: "位於愛媛縣松山市的高中。自然科學部主導開展松山旅遊支援專案。",
+        col1Body: "位於愛媛縣松山市的高中。自然科學部主導開展松山無障礙旅遊專案。",
         col2Title: "專案",
         col3Title: "連結",
         schoolHp: "學校官網",
@@ -868,7 +868,7 @@
         eyebrow: "Track record",
         title: "What we’ve done so far",
         subtitle:
-          "As part of Matsuyama City’s tourism support programs, we have produced three diorama projects.",
+          "As part of Matsuyama City’s universal tourism programs, we have produced three diorama projects.",
       },
       awards: {
         eyebrow: "Awards",
@@ -935,7 +935,7 @@
         roleMain: "Project owner · support",
         roleFacility: "Facility cooperation · information",
         roleCoop: "Cooperation",
-        p1Name: "Matsuyama City Industrial Policy Division",
+        p1Name: "Matsuyama City Tourism and International Exchange Section",
         p2Name: "Matsuyama Airport Terminal Building Co., Ltd.",
         p3Name: "ANA Air Services Matsuyama",
         p4Name: "JAL Matsuyama Airport Office",
@@ -944,7 +944,7 @@
         p7Name: "Iyo Tetsu Commerce Co., Ltd.",
         p8Name: "Wako Building Service Co., Ltd.",
         p1desc:
-          "We advance the project under commission from Matsuyama City as part of its tourism support programs.",
+          "We advance the project under commission from Matsuyama City as part of its universal tourism programs.",
         p2desc:
           "Detailed architectural and facility information supports accurate reproduction in virtual space.",
       },
@@ -953,7 +953,7 @@
         subtitle: "Transparency and safety of this project.",
         b1Title: "Official activity wristbands",
         b1Body:
-          "Students wear official wristbands during project activities. Filming at Matsuyama Airport is conducted with permission from the city and Matsuyama Airport Terminal Building Co., Ltd.",
+          "Students wear official wristbands during project activities. Filming at Matsuyama Airport is conducted with permission from Matsuyama Airport Terminal Building Co., Ltd.",
         b2Title: "Privacy and safety",
         b2Body:
           "We avoid imagery that could identify individuals. Filming in security zones is strictly prohibited; safety comes first.",
@@ -1032,7 +1032,7 @@
       footer: {
         col1Title: "Matsuyama Minami High School",
         col1Body:
-          "A high school in Matsuyama, Ehime Prefecture. The science club leads tourism support projects for the city.",
+          "A high school in Matsuyama, Ehime Prefecture. The science club leads universal tourism projects for the city.",
         col2Title: "Project",
         col3Title: "Links",
         schoolHp: "School website",
@@ -1120,7 +1120,7 @@
       achievements: {
         eyebrow: "성과 기록",
         title: "지금까지의 활동",
-        subtitle: "마쓰야마 시 관광 지원 사업의 일환으로 지금까지 세 가지 디오라마 프로젝트를 제작해 왔습니다.",
+        subtitle: "마쓰야마 시 유니버설 투어리즘 사업의 일환으로 지금까지 세 가지 디오라마 프로젝트를 제작해 왔습니다.",
       },
       awards: {
         eyebrow: "Awards",
@@ -1187,7 +1187,7 @@
         roleMain: "사업 주체·지원",
         roleFacility: "시설 협력·정보 제공",
         roleCoop: "협력",
-        p1Name: "마쓰야마 시 산업경제부",
+        p1Name: "마쓰야마 시 관광·국제교류과",
         p2Name: "마쓰야마 공항빌딩 주식회사",
         p3Name: "ANA 에어서비스 마쓰야마",
         p4Name: "일본항공 마쓰야마 공항 사무소",
@@ -1196,7 +1196,7 @@
         p7Name: "이요테츠 상사",
         p8Name: "주식회사 와코 빌 서비스",
         p1desc:
-          "마쓰야마 시의 의뢰를 받아 관광 지원 사업의 일환으로 프로젝트를 추진하고 있습니다.",
+          "마쓰야마 시의 의뢰를 받아 유니버설 투어리즘 사업의 일환으로 프로젝트를 추진하고 있습니다.",
         p2desc:
           "마쓰야마 공항의 상세한 건축·시설 정보를 제공합니다. 가상 공간에서의 정확한 재현을 지원합니다.",
       },
@@ -1205,7 +1205,7 @@
         subtitle: "이 프로젝트의 투명성과 안전에 대해 설명합니다.",
         b1Title: "공식 활동 완장",
         b1Body:
-          "마쓰야마 미나미 고등학교 학생은 이 프로젝트의 공식 활동을 나타내는 완장을 착용하고 활동합니다. 마쓰야마 공항에서의 촬영 활동은 마쓰야마 시 및 마쓰야마 공항빌딩 주식회사의 협력 아래 허가를 받아 실시됩니다.",
+          "마쓰야마 미나미 고등학교 학생은 이 프로젝트의 공식 활동을 나타내는 완장을 착용하고 활동합니다. 마쓰야마 공항에서의 촬영 활동은 마쓰야마 공항빌딩 주식회사의 협력 아래 허가를 받아 실시됩니다.",
         b2Title: "프라이버시와 안전",
         b2Body:
           "촬영 활동에서는 개인이 특정될 수 있는 촬영은 하지 않습니다. 또한 보안 구역 촬영은 엄격히 금지되어 있으며 안전을 최우선으로 합니다.",
@@ -1284,7 +1284,7 @@
       footer: {
         col1Title: "마쓰야마 미나미 고등학교",
         col1Body:
-          "에히메현 마쓰야마시에 있는 고등학교입니다. 자연과학부가 중심이 되어 마쓰야마 관광 지원 프로젝트에 임하고 있습니다.",
+          "에히메현 마쓰야마시에 있는 고등학교입니다. 자연과학부가 중심이 되어 마쓰야마 유니버설 투어리즘 프로젝트에 임하고 있습니다.",
         col2Title: "프로젝트",
         col3Title: "링크",
         schoolHp: "학교 홈페이지",

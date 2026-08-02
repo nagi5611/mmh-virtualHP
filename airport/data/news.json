@@ -1,5 +1,37 @@
 [
     {
+        "id": 5,
+        "date": "2026.07.17",
+        "datetime": "2026-07-17",
+        "link": "",
+        "text": {
+            "ja": "「プレゼン甲子園2026 中国・四国ブロック」で優秀賞を受賞しました！",
+            "zh": "在『2026年演讲甲子园 中国・四国地区』中荣获优秀奖！",
+            "zh-TW": "在『2026年簡報甲子園 中國・四國地區』中榮獲優秀獎！",
+            "en": "We received an Excellence Award at the \"Presentation Koshien 2026 Chugoku-Shikoku Block\"!",
+            "ko": "「프레젠테이션 고시엔 2026 주고쿠・시코쿠 블록」에서 우수상을 수상했습니다!"
+        },
+        "order": 0,
+        "createdAt": "2026-07-17T22:41:42+09:00",
+        "updatedAt": "2026-07-17T22:41:42+09:00"
+    },
+    {
+        "id": 4,
+        "date": "2026.07.03",
+        "datetime": "2026-07-03",
+        "link": "https:\/\/www.instagram.com\/mmh_airport_diorama?igsh=d3V1Z2Q3Ymw5YTUw&utm_source=qr",
+        "text": {
+            "ja": "空港ジオラマ班公式instagramが公開されました！",
+            "zh": "机场立体模型小组的官方Instagram已开通！",
+            "zh-TW": "機場立體模型小組的官方Instagram已開通！",
+            "en": "The official Instagram of the Airport Diorama Team has been launched!",
+            "ko": "공항 디오라마 팀의 공식 인스타그램이 개설되었습니다!"
+        },
+        "order": 1,
+        "createdAt": "2026-07-04T02:20:51+09:00",
+        "updatedAt": "2026-07-04T02:20:51+09:00"
+    },
+    {
         "id": 3,
         "date": "2026.07.02",
         "datetime": "2026-07-02",
@@ -11,7 +43,7 @@
             "en": "We were awarded an Encouragement Award at the \"Social Co-creation Contest 2026\" hosted by Ehime University!",
             "ko": "에히메 대학 주최 '사회 공창 콘테스트 2026'에서 장려상을 수상했습니다!"
         },
-        "order": 0,
+        "order": 2,
         "createdAt": "2026-07-02T23:16:18+09:00",
         "updatedAt": "2026-07-02T23:16:30+09:00"
     },
@@ -27,7 +59,7 @@
             "en": "AR mode has been added to the diorama experience!",
             "ko": "디오라마 체험에 AR 모드가 추가되었습니다!"
         },
-        "order": 1,
+        "order": 3,
         "createdAt": "2026-07-02T23:15:33+09:00",
         "updatedAt": "2026-07-02T23:15:33+09:00"
     },
@@ -43,7 +75,7 @@
             "en": "The official website has been renewed!",
             "ko": "공식 홈페이지가 새롭게 단장되었습니다!"
         },
-        "order": 2,
+        "order": 4,
         "createdAt": "2026-05-16T01:28:23+09:00",
         "updatedAt": "2026-05-16T01:28:23+09:00"
     }

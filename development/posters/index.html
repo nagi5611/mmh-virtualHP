@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>発表ポスター / 論文一覧 - 開発ポータル</title>
+    <title>コンテスト・発表資料 - 開発ポータル</title>
     <link rel="stylesheet" href="../assets/styles.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
                 <span></span>
             </button>
             <div class="nav-links">
-                <a href="../posters/" class="active">発表ポスター</a>
+                <a href="../posters/" class="active">発表資料</a>
                 <a href="../simulation/">シミュレーション</a>
                 <a href="../app/">アプリ開発</a>
                 <a href="../modeling/">モデリング</a>
@@ -25,27 +25,56 @@
         </nav>
     </header>
 
-    <section class="hero">
-        <p class="category-tag">Research Archive</p>
-        <h1>発表ポスター / 論文アーカイブ</h1>
-        <p>過去に提出・発表したポスターや論文をコンテスト別に整理。すぐにダウンロードできるプレースホルダーを配置しています。</p>
+    <section class="hero hero-compact hero-compact--tight">
+        <p class="category-tag">Contest Archive</p>
+        <h1>コンテスト・発表資料</h1>
+        <p>年度ごとに並んだコンテストを選ぶと、説明と提出資料の一覧が表示されます。</p>
     </section>
 
-    <main class="container">
-        <section>
-            <h2 class="section-title">最新カテゴリー</h2>
-            <div class="card-grid" id="postersCategories">
-                <!-- ポスターカテゴリはJavaScriptで動的生成 -->
+    <main class="container container--archive">
+        <section id="contestArchive">
+            <div class="contest-search">
+                <label class="contest-search__label" for="contestSearch">検索</label>
+                <div class="contest-search__field">
+                    <input
+                        type="search"
+                        id="contestSearch"
+                        class="contest-search__input"
+                        placeholder="コンテスト名・説明・年度・資料種別"
+                        autocomplete="off"
+                        enterkeyhint="search">
+                    <button type="button" class="contest-search__clear" id="contestSearchClear" aria-label="検索をクリア" hidden>&times;</button>
+                </div>
+                <p class="contest-search__status" id="contestSearchStatus" aria-live="polite"></p>
             </div>
-        </section>
-
-        <section style="margin-top: 80px;">
-            <h2 class="section-title">ダウンロード</h2>
-            <div id="postersDownloads">
-                <!-- ダウンロードセクションはJavaScriptで動的生成 -->
+            <div id="contestArchiveList" class="contest-archive" aria-live="polite">
+                <p class="contest-archive__loading">読み込み中…</p>
             </div>
         </section>
     </main>
+
+    <div id="contest-detail" class="award-detail" hidden aria-hidden="true">
+        <div class="award-detail__overlay" data-contest-detail-close tabindex="-1"></div>
+        <div class="award-detail__panel" role="dialog" aria-modal="true" aria-labelledby="contest-detail-title">
+            <button type="button" class="award-detail__close" data-contest-detail-close aria-label="閉じる">&times;</button>
+            <h2 id="contest-detail-title" class="award-detail__title visually-hidden"></h2>
+            <div class="award-detail__thumb-wrap">
+                <div id="contest-detail-thumb-viewport" class="award-thumb-viewport">
+                    <img id="contest-detail-thumb" class="award-detail__thumb" src="" alt="" hidden>
+                </div>
+                <div id="contest-detail-thumb-placeholder" class="award-detail__thumb-placeholder">サムネ画像</div>
+            </div>
+            <div class="award-detail__body">
+                <div class="award-detail__desc-wrap">
+                    <p id="contest-detail-desc" class="award-detail__desc"></p>
+                </div>
+                <div class="award-detail__files-wrap">
+                    <p class="award-detail__files-label">資料</p>
+                    <ul id="contest-detail-files" class="award-detail__files"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <nav>
@@ -60,96 +89,347 @@
 
     <script src="../assets/scripts.js"></script>
     <script>
-        // ポスターデータを読み込んで表示
-        async function loadPosters() {
-            try {
-                const response = await fetch('../../data/posters.json');
-                let posters = await response.json();
-                
-                // orderの昇順でソート（orderが小さいほど新しい）
-                posters.sort((a, b) => {
-                    const orderA = a.order !== undefined ? a.order : 999999;
-                    const orderB = b.order !== undefined ? b.order : 999999;
-                    return orderA - orderB;
-                });
-                
-                // カテゴリカード生成
-                const categoriesContainer = document.getElementById('postersCategories');
-                const contestGroups = {};
-                
-                posters.forEach(poster => {
-                    // 最大4つのカテゴリーまで追加
-                    if (Object.keys(contestGroups).length < 4 && !contestGroups[poster.contestName]) {
-                        contestGroups[poster.contestName] = {
-                            name: poster.contestName,
-                            description: poster.description,
-                            id: poster.contestName.replace(/\s+/g, '-').toLowerCase()
-                        };
-                    }
-                });
-                
-                // 最新の4つのカテゴリーのみ表示
-                categoriesContainer.innerHTML = Object.values(contestGroups).slice(0, 4).map(contest => `
-                    <article class="card" role="button" tabindex="0" data-scroll-target="#${contest.id}">
-                        <span class="category-tag">Contest</span>
-                        <h3>${contest.name}</h3>
-                        <p>${contest.description}</p>
-                    </article>
-                `).join('');
-                
-                // ダウンロードセクション生成
-                const downloadsContainer = document.getElementById('postersDownloads');
-                const downloadsByContest = {};
-                
-                posters.forEach(poster => {
-                    if (!downloadsByContest[poster.contestName]) {
-                        downloadsByContest[poster.contestName] = [];
-                    }
-                    downloadsByContest[poster.contestName].push(poster);
-                });
-                
-                // 縦2列のグリッドレイアウト用のクラスを追加
-                downloadsContainer.style.display = 'grid';
-                downloadsContainer.style.gridTemplateColumns = '1fr 1fr';
-                downloadsContainer.style.gap = '40px';
-                
-                downloadsContainer.innerHTML = Object.entries(downloadsByContest).map(([contestName, items], index) => {
-                    const contestId = contestName.replace(/\s+/g, '-').toLowerCase();
-                    
-                    return `
-                        <div style="margin-bottom: 40px;" id="${contestId}">
-                            <h3>${contestName}</h3>
-                            ${items.map(item => `
-                                <div class="download-card" style="margin-top: 16px;">
-                                    <h4>${item.title}</h4>
-                                    <p class="download-meta">公開年: ${item.year} / 種別: ${item.type}</p>
-                                    <a class="btn btn-secondary" href="../../${item.pdfPath}" download>ダウンロード</a>
-                                </div>
-                            `).join('')}
-                        </div>
-                    `;
-                }).join('');
-                
-                // カードクリックイベント
-                document.querySelectorAll('[data-scroll-target]').forEach(card => {
-                    card.addEventListener('click', function() {
-                        const targetId = this.dataset.scrollTarget;
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-                    });
-                });
-                
-            } catch (error) {
-                console.error('ポスターデータの読み込みに失敗しました:', error);
-                document.getElementById('postersCategories').innerHTML = '<p>データの読み込みに失敗しました。</p>';
+        const MATERIAL_TYPE_ORDER = ['発表ポスター', '発表論文', '発表提出動画', '発表スライド'];
+
+        let contestsData = [];
+        let materialsData = [];
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text ?? '';
+            return div.innerHTML;
+        }
+
+        function getFilePath(item) {
+            return item.filePath || item.pdfPath || '';
+        }
+
+        function sortMaterials(materials) {
+            return [...materials].sort((a, b) => {
+                const orderA = MATERIAL_TYPE_ORDER.indexOf(a.type);
+                const orderB = MATERIAL_TYPE_ORDER.indexOf(b.type);
+                return (orderA === -1 ? 99 : orderA) - (orderB === -1 ? 99 : orderB);
+            });
+        }
+
+        function getContestYear(contest) {
+            const year = Number(contest.year);
+            if (year > 0) {
+                return year;
+            }
+            const match = String(contest.name || '').match(/(20\d{2})/);
+            return match ? Number(match[1]) : 0;
+        }
+
+        function groupContestsByYear(contests) {
+            const groups = new Map();
+
+            contests.forEach((contest) => {
+                const year = getContestYear(contest);
+                if (!groups.has(year)) {
+                    groups.set(year, []);
+                }
+                groups.get(year).push(contest);
+            });
+
+            return [...groups.entries()]
+                .sort((a, b) => b[0] - a[0])
+                .map(([year, items]) => ({
+                    year,
+                    items: items.sort((a, b) => (a.order ?? 999999) - (b.order ?? 999999)),
+                }));
+        }
+
+        function renderContestTile(contest, index, animate = true) {
+            const placeholderLabel = contest.name ? contest.name.trim().slice(0, 1) : '—';
+            const thumbHtml = contest.thumbPath
+                ? `<img class="contest-tile__thumb" src="../../${escapeHtml(contest.thumbPath)}" alt="" loading="lazy" decoding="async">`
+                : `<span class="contest-tile__thumb contest-tile__thumb--placeholder" aria-hidden="true">${escapeHtml(placeholderLabel)}</span>`;
+            const animationStyle = animate
+                ? `animation-delay: ${index * 50}ms`
+                : 'animation: none; opacity: 1';
+
+            return `
+                <button class="contest-tile" type="button" data-contest-id="${contest.id}" aria-label="${escapeHtml(contest.name)}の資料を見る" style="${animationStyle}">
+                    ${thumbHtml}
+                    <span class="contest-tile__name">${escapeHtml(contest.name)}</span>
+                </button>
+            `;
+        }
+
+        function getContestMaterials(contestId) {
+            return sortMaterials(
+                materialsData.filter((item) => Number(item.contestId) === Number(contestId)),
+            );
+        }
+
+        function renderYearRow(yearGroup, animationOffset, animate = true) {
+            const tiles = yearGroup.items
+                .map((contest, index) => renderContestTile(contest, animationOffset + index, animate))
+                .join('');
+            const label = yearGroup.year > 0 ? `${yearGroup.year}_` : 'その他_';
+
+            return `
+                <div class="contest-year-row">
+                    <div class="contest-year-row__label">${escapeHtml(label)}</div>
+                    <div class="contest-year-row__tiles" role="list">
+                        ${tiles}
+                    </div>
+                </div>
+            `;
+        }
+
+        function getContestSearchText(contest) {
+            const materials = getContestMaterials(contest.id);
+            const materialText = materials
+                .flatMap((item) => [item.type, item.title, ...(Array.isArray(item.tags) ? item.tags : [])])
+                .join(' ');
+
+            return [
+                contest.name,
+                contest.description,
+                getContestYear(contest),
+                materialText,
+            ].filter(Boolean).join(' ').toLowerCase();
+        }
+
+        function filterContestsByQuery(contests, query) {
+            const normalizedQuery = query.trim().toLowerCase();
+            if (!normalizedQuery) {
+                return contests;
+            }
+
+            return contests.filter((contest) => getContestSearchText(contest).includes(normalizedQuery));
+        }
+
+        function updateSearchStatus(total, query) {
+            const statusEl = document.getElementById('contestSearchStatus');
+            if (!statusEl) {
+                return;
+            }
+
+            if (!query.trim()) {
+                statusEl.textContent = '';
+                return;
+            }
+
+            statusEl.textContent = `${total}件のコンテスト`;
+        }
+
+        function renderContestArchive(contests, options = {}) {
+            const container = document.getElementById('contestArchiveList');
+            const animate = options.animate !== false;
+            const query = options.query ?? '';
+
+            if (contests.length === 0) {
+                container.innerHTML = query.trim()
+                    ? '<p class="contest-archive__empty">該当するコンテストが見つかりません。</p>'
+                    : '<p class="contest-archive__empty">コンテストがまだ登録されていません。</p>';
+                updateSearchStatus(0, query);
+                return;
+            }
+
+            const yearGroups = groupContestsByYear(contests);
+            let animationOffset = 0;
+            const rows = yearGroups.map((yearGroup) => {
+                const rowHtml = renderYearRow(yearGroup, animationOffset, animate);
+                animationOffset += yearGroup.items.length;
+                return rowHtml;
+            }).join('');
+
+            container.innerHTML = `<div class="contest-year-table">${rows}</div>`;
+            updateSearchStatus(contests.length, query);
+        }
+
+        function bindContestSearch() {
+            const input = document.getElementById('contestSearch');
+            const clearBtn = document.getElementById('contestSearchClear');
+            if (!input || !clearBtn) {
+                return;
+            }
+
+            const applySearch = () => {
+                const query = input.value;
+                const filtered = filterContestsByQuery(contestsData, query);
+                clearBtn.hidden = !query;
+                renderContestArchive(filtered, { animate: false, query });
+            };
+
+            input.addEventListener('input', applySearch);
+            input.addEventListener('search', applySearch);
+
+            clearBtn.addEventListener('click', () => {
+                input.value = '';
+                applySearch();
+                input.focus();
+            });
+        }
+
+        function getMaterialExtension(item) {
+            const filePath = getFilePath(item);
+            if (filePath) {
+                const match = filePath.match(/\.([a-z0-9]+)$/i);
+                return match ? match[1].toLowerCase() : '';
+            }
+            if (item.externalUrl) {
+                return 'link';
+            }
+            return '';
+        }
+
+        function buildMaterialFileLinkHtml(item) {
+            const label = item.type || item.title || '資料';
+            const filePath = getFilePath(item);
+            const externalUrl = item.externalUrl || '';
+
+            if (!filePath && !externalUrl) {
+                return '';
+            }
+
+            let url;
+            let opensInNewTab = false;
+
+            if (externalUrl) {
+                url = externalUrl;
+                opensInNewTab = true;
+            } else {
+                url = `../../${filePath}`;
+                opensInNewTab = /\.(pdf|mp4|webm|mov)$/i.test(filePath);
+            }
+
+            const ext = getMaterialExtension(item);
+            const extHtml = ext
+                ? `<span class="award-detail__file-ext">.${escapeHtml(ext)}</span>`
+                : '';
+            const targetAttr = opensInNewTab ? ' target="_blank" rel="noopener noreferrer"' : '';
+            const downloadAttr = opensInNewTab ? '' : ' download';
+
+            return `<li><a class="award-detail__file-link" href="${escapeHtml(url)}"${targetAttr}${downloadAttr}><span class="award-detail__file-label">${escapeHtml(label)}</span>${extHtml}</a></li>`;
+        }
+
+        function openContestModal(contestId) {
+            const contest = contestsData.find((item) => Number(item.id) === Number(contestId));
+            if (!contest) {
+                return;
+            }
+
+            const modal = document.getElementById('contest-detail');
+            const viewport = document.getElementById('contest-detail-thumb-viewport');
+            const thumbEl = document.getElementById('contest-detail-thumb');
+            const thumbPh = document.getElementById('contest-detail-thumb-placeholder');
+            const titleEl = document.getElementById('contest-detail-title');
+            const descEl = document.getElementById('contest-detail-desc');
+            const filesEl = document.getElementById('contest-detail-files');
+            const materials = getContestMaterials(contest.id).filter((item) => getFilePath(item) || item.externalUrl);
+
+            titleEl.textContent = contest.name || '';
+            descEl.textContent = contest.description || '';
+
+            if (contest.thumbPath) {
+                viewport.hidden = false;
+                thumbEl.src = `../../${contest.thumbPath}`;
+                thumbEl.alt = contest.name || '';
+                thumbEl.hidden = false;
+                thumbPh.hidden = true;
+            } else {
+                viewport.hidden = true;
+                thumbEl.removeAttribute('src');
+                thumbEl.alt = '';
+                thumbEl.hidden = true;
+                thumbPh.hidden = false;
+            }
+
+            if (materials.length === 0) {
+                filesEl.innerHTML = '<li class="award-detail__files-empty">資料はまだ登録されていません。</li>';
+            } else {
+                filesEl.innerHTML = materials.map(buildMaterialFileLinkHtml).filter(Boolean).join('');
+            }
+
+            modal.hidden = false;
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('award-detail-open');
+            history.replaceState(null, '', `#contest-${contest.id}`);
+            modal.querySelector('.award-detail__close')?.focus();
+        }
+
+        function closeContestModal() {
+            const modal = document.getElementById('contest-detail');
+            modal.hidden = true;
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('award-detail-open');
+
+            if (location.hash.startsWith('#contest-')) {
+                history.replaceState(null, '', `${location.pathname}${location.search}`);
             }
         }
-        
-        // ページ読み込み時に実行
-        document.addEventListener('DOMContentLoaded', loadPosters);
+
+        function bindContestModal() {
+            const modal = document.getElementById('contest-detail');
+            const grid = document.getElementById('contestArchiveList');
+
+            grid.addEventListener('click', (event) => {
+                const tile = event.target.closest('[data-contest-id]');
+                if (!tile) {
+                    return;
+                }
+                openContestModal(tile.getAttribute('data-contest-id'));
+            });
+
+            modal.addEventListener('click', (event) => {
+                if (event.target.closest('[data-contest-detail-close]')) {
+                    closeContestModal();
+                }
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !modal.hidden) {
+                    closeContestModal();
+                }
+            });
+        }
+
+        function openContestFromHash() {
+            const match = location.hash.match(/^#contest-(\d+)$/);
+            if (match) {
+                openContestModal(match[1]);
+            }
+        }
+
+        async function loadContestArchive() {
+            const container = document.getElementById('contestArchiveList');
+
+            try {
+                const [contestsRes, materialsRes] = await Promise.all([
+                    fetch('../../data/contests.json'),
+                    fetch('../../data/posters.json'),
+                ]);
+
+                if (!contestsRes.ok || !materialsRes.ok) {
+                    throw new Error('データの取得に失敗しました');
+                }
+
+                contestsData = await contestsRes.json();
+                materialsData = await materialsRes.json();
+
+                contestsData.sort((a, b) => (a.order ?? 999999) - (b.order ?? 999999));
+                materialsData.sort((a, b) => (a.order ?? 999999) - (b.order ?? 999999));
+
+                if (contestsData.length === 0) {
+                    document.getElementById('contestArchiveList').innerHTML = '<p class="contest-archive__empty">コンテストがまだ登録されていません。</p>';
+                    return;
+                }
+
+                renderContestArchive(contestsData, { animate: true });
+                bindContestModal();
+                bindContestSearch();
+                openContestFromHash();
+            } catch (error) {
+                console.error(error);
+                container.innerHTML = '<p class="contest-archive__empty">データの読み込みに失敗しました。</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadContestArchive);
     </script>
 </body>
 </html>
-

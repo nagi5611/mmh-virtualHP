@@ -4,6 +4,7 @@
 const state = {
     currentTab: 'news',
     news: [],
+    contests: [],
     posters: [],
     models: [],
     selectedItems: new Set(),
@@ -97,7 +98,7 @@ function initToolbar() {
     });
     
     // すべて選択
-    ['News', 'Posters', 'Models'].forEach(type => {
+    ['News', 'Contests', 'Posters', 'Models'].forEach(type => {
         const checkbox = document.getElementById('selectAll' + type);
         if (checkbox) {
             checkbox.addEventListener('change', function(e) {
@@ -117,10 +118,12 @@ function updateToolbar() {
         tags.forEach(tag => {
             filterSelect.innerHTML += `<option value="${tag}">${tag}</option>`;
         });
+    } else if (state.currentTab === 'contests') {
+        // 年フィルタなし（検索のみ）
     } else if (state.currentTab === 'posters') {
-        const years = [...new Set(state.posters.map(item => item.year))].sort((a, b) => b - a);
-        years.forEach(year => {
-            filterSelect.innerHTML += `<option value="${year}">${year}年</option>`;
+        const types = ['発表ポスター', '発表論文', '発表提出動画', '発表スライド'];
+        types.forEach(type => {
+            filterSelect.innerHTML += `<option value="${type}">${type}</option>`;
         });
     } else if (state.currentTab === 'models') {
         const categories = [
@@ -144,6 +147,7 @@ async function loadAllData() {
     try {
         await Promise.all([
             loadNews(),
+            loadContests(),
             loadPosters(),
             loadModels()
         ]);
@@ -162,6 +166,12 @@ async function loadNews() {
     state.news = result.data || [];
 }
 
+async function loadContests() {
+    const response = await fetch('api/contests.php');
+    const result = await response.json();
+    state.contests = result.data || [];
+}
+
 async function loadPosters() {
     const response = await fetch('api/posters.php');
     const result = await response.json();
@@ -177,6 +187,7 @@ async function loadModels() {
 // カウント更新
 function updateCounts() {
     document.getElementById('newsCount').textContent = state.news.length;
+    document.getElementById('contestsCount').textContent = state.contests.length;
     document.getElementById('postersCount').textContent = state.posters.length;
     document.getElementById('modelsCount').textContent = state.models.length;
 }
@@ -186,6 +197,9 @@ function renderCurrentTab() {
     switch (state.currentTab) {
         case 'news':
             renderNews();
+            break;
+        case 'contests':
+            renderContests();
             break;
         case 'posters':
             renderPosters();
@@ -251,7 +265,61 @@ function renderNews() {
     initSortable('newsGrid');
 }
 
-// ポスターレンダリング
+function getContestName(contestId) {
+    const contest = state.contests.find(c => c.id === contestId);
+    return contest ? contest.name : '未設定';
+}
+
+function getMaterialFilePath(item) {
+    return item.filePath || item.pdfPath || '';
+}
+
+// コンテストレンダリング
+function renderContests() {
+    const grid = document.getElementById('contestsGrid');
+    let items = [...state.contests];
+
+    if (state.searchTerm) {
+        items = items.filter(item => {
+            const text = ((item.name || '') + (item.description || '')).toLowerCase();
+            return text.includes(state.searchTerm);
+        });
+    }
+
+    items.sort((a, b) => {
+        if (state.sortValue === 'title-asc') return a.name.localeCompare(b.name);
+        return (a.order ?? 999999) - (b.order ?? 999999);
+    });
+
+    if (items.length === 0) {
+        grid.innerHTML = '<div class="loading">コンテストがありません</div>';
+        return;
+    }
+
+    grid.innerHTML = items.map(item => `
+        <div class="item-card" data-id="${item.id}">
+            <div class="item-card-header">
+                <div class="item-checkbox">
+                    <input type="checkbox" ${state.selectedItems.has(item.id) ? 'checked' : ''}
+                           onchange="toggleSelect(${item.id}, this.checked)">
+                </div>
+                <div class="item-content">
+                    ${item.thumbPath ? `<img src="../${escapeHtml(item.thumbPath)}" alt="" style="width:100%; height:140px; object-fit:cover; margin-bottom:12px; border-radius:8px; border:1px solid #e2e8f0;">` : ''}
+                    <div class="item-title">${escapeHtml(item.name)}</div>
+                    ${item.description ? `<p class="item-meta" style="margin-top:8px;">${escapeHtml(item.description)}</p>` : ''}
+                </div>
+            </div>
+            <div class="item-actions">
+                <button class="item-btn" onclick="editItem(${item.id})">編集</button>
+                <button class="item-btn danger" onclick="deleteItem(${item.id})">削除</button>
+            </div>
+        </div>
+    `).join('');
+
+    initSortable('contestsGrid');
+}
+
+// 資料レンダリング
 function renderPosters() {
     const grid = document.getElementById('postersGrid');
     let items = [...state.posters];
@@ -259,50 +327,52 @@ function renderPosters() {
     // フィルタ
     if (state.searchTerm) {
         items = items.filter(item => {
-            const text = (item.title + item.contestName + item.description).toLowerCase();
+            const contestName = getContestName(item.contestId).toLowerCase();
+            const text = ((item.title || '') + contestName + (item.description || '') + (item.type || '')).toLowerCase();
             return text.includes(state.searchTerm);
         });
     }
-    
+
     if (state.filterValue) {
-        items = items.filter(item => item.year == state.filterValue);
+        items = items.filter(item => item.type === state.filterValue);
     }
     
     // ソート
     items.sort((a, b) => {
-        if (state.sortValue === 'date-desc') return b.year - a.year;
-        if (state.sortValue === 'date-asc') return a.year - b.year;
-        if (state.sortValue === 'title-asc') return a.title.localeCompare(b.title);
+        if (state.sortValue === 'title-asc') return (a.type || a.title).localeCompare(b.type || b.title);
         return a.order - b.order;
     });
     
     if (items.length === 0) {
-        grid.innerHTML = '<div class="loading">ポスターがありません</div>';
+        grid.innerHTML = '<div class="loading">資料がありません</div>';
         return;
     }
-    
-    grid.innerHTML = items.map(item => `
+
+    grid.innerHTML = items.map(item => {
+        const filePath = getMaterialFilePath(item);
+        return `
         <div class="item-card" data-id="${item.id}">
             <div class="item-card-header">
                 <div class="item-checkbox">
-                    <input type="checkbox" ${state.selectedItems.has(item.id) ? 'checked' : ''} 
+                    <input type="checkbox" ${state.selectedItems.has(item.id) ? 'checked' : ''}
                            onchange="toggleSelect(${item.id}, this.checked)">
                 </div>
                 <div class="item-content">
-                    <div class="item-title">${escapeHtml(item.title)}</div>
-                    <div class="item-meta">${item.year}年 - ${escapeHtml(item.type)}</div>
+                    <div class="item-title">${escapeHtml(item.type || item.title)}</div>
+                    <div class="item-meta">${escapeHtml(getContestName(item.contestId))}</div>
                     <div class="item-tags">
                         ${(item.tags || []).map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
                     </div>
                 </div>
             </div>
             <div class="item-actions">
-                <a href="../${item.pdfPath}" class="item-btn" target="_blank">PDF表示</a>
+                ${filePath ? `<a href="../${filePath}" class="item-btn" target="_blank">ファイル</a>` : ''}
+                ${item.externalUrl ? `<a href="${escapeHtml(item.externalUrl)}" class="item-btn" target="_blank" rel="noopener noreferrer">外部リンク</a>` : ''}
                 <button class="item-btn" onclick="editItem(${item.id})">編集</button>
                 <button class="item-btn danger" onclick="deleteItem(${item.id})">削除</button>
             </div>
         </div>
-    `).join('');
+    `}).join('');
     
     initSortable('postersGrid');
 }
@@ -420,6 +490,7 @@ function toggleSelect(id, checked) {
 // すべて選択
 function selectAll(checked) {
     const items = state.currentTab === 'news' ? state.news :
+                  state.currentTab === 'contests' ? state.contests :
                   state.currentTab === 'posters' ? state.posters : state.models;
     
     if (checked) {
@@ -539,6 +610,8 @@ async function editItem(id) {
     let item;
     if (state.currentTab === 'news') {
         item = state.news.find(n => n.id === id);
+    } else if (state.currentTab === 'contests') {
+        item = state.contests.find(c => c.id === id);
     } else if (state.currentTab === 'posters') {
         item = state.posters.find(p => p.id === id);
     } else {
@@ -579,36 +652,55 @@ function getFormHTML(item = null) {
                 <textarea class="form-textarea" name="textZh">${item?.text.zh || ''}</textarea>
             </div>
         `;
-    } else if (state.currentTab === 'posters') {
+    } else if (state.currentTab === 'contests') {
         return `
             <div class="form-group">
                 <label class="form-label required">コンテスト名</label>
-                <input type="text" class="form-input" name="contestName" value="${item?.contestName || ''}" required>
+                <input type="text" class="form-input" name="name" value="${escapeHtml(item?.name || '')}" required>
             </div>
             <div class="form-group">
-                <label class="form-label required">タイトル</label>
-                <input type="text" class="form-input" name="title" value="${item?.title || ''}" required>
+                <label class="form-label">説明</label>
+                <textarea class="form-textarea" name="description">${escapeHtml(item?.description || '')}</textarea>
             </div>
             <div class="form-group">
-                <label class="form-label required">年</label>
-                <input type="number" class="form-input" name="year" value="${item?.year || new Date().getFullYear()}" required>
+                <label class="form-label">サムネイル画像</label>
+                <input type="file" class="form-input" name="thumbFile" accept=".png,.jpg,.jpeg,.webp">
+                ${item?.thumbPath ? `<img src="../${escapeHtml(item.thumbPath)}" alt="" style="width:100%; max-width:240px; margin-top:12px; border-radius:8px; border:1px solid #e2e8f0;">` : ''}
+                <p class="form-help">PNG / JPG / WEBP。未設定の場合はプレースホルダー表示になります。</p>
+            </div>
+        `;
+    } else if (state.currentTab === 'posters') {
+        const contestOptions = state.contests.map(contest => `
+            <option value="${contest.id}" ${Number(item?.contestId) === Number(contest.id) ? 'selected' : ''}>${escapeHtml(contest.name)}</option>
+        `).join('');
+        const materialTypes = ['発表ポスター', '発表論文', '発表提出動画', '発表スライド'];
+        const typeOptions = materialTypes.map(type => `
+            <option value="${type}" ${item?.type === type ? 'selected' : ''}>${type}</option>
+        `).join('');
+
+        return `
+            <div class="form-group">
+                <label class="form-label required">コンテスト</label>
+                <select class="form-select" name="contestId" required>
+                    <option value="">選択してください</option>
+                    ${contestOptions}
+                </select>
+                ${state.contests.length === 0 ? '<p class="form-help">先にコンテストタブでコンテストを追加してください。</p>' : ''}
             </div>
             <div class="form-group">
                 <label class="form-label required">種別</label>
                 <select class="form-select" name="type" required>
-                    <option value="ポスター" ${item?.type === 'ポスター' ? 'selected' : ''}>ポスター</option>
-                    <option value="スライド資料" ${item?.type === 'スライド資料' ? 'selected' : ''}>スライド資料</option>
-                    <option value="論文" ${item?.type === '論文' ? 'selected' : ''}>論文</option>
+                    ${typeOptions}
                 </select>
             </div>
             <div class="form-group">
-                <label class="form-label">説明</label>
-                <textarea class="form-textarea" name="description">${item?.description || ''}</textarea>
+                <label class="form-label ${item ? '' : ''}">ファイル（PDF / 動画）</label>
+                <input type="file" class="form-input" name="file" accept=".pdf,.mp4,.webm,.mov">
+                ${item ? '<p class="form-help">変更しない場合は選択不要</p>' : '<p class="form-help">ファイルまたは外部URLのいずれかが必要です</p>'}
             </div>
             <div class="form-group">
-                <label class="form-label ${item ? '' : 'required'}">PDFファイル</label>
-                <input type="file" class="form-input" name="pdf" accept=".pdf" ${item ? '' : 'required'}>
-                ${item ? '<p class="form-help">変更しない場合は選択不要</p>' : ''}
+                <label class="form-label">外部URL（YouTube など）</label>
+                <input type="url" class="form-input" name="externalUrl" value="${escapeHtml(item?.externalUrl || '')}" placeholder="https://youtu.be/...">
             </div>
             <div class="form-group">
                 <label class="form-label">タグ（カンマ区切り）</label>
@@ -688,21 +780,32 @@ async function translateText() {
 
         console.log('Translation response:', result);
 
-        if (result.data && typeof result.data === 'object' &&
-            (result.data.en !== undefined || result.data.zh !== undefined)) {
-
+        if (result.data && typeof result.data === 'object') {
             const enField = document.querySelector('[name="textEn"]');
             const zhField = document.querySelector('[name="textZh"]');
+            const errors = [];
 
-            if (enField) {
-                enField.value = result.data.en || '';
-            }
-            if (zhField) {
-                zhField.value = result.data.zh || '';
+            if (typeof result.data.en === 'string' && enField) {
+                enField.value = result.data.en;
+            } else if (result.data.en?.error) {
+                errors.push(`英語: ${result.data.en.error}`);
             }
 
-            showToast('翻訳完了', 'success');
-            return;
+            if (typeof result.data.zh === 'string' && zhField) {
+                zhField.value = result.data.zh;
+            } else if (result.data.zh?.error) {
+                errors.push(`中国語: ${result.data.zh.error}`);
+            }
+
+            if (errors.length) {
+                showToast(errors.join(' / '), 'error');
+                return;
+            }
+
+            if (result.data.en !== undefined || result.data.zh !== undefined) {
+                showToast('翻訳完了', 'success');
+                return;
+            }
         }
 
         if (result.error) {
@@ -732,7 +835,7 @@ async function handleFormSubmit(e) {
     
     const formData = new FormData(form);
     
-    // ニュースの場合はJSON形式
+    // ニュースはJSON形式
     if (state.currentTab === 'news') {
         const data = {
             date: formData.get('date'),
@@ -741,31 +844,27 @@ async function handleFormSubmit(e) {
                 en: formData.get('textEn'),
                 zh: formData.get('textZh')
             },
-            tags: [] // タグは使用しない
+            tags: []
         };
-        
-        if (mode === 'edit') data.id = parseInt(id);
-        
+
+        if (mode === 'edit') data.id = parseInt(id, 10);
+
         const method = mode === 'add' ? 'POST' : 'PUT';
-        
+
         try {
             const response = await fetch('api/news.php', {
                 method,
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
             });
-            
+
             const result = await response.json();
-            console.log('News save response:', result);
-            console.log('isApiSuccess:', isApiSuccess(result));
-            
-            // 成功判定
+
             if (isApiSuccess(result)) {
                 closeModal();
                 await loadAllData();
                 showToast(mode === 'add' ? '追加しました' : '更新しました', 'success');
             } else {
-                console.error('Save failed:', result);
                 showToast(result.error || '保存に失敗しました', 'error');
             }
         } catch (error) {
@@ -773,7 +872,7 @@ async function handleFormSubmit(e) {
             console.error('Save error:', error);
         }
     } else {
-        // ポスターとモデルはマルチパート
+        // コンテスト・資料・モデルはマルチパート
         if (mode === 'edit') {
             formData.append('_method', 'PUT');
             formData.append('id', id);

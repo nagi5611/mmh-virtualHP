@@ -1,0 +1,27 @@
+# MMH public_html アップロード用 WinSCP スクリプト
+# .git フォルダは転送しません
+#
+# 使い方:
+#   1. 下の open 行を自分のセッション名に書き換える
+#   2. WinSCP > コマンド > スクリプトの実行 > このファイルを選択
+#
+# 手動アップロード時は deploy/filemask.txt の内容を
+# 転送設定 > ファイルマスク に貼り付けてください
+
+option batch on
+option confirm off
+
+# 例: open mmh-server
+# 例: open sftp://user@example.com -hostkey="..."
+open YOUR_SESSION_NAME
+
+lcd "D:\myprojects\meta\homepage\mmh\public_html"
+cd /home/USER/public_html
+
+option transfer binary
+
+# .git を除外して同期（リモートの余分なファイルは削除しない）
+synchronize remote -filemask="|.git/" -delete=off
+
+close
+exit

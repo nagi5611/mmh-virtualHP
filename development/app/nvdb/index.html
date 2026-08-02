@@ -6,42 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NanoVDB 煙描画記録 - 松山南高校ばーちゃるず</title>
     <link rel="stylesheet" href="../../assets/styles.css">
-    <style>
-        .step-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .step-block {
-            margin-bottom: 60px;
-            padding: 24px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 12px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .step-header {
-            display: flex;
-            align-items: baseline;
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--accent-color, #6c5ce7);
-            padding-bottom: 10px;
-        }
-
-        .step-num {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--accent-color, #6c5ce7);
-            margin-right: 16px;
-            line-height: 1;
-        }
-
-        .step-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 0;
-        }
-    </style>
 </head>
 
 <body>
@@ -56,7 +20,7 @@
         </nav>
     </header>
 
-    <section class="hero" style="min-height: 40vh; align-content: center;">
+    <section class="hero hero-compact">
         <p class="category-tag">Advanced Graphics</p>
         <h1>NanoVDB 煙描画ガイド</h1>
         <p>高品質な体積レンダリング(Volume Rendering)をMeta Quest上で実現するための技術解説です。</p>
@@ -79,7 +43,7 @@
             <p>VDBデータをGPUで高速に扱えるNanoVDB形式に変換し、UnityのCompute Shaderを使用して描画します。</p>
         </section>
 
-        <div style="text-align: center; margin-top: 60px;">
+        <div class="page-actions">
             <a class="btn btn-primary" href="../">アプリ一覧に戻る</a>
         </div>
     </main>

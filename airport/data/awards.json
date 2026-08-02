@@ -30,10 +30,10 @@
         },
         "description": {
             "ja": "2026年6月15日株式会社トモノカイ主催の「自由すぎる研究®EXPO2026」の一次を通過しました！現在は二次審査中です",
-            "zh": "",
-            "zh-TW": "",
-            "en": "",
-            "ko": ""
+            "zh": "2026年6月15日，我通过了株式会社トモノカイ",
+            "zh-TW": "2026年6月15日，我們通過了株式會社トモノ",
+            "en": "On June 15, 2026, we passed the first round of",
+            "ko": "2026년 6월 15일 주식회사 토모노카이 주"
         },
         "thumbnail": "images\/awards\/award-7-thumb-1783014429.png",
         "thumbnailFrame": {
@@ -62,7 +62,7 @@
         ],
         "order": 0,
         "createdAt": "2026-07-03T02:42:09+09:00",
-        "updatedAt": "2026-07-03T03:00:35+09:00"
+        "updatedAt": "2026-07-03T03:54:25+09:00"
     },
     {
         "id": 6,
@@ -95,10 +95,10 @@
         },
         "description": {
             "ja": "2026年7月2日愛媛大学主催の「社会共創コンテスト」で奨励賞を受賞しました！",
-            "zh": "",
-            "zh-TW": "",
-            "en": "",
-            "ko": ""
+            "zh": "2026年7月2日，在爱媛大学主办的“社会共创大赛”中荣获鼓励奖！",
+            "zh-TW": "2026年7月2日，在愛媛大學主辦的「社會共創競賽」中榮獲鼓勵獎！",
+            "en": "We received an Encouragement Award at the \"Social Co-creation Contest\" hosted by Ehime University on July 2, 2026!",
+            "ko": "2026년 7월 2일 에히메 대학 주최 '사회 공창 콘테스트'에서 장려상을 수상했습니다!"
         },
         "thumbnail": "images\/awards\/award-6-thumb-1783014586.png",
         "thumbnailFrame": {
@@ -120,7 +120,7 @@
         ],
         "order": 1,
         "createdAt": "2026-07-03T02:23:20+09:00",
-        "updatedAt": "2026-07-03T02:49:57+09:00"
+        "updatedAt": "2026-07-03T03:54:39+09:00"
     },
     {
         "id": 5,
@@ -131,32 +131,32 @@
         "published": true,
         "link": "",
         "organization": {
-            "ja": "全国高校生プレゼン甲子園",
+            "ja": "全国高校生プレゼン甲子園中国・四国ブロック大会",
             "zh": "",
             "zh-TW": "",
             "en": "",
             "ko": ""
         },
         "title": {
-            "ja": "全国高校生プレゼン甲子園",
+            "ja": "全国高校生プレゼン甲子園中国・四国ブロック大会",
             "zh": "",
             "zh-TW": "",
             "en": "",
             "ko": ""
         },
         "result": {
-            "ja": "一次通過",
+            "ja": "優秀賞",
             "zh": "",
             "zh-TW": "",
             "en": "",
             "ko": ""
         },
         "description": {
-            "ja": "2026年6月22日全国高校生プレゼン甲子園実行委員会主催の「全国高校生プレゼン甲子園」で一次通過しました！現在は二次に向けて準備中です",
-            "zh": "",
-            "zh-TW": "",
-            "en": "",
-            "ko": ""
+            "ja": "2026年6月22日全国高校生プレゼン甲子園実行委員会主催の「全国高校生プレゼン甲子園　中国・四国ブロック大会」にて優秀賞を受賞しました！",
+            "zh": "2026年6月22日，在由全国高中生演讲甲子园执行委员会主办的“全国高中生演讲甲子园 中国·四国地区大会”上，我们荣获了优秀奖！",
+            "zh-TW": "2026年6月22日，在由全國高中生簡報甲子園執行委員會主辦的「全國高中生簡報甲子園 中國・四國地區大會」中，我們榮獲了優秀獎！",
+            "en": "We received an Excellence Award at the \"National High School Student Presentation Koshien Chugoku\/Shikoku Block Tournament,\" hosted by the National High School Student Presentation Koshien Executive Committee on June 22, 2026!",
+            "ko": "2026년 6월 22일, 전국 고등학생 프레젠테이션 고시엔 실행위원회 주최의 \"전국 고등학생 프레젠테이션 고시엔 주고쿠\/시코쿠 블록 대회\"에서 우수상을 수상했습니다!"
         },
         "thumbnail": "images\/awards\/award-5-thumb-1783014671.jpg",
         "thumbnailFrame": {
@@ -178,6 +178,6 @@
         ],
         "order": 2,
         "createdAt": "2026-07-03T02:22:40+09:00",
-        "updatedAt": "2026-07-03T03:06:07+09:00"
+        "updatedAt": "2026-07-17T15:12:49+09:00"
     }
 ]

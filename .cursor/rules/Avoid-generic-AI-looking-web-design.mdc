@@ -1,0 +1,14 @@
+---
+alwaysApply: true
+---
+
+- Do not overuse gradients, glassmorphism, neon glows, or oversized shadows.
+- Prefer restrained color palettes with 1 accent color maximum.
+- Use clear information hierarchy before decorative visuals.
+- Avoid excessive border-radius on every component.
+- Avoid landing-page clichés unless explicitly requested.
+- Prefer asymmetric but intentional layouts over repetitive identical cards.
+- Every section must have a clear product purpose, not just visual filler.
+- Prioritize readability, spacing consistency, and realistic UX patterns.
+- If a UI pattern looks trendy but harms usability, choose usability.
+- Before finalizing, critique the design for “AI-generated sameness” and revise it.

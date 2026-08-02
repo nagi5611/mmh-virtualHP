@@ -45,7 +45,7 @@
             </p>
             <div class="demo-video-hero__actions">
                 <a href="fds/" class="hp-btn hp-btn--primary">FDSアプリプレイ動画</a>
-                <a href="#app-projects" class="hp-btn hp-btn--secondary">プロジェクト一覧</a>
+                <a href="#app-projects" class="hp-btn hp-btn--secondary">プロジェクト一覧 <span class="hp-btn__icon" aria-hidden="true">&rarr;</span></a>
             </div>
         </div>
 
@@ -64,42 +64,89 @@
         </button>
     </section>
 
-    <main class="container">
-        <section id="app-projects">
-            <h2 class="section-title">アプリプロジェクト一覧</h2>
-            <div class="card-grid">
-                <article class="card">
-                    <span class="category-tag">VR Experience</span>
-                    <h3>VR体験</h3>
-                    <p>建物スキャンデータをVRゴーグルで閲覧するアプリ。スキャンから実装までの全ステップを掲載。</p>
-                    <a class="hp-btn hp-btn--card" href="../vr/">開発詳細を見る</a>
-                </article>
-
-                <article class="card">
-                    <span class="category-tag">FDS Experience</span>
-                    <h3>FDS体験アプリ</h3>
-                    <p>FDSの煙・火災データをVR／デスクトップで体験。避難訓練と酸素・視界の阻害を再現した防災体験アプリ。</p>
-                    <a class="hp-btn hp-btn--card" href="fds/">開発詳細を見る</a>
-                </article>
-
-                <article class="card">
-                    <span class="category-tag">Disaster Training</span>
-                    <h3>消火訓練アプリ</h3>
-                    <p>火災発生時の初期消火活動をVRで体験・学習するためのアプリ開発ガイド。</p>
-                    <a class="hp-btn hp-btn--card" href="firefight/">開発詳細を見る</a>
-                </article>
-
-                <article class="card">
-                    <span class="category-tag">Advanced Graphics</span>
-                    <h3>NanoVDBアプリ</h3>
-                    <p>OpenVDB/NanoVDBを用いた高品質な流体（煙）の描画と最適化に関する記録。</p>
-                    <a class="hp-btn hp-btn--card" href="nvdb/">開発詳細を見る</a>
-                </article>
-            </div>
+    <main class="container container--app-list">
+        <section id="app-projects" class="app-projects">
+            <header class="portal-catalog__head">
+                <h2>プロジェクト</h2>
+                <p>実装手順と技術メモへの入口</p>
+            </header>
+            <ol class="portal-catalog">
+                <li class="portal-catalog__item portal-catalog__item--lead">
+                    <a class="portal-catalog__link" href="fds/">
+                        <span class="portal-catalog__index" aria-hidden="true">01</span>
+                        <div class="portal-catalog__main">
+                            <div class="portal-catalog__title-row">
+                                <h3>FDS体験アプリ</h3>
+                                <span class="portal-catalog__status">デモ動画あり</span>
+                            </div>
+                            <p>FDSの煙・火災データを粒子表示し、建物内を歩きながら避難を体験。酸素低下と視界阻害を再現した防災体験アプリ。</p>
+                            <ul class="portal-catalog__tags" aria-label="関連技術">
+                                <li>Unity</li>
+                                <li>FDS</li>
+                                <li>Meta Quest</li>
+                            </ul>
+                        </div>
+                        <span class="portal-catalog__arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="portal-catalog__item">
+                    <a class="portal-catalog__link" href="../vr/">
+                        <span class="portal-catalog__index" aria-hidden="true">02</span>
+                        <div class="portal-catalog__main">
+                            <div class="portal-catalog__title-row">
+                                <h3>VR体験</h3>
+                                <span class="portal-catalog__status">Scaniverse連携</span>
+                            </div>
+                            <p>建物スキャンデータをVRゴーグルで閲覧。スキャンからQuestへの実装までの手順を記録。</p>
+                            <ul class="portal-catalog__tags" aria-label="関連技術">
+                                <li>Unity</li>
+                                <li>Scaniverse</li>
+                                <li>Quest</li>
+                            </ul>
+                        </div>
+                        <span class="portal-catalog__arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="portal-catalog__item">
+                    <a class="portal-catalog__link" href="firefight/">
+                        <span class="portal-catalog__index" aria-hidden="true">03</span>
+                        <div class="portal-catalog__main">
+                            <div class="portal-catalog__title-row">
+                                <h3>消火訓練アプリ</h3>
+                                <span class="portal-catalog__status">開発記録</span>
+                            </div>
+                            <p>火災発生時の初期消火活動をVRで体験・学習するための実装ガイド。</p>
+                            <ul class="portal-catalog__tags" aria-label="関連技術">
+                                <li>Unity</li>
+                                <li>VR</li>
+                            </ul>
+                        </div>
+                        <span class="portal-catalog__arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+                <li class="portal-catalog__item">
+                    <a class="portal-catalog__link" href="nvdb/">
+                        <span class="portal-catalog__index" aria-hidden="true">04</span>
+                        <div class="portal-catalog__main">
+                            <div class="portal-catalog__title-row">
+                                <h3>NanoVDB</h3>
+                                <span class="portal-catalog__status">描画最適化</span>
+                            </div>
+                            <p>OpenVDB / NanoVDB を用いた煙の高品質描画とパフォーマンス調整の記録。</p>
+                            <ul class="portal-catalog__tags" aria-label="関連技術">
+                                <li>Unity</li>
+                                <li>OpenVDB</li>
+                                <li>HLSL</li>
+                            </ul>
+                        </div>
+                        <span class="portal-catalog__arrow" aria-hidden="true">&rarr;</span>
+                    </a>
+                </li>
+            </ol>
         </section>
 
         <div class="page-footer-cta">
-            <a class="hp-btn hp-btn--secondary" href="../index.html">開発トップに戻る</a>
+            <a class="hp-btn hp-btn--secondary" href="../index.html">開発トップに戻る <span class="hp-btn__icon" aria-hidden="true">&rarr;</span></a>
         </div>
     </main>
 

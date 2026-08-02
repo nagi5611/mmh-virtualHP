@@ -52,11 +52,18 @@ admin_require_login();
                     <span>ニュース</span>
                     <span class="badge" id="newsCount">0</span>
                 </button>
+                <button class="nav-item" data-tab="contests">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14H7v-2h5v2zm7-4H7v-2h12v2zm0-4H7V7h12v2z"/>
+                    </svg>
+                    <span>コンテスト</span>
+                    <span class="badge" id="contestsCount">0</span>
+                </button>
                 <button class="nav-item" data-tab="posters">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
                     </svg>
-                    <span>ポスター</span>
+                    <span>資料</span>
                     <span class="badge" id="postersCount">0</span>
                 </button>
                 <button class="nav-item" data-tab="models">
@@ -122,10 +129,24 @@ admin_require_login();
                     </div>
                 </div>
 
-                <!-- ポスタータブ -->
+                <!-- コンテストタブ -->
+                <div class="tab-content" id="contestsTab">
+                    <div class="content-header">
+                        <h2>コンテスト管理</h2>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="selectAllContests">
+                            <span>すべて選択</span>
+                        </label>
+                    </div>
+                    <div class="items-grid" id="contestsGrid">
+                        <div class="loading">読み込み中...</div>
+                    </div>
+                </div>
+
+                <!-- 資料タブ -->
                 <div class="tab-content" id="postersTab">
                     <div class="content-header">
-                        <h2>ポスター管理</h2>
+                        <h2>資料管理</h2>
                         <label class="checkbox-label">
                             <input type="checkbox" id="selectAllPosters">
                             <span>すべて選択</span>
