@@ -856,6 +856,8 @@ body.portal-home.is-ready .developer-card:focus-within {
     flex-shrink: 0;
     border-radius: 50%;
     border: 2px solid var(--border);
+    object-fit: cover;
+    object-position: center top;
 }
 
 .developer-role {

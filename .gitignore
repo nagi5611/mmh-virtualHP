@@ -13,9 +13,27 @@ Thumbs.db
 
 # 100MB超の3Dモデル・動画（GitHub制限。デプロイは別途）
 GLBs/
-development/assets/docs/*.glb
 airport/files/awards/award-7-18b8af2a.mp4
 airport/images/metaverse_thumbnail.mp4
+
+# 開発ポータル: 大容量配布物
+development/assets/docs/*.glb
+development/assets/docs/*.mp4
+development/assets/docs/material_*.pdf
+development/assets/docs/video_*.mp4
+development/assets/docs/*.pdf
+!development/assets/docs/paper-sample-*.pdf
+!development/assets/docs/poster-sample-*.pdf
+development/assets/downloads/*
+!development/assets/downloads/.gitkeep
+development/simulation/data/*.zip
+!development/simulation/data/.gitkeep
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
 
 # 依存関係
 node_modules/
