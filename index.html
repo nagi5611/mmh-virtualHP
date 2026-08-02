@@ -1112,12 +1112,28 @@
             margin-top: 32px;
         }
 
-        .metaverse-gallery .metaverse-card:first-child {
+        .metaverse-gallery .metaverse-card--lead {
             grid-column: span 2;
         }
 
-        .metaverse-gallery .metaverse-card:first-child img {
+        .metaverse-gallery .metaverse-card--lead img {
             height: 240px;
+        }
+
+        .metaverse-gallery .metaverse-card--memories {
+            grid-column: span 2;
+            margin-top: 8px;
+            border-color: var(--color-border-strong);
+            background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-muted) 100%);
+        }
+
+        .metaverse-gallery .metaverse-card--memories::before {
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+        }
+
+        .metaverse-gallery .metaverse-card--memories img {
+            height: 260px;
         }
 
         @media (max-width: 900px) {
@@ -1125,11 +1141,13 @@
                 grid-template-columns: 1fr;
             }
 
-            .metaverse-gallery .metaverse-card:first-child {
+            .metaverse-gallery .metaverse-card--lead,
+            .metaverse-gallery .metaverse-card--memories {
                 grid-column: span 1;
             }
 
-            .metaverse-gallery .metaverse-card:first-child img,
+            .metaverse-gallery .metaverse-card--lead img,
+            .metaverse-gallery .metaverse-card--memories img,
             .metaverse-gallery .metaverse-card img {
                 height: 200px;
             }
@@ -2164,6 +2182,10 @@
         [data-theme="dark"] .metaverse-card p {
             color: var(--color-text-muted);
             opacity: 1;
+        }
+
+        [data-theme="dark"] .metaverse-card--memories {
+            background: linear-gradient(180deg, #1a1f1d 0%, #141918 100%);
         }
         
         [data-theme="dark"] .about-section {
@@ -3993,7 +4015,7 @@
                     <h3 class="category-title fade-in" data-i18n="categoryViewOnly">見るだけメタ</h3>
                     <p class="category-description fade-in" data-i18n="categoryViewOnlyDesc">Three.jsを使用したメタバース空間を自由に探索できます。一人でゆっくりと学校の思い出を振り返りたい方におすすめです。</p>
                     <div class="metaverse-gallery">
-                        <div class="metaverse-card fade-in" onclick="window.location.href='school-whole-metaverse/'">
+                        <div class="metaverse-card metaverse-card--lead fade-in" onclick="window.location.href='school-whole-metaverse/'">
                             <img src="images/校舎全体.png" alt="校舎全体メタバース">
                             <div class="metaverse-card-content">
                                 <h3 data-i18n="cardSchoolWholeTitle">校舎全体メタバース</h3>
@@ -4018,13 +4040,6 @@
                             </div>
                         </div>
                         
-                        <div class="metaverse-card fade-in" onclick="window.location.href='memories-museum/'">
-                            <img src="images/memorys.png" alt="思い出の品">
-                            <div class="metaverse-card-content">
-                                <h3 data-i18n="cardMemoriesTitle">思い出の品々</h3>
-                                <p data-i18n="cardMemoriesDesc">給水機, 石碑, 鍵入れ, 南高太鼓など、校内の思い出の品を3Dモデル化。</p>
-                            </div>
-                        </div>
                         <div class="metaverse-card fade-in" onclick="window.location.href='science-metaverse/'">
                             <img src="images/理科教棟.png" alt="理科教棟">
                             <div class="metaverse-card-content">
@@ -4038,6 +4053,14 @@
                             <div class="metaverse-card-content">
                                 <h3 data-i18n="cardMainBuildingTitle">本館（未）</h3>
                                 <p data-i18n="cardMainBuildingDesc">卒業生の思い出が詰まった本館の撮影を今後予定しています。</p>
+                            </div>
+                        </div>
+
+                        <div class="metaverse-card metaverse-card--memories fade-in" onclick="window.location.href='memories-museum/'">
+                            <img src="images/memorys.png" alt="思い出の品">
+                            <div class="metaverse-card-content">
+                                <h3 data-i18n="cardMemoriesTitle">思い出の品々</h3>
+                                <p data-i18n="cardMemoriesDesc">給水機, 石碑, 鍵入れ, 南高太鼓など、校内の思い出の品を3Dモデル化。</p>
                             </div>
                         </div>
                     </div>
