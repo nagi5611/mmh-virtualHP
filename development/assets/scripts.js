@@ -600,6 +600,37 @@ document.addEventListener('DOMContentLoaded', () => {
     initPortalNews();
     initOptionalAssets();
 
+    const initScenarioModal = () => {
+        const modal = document.getElementById('scenario-modal');
+        const openButton = document.getElementById('open-scenario-modal');
+        if (!modal || !openButton) return;
+
+        const closeModal = () => {
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('modal-open');
+        };
+
+        const openModal = () => {
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('modal-open');
+            initOptionalAssets(modal);
+            modal.querySelector('.scenario-modal__close')?.focus();
+        };
+
+        openButton.addEventListener('click', openModal);
+        modal.querySelectorAll('[data-close-scenario-modal]').forEach(trigger => {
+            trigger.addEventListener('click', closeModal);
+        });
+        window.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && modal.classList.contains('is-open')) {
+                closeModal();
+            }
+        });
+    };
+    initScenarioModal();
+
     if (downloadModal) {
         const thumbImg = document.getElementById('modal-thumb');
         const modalTitle = document.getElementById('modal-title');

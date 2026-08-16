@@ -2200,6 +2200,62 @@ body.modal-open {
     overflow: hidden;
 }
 
+.scenario-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.scenario-modal.is-open {
+    display: flex;
+}
+
+.scenario-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.scenario-modal__body {
+    position: relative;
+    background: #fff;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    box-shadow: var(--card-shadow);
+    padding: 24px 28px 28px;
+    width: 640px;
+    max-width: 95%;
+    max-height: 85vh;
+    overflow-y: auto;
+    z-index: 1;
+}
+
+.scenario-modal__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.scenario-modal__title {
+    margin: 0 32px 12px 0;
+    font-size: 1.25rem;
+}
+
+.scenario-modal__lead {
+    margin: 0 0 16px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
 @media (max-width: 900px) {
     .download-modal__content {
         grid-template-columns: 1fr;

@@ -62,7 +62,7 @@
                 <li><strong>視界・移動の阻害</strong> — 煙にさらされると視界が狭まり、移動速度や視点が不安定になる</li>
                 <li><strong>難易度選択</strong> — イージー／ハードで体験の厳しさを切り替え</li>
                 <li><strong>シナリオ選択</strong> — 複数の火災シナリオ（例: prod01）を切り替えて体験可能</li>
-                <li><strong>追加シナリオの取り込み</strong> — <code>.firesim</code> パックを所定フォルダに置くとシナリオを追加可能</li>
+                <li><strong>シナリオデータの利用</strong> — <code>prod01.firesim</code> 〜 <code>prod10.firesim</code> をダウンロードしてアプリ内でシナリオを切り替え</li>
             </ul>
         </section>
 
@@ -74,8 +74,9 @@
             <ol class="developer-bio" style="list-style: decimal; padding-left: 1.4em;">
                 <li>FDS で火災シミュレーションを実行（SOOT・HRRPUV などの出力）</li>
                 <li>Python スクリプトでグリッドデータを粒子データへ変換（<code>fdstoraw.py</code> &rarr; <code>rawtoparticles.py</code>）</li>
-                <li>シナリオごとに ZIP 化し、アプリに同梱または別途配置</li>
-                <li>初回起動時に ZIP を展開し、ゲーム内で時系列再生</li>
+                <li>解析結果はシミュレーションページで <code>.zip</code> として公開（prod01〜prod10）</li>
+                <li>体験アプリ用に <code>.firesim</code> 形式のシナリオデータへ変換し、本ページから配布</li>
+                <li>アプリが <code>.firesim</code> を読み込み、ゲーム内で時系列再生</li>
             </ol>
             <p style="margin-top: 16px;">
                 シミュレーション本体の詳細は
@@ -120,7 +121,7 @@
                 <span class="step-num">05</span>
                 <h2 class="step-title">配布・ダウンロード</h2>
             </div>
-            <p>アプリ本体をダウンロードして体験できます。シミュレーションデータは容量が大きいため、初回起動時の展開または別途データの配置が必要な場合があります。</p>
+            <p>アプリ本体をダウンロードして体験できます。シナリオデータ（<code>.firesim</code>）は容量が大きいため、別途ダウンロードが必要です。</p>
 
             <div class="download-grid" style="margin-top: 24px;">
                 <div class="download-card">
@@ -138,10 +139,10 @@
                 </div>
 
                 <div class="download-card">
-                    <h3>シミュレーションデータ（prod01〜prod10）</h3>
-                    <p class="download-meta">オプション / 大容量</p>
-                    <p>火災シナリオごとのデータパック。アプリに同梱されていない場合は別途配置してください。</p>
-                    <a class="btn btn-secondary" href="../../simulation/#simulation-data">データ一覧へ</a>
+                    <h3>シナリオデータ（prod01〜prod10）</h3>
+                    <p class="download-meta">大容量 / <code>.firesim</code></p>
+                    <p>体験アプリ用の火災シナリオデータです。FDS解析のシミュレーションデータ（<code>.zip</code>）とは別ファイルです。</p>
+                    <button class="btn btn-secondary" type="button" id="open-scenario-modal">シナリオ一覧を開く</button>
                 </div>
             </div>
 
@@ -155,6 +156,27 @@
             <a class="btn btn-primary" href="../">アプリ一覧に戻る</a>
         </div>
     </main>
+
+    <div class="scenario-modal" id="scenario-modal" aria-hidden="true">
+        <div class="scenario-modal__backdrop" data-close-scenario-modal></div>
+        <div class="scenario-modal__body" role="dialog" aria-modal="true" aria-labelledby="scenario-modal-title">
+            <button class="scenario-modal__close" type="button" aria-label="閉じる" data-close-scenario-modal>&times;</button>
+            <h2 class="scenario-modal__title" id="scenario-modal-title">シナリオデータ（prod01〜prod10）</h2>
+            <p class="scenario-modal__lead">体験アプリ用の火災シナリオ（<code>.firesim</code>）です。ダウンロード後、アプリ所定のフォルダへ配置してください。</p>
+            <div class="sim-data-list">
+                <a class="sim-data-link" href="scenarios/prod01.firesim" download data-asset-optional><span>prod01</span><span class="sim-data-link__ext">.firesim</span></a>
+                <a class="sim-data-link" href="scenarios/prod02.firesim" download data-asset-optional><span>prod02</span><span class="sim-data-link__ext">.firesim</span></a>
+                <a class="sim-data-link" href="scenarios/prod03.firesim" download data-asset-optional><span>prod03</span><span class="sim-data-link__ext">.firesim</span></a>
+                <a class="sim-data-link" href="scenarios/prod04.firesim" download data-asset-optional><span>prod04</span><span class="sim-data-link__ext">.firesim</span></a>
+                <a class="sim-data-link" href="scenarios/prod05.firesim" download data-asset-optional><span>prod05</span><span class="sim-data-link__ext">.firesim</span></a>
+                <a class="sim-data-link" href="scenarios/prod06.firesim" download data-asset-optional><span>prod06</span><span class="sim-data-link__ext">.firesim</span></a>
+                <a class="sim-data-link" href="scenarios/prod07.firesim" download data-asset-optional><span>prod07</span><span class="sim-data-link__ext">.firesim</span></a>
+                <a class="sim-data-link" href="scenarios/prod08.firesim" download data-asset-optional><span>prod08</span><span class="sim-data-link__ext">.firesim</span></a>
+                <a class="sim-data-link" href="scenarios/prod09.firesim" download data-asset-optional><span>prod09</span><span class="sim-data-link__ext">.firesim</span></a>
+                <a class="sim-data-link" href="scenarios/prod10.firesim" download data-asset-optional><span>prod10</span><span class="sim-data-link__ext">.firesim</span></a>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer">
         <nav>
