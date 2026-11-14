@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>体育館メタバース - 松山南高校ばーちゃるず</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -364,15 +363,17 @@
         }
 
         /* メインコンテンツ */
+        /* UI オーバーレイのみ。a-scene は body 直下で常に表示（hidden 親の中に置かない） */
         .main-content {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease, visibility 1s ease;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
         }
 
         .main-content.show {
             opacity: 1;
-            visibility: visible;
         }
 
         .ui-overlay {
@@ -653,7 +654,44 @@
         </div>
     </div>
 
-    <!-- メインコンテンツ -->
+    <a-scene id="gymScene" vr-mode-ui="enabled: true" style="height: 100vh; width: 100vw;" background="color: #87CEEB"
+        fog="type: linear; color: #87CEEB; near: 20; far: 100" loading-screen="enabled: false">
+
+        <!-- 環境光 -->
+        <a-light type="ambient" color="#ffffff" intensity="0.7"></a-light>
+
+        <!-- 方向光 -->
+        <a-light type="directional" position="10 20 10" color="#ffffff" intensity="0.9"></a-light>
+
+        <!-- 追加の光源（体育館内を明るく） -->
+        <a-light type="point" position="0 5 0" color="#ffffff" intensity="0.6"></a-light>
+        <a-light type="point" position="-10 5 5" color="#ffffff" intensity="0.4"></a-light>
+        <a-light type="point" position="10 5 -5" color="#ffffff" intensity="0.4"></a-light>
+
+        <!-- 体育館3Dモデル（Draco は A-Frame 1.5 の scene デフォルトパス） -->
+        <a-entity id="gym-entity" gltf-model="url(../GLBs/gym20241104.glb)" position="0 0 0" rotation="0 0 0"
+            scale="1 1 1">
+        </a-entity>
+
+        <!-- 地面 -->
+        <a-plane position="0 -0.1 0" rotation="-90 0 0" width="100" height="100" color="#4a4a4a">
+        </a-plane>
+
+        <!-- カメラリグ -->
+        <a-entity id="cameraRig" position="0 1.6 5">
+
+            <a-camera id="camera" look-controls="pointerLockEnabled: false" position="0 0 0">
+
+                <a-cursor geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
+                    material="color: #28a699; shader: flat" position="0 0 -1"
+                    animation__click="property: scale; startEvents: click; from: 1 1 1; to: 0.8 0.8 0.8; dur: 150; dir: alternate; easing: easeInQuad">
+                </a-cursor>
+            </a-camera>
+
+        </a-entity>
+    </a-scene>
+
+    <!-- UI オーバーレイ -->
     <div class="main-content" id="mainContent">
         <div class="ui-overlay">
             <div class="header">
@@ -703,55 +741,68 @@
                 🥽
             </button>
         </div>
-
-        <a-scene vr-mode-ui="enabled: true" style="height: 100vh; width: 100vw;" background="color: #87CEEB"
-            fog="type: linear; color: #87CEEB; near: 20; far: 100" loading-screen="enabled: false">
-
-            <!-- アセット -->
-            <a-assets>
-                <a-asset-item id="gym-model" src="../GLBs/gym20241104.glb"></a-asset-item>
-            </a-assets>
-
-            <!-- 環境光 -->
-            <a-light type="ambient" color="#ffffff" intensity="0.7"></a-light>
-
-            <!-- 方向光 -->
-            <a-light type="directional" position="10 20 10" color="#ffffff" intensity="0.9"
-                light="castShadow: true; shadowMapHeight: 2048; shadowMapWidth: 2048"></a-light>
-
-            <!-- 追加の光源（体育館内を明るく） -->
-            <a-light type="point" position="0 5 0" color="#ffffff" intensity="0.6"></a-light>
-            <a-light type="point" position="-10 5 5" color="#ffffff" intensity="0.4"></a-light>
-            <a-light type="point" position="10 5 -5" color="#ffffff" intensity="0.4"></a-light>
-
-            <!-- 体育館3Dモデル -->
-            <a-entity id="gym-entity" gltf-model="#gym-model" position="0 0 0" rotation="0 0 0" scale="1 1 1"
-                shadow="cast: true; receive: true">
-            </a-entity>
-
-            <!-- 地面 -->
-            <a-plane position="0 -0.1 0" rotation="-90 0 0" width="100" height="100" color="#4a4a4a"
-                shadow="receive: true">
-            </a-plane>
-
-            <!-- カメラリグ -->
-            <a-entity id="cameraRig" position="0 1.6 5">
-
-                <!-- カメラ -->
-                <a-camera id="camera" look-controls="pointerLockEnabled: false"
-                    wasd-controls="enabled: true; acceleration: 20" position="0 0 0">
-
-                    <!-- カーソル -->
-                    <a-cursor geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
-                        material="color: #28a699; shader: flat" position="0 0 -1"
-                        animation__click="property: scale; startEvents: click; from: 1 1 1; to: 0.8 0.8 0.8; dur: 150; dir: alternate; easing: easeInQuad">
-                    </a-cursor>
-                </a-camera>
-            </a-entity>
-        </a-scene>
     </div>
 
     <script>
+        /** デプロイ確認・GLB検証用（Console で [gym:glb] をフィルタ） */
+        const GYM_PAGE_BUILD_ID = 'gym-direct-glb-url-2026-03-25f';
+        const GYM_DRACO_DECODER_PATH = 'https://www.gstatic.com/draco/versioned/decoders/1.5.7/';
+        const GYM_GLB_URL = new URL('../GLBs/gym20241104.glb', window.location.href).href;
+
+        const gymGlbLog = (phase, detail) => {
+            const payload = detail !== undefined ? detail : '';
+            console.log(`[gym:glb] ${phase}`, payload);
+        };
+
+        gymGlbLog('boot', {
+            build: GYM_PAGE_BUILD_ID,
+            href: location.href,
+            protocol: location.protocol,
+            glbUrl: GYM_GLB_URL,
+        });
+
+        window.addEventListener('error', (event) => {
+            gymGlbLog('window-error', { message: event.message, filename: event.filename });
+        });
+
+        /**
+         * Draco パスは a-scene の gltf-model システム用（entity には src のみ）。
+         * HTML 属性の key:value では https:// が壊れるため JS で scene に渡す。
+         * 出典: https://github.com/aframevr/aframe/blob/master/docs/components/gltf-model.md
+         */
+        function logGymGltfSystemState(phase) {
+            const sceneEl = document.querySelector('a-scene');
+            const system = sceneEl && sceneEl.systems ? sceneEl.systems['gltf-model'] : null;
+            gymGlbLog(phase, {
+                sceneAttr: sceneEl ? sceneEl.getAttribute('gltf-model') : null,
+                systemData: system && system.data ? system.data : null,
+            });
+        }
+
+        gymGlbLog('configure-entity-html', {
+            applied: document.getElementById('gym-entity')?.getAttribute('gltf-model'),
+        });
+
+        if (typeof PerformanceObserver !== 'undefined') {
+            try {
+                const gymResourceObserver = new PerformanceObserver((list) => {
+                    list.getEntries().forEach((entry) => {
+                        if (!/draco|gym20241104\.glb/i.test(entry.name)) return;
+                        gymGlbLog('resource-timing', {
+                            name: entry.name,
+                            durationMs: Math.round(entry.duration),
+                            transferSize: entry.transferSize,
+                        });
+                    });
+                });
+                gymResourceObserver.observe({ type: 'resource', buffered: true });
+            } catch (err) {
+                gymGlbLog('resource-observer-failed', String(err));
+            }
+        }
+
+        gymGlbLog('load-mode', { gltf: 'url(../GLBs/gym20241104.glb)', aAssets: false });
+
         // プリローダーアニメーション
         function animatePreloader() {
             const redBall = document.querySelector('.dna-ball.red');
@@ -909,6 +960,7 @@
             const preloader = document.getElementById('preloader');
             const mainContent = document.getElementById('mainContent');
 
+            gymGlbLog('preloader-hide');
             preloader.classList.add('hidden');
             mainContent.classList.add('show');
 
@@ -928,20 +980,105 @@
         // 3Dモデルの読み込み状態管理
         let modelLoaded = false;
         const loadingScreen = document.getElementById('loadingScreen');
-        const gymEntity = document.querySelector('#gym-entity');
 
-        // モデル読み込み完了時の処理
-        gymEntity.addEventListener('model-loaded', function () {
+        /** ネットワーク完了後も Draco 展開中は model-loaded が遅れる */
+        function dismissModelLoading(message) {
+            if (modelLoaded) return;
             modelLoaded = true;
-            loadingScreen.style.display = 'none';
-            console.log('体育館3Dモデルの読み込みが完了しました');
-        });
+            if (loadingScreen) loadingScreen.style.display = 'none';
+            gymGlbLog('model-ready-ui-dismiss', message || '');
+        }
 
-        // モデル読み込みエラー時の処理
-        gymEntity.addEventListener('model-error', function (event) {
-            console.error('3Dモデルの読み込みに失敗しました:', event.detail);
+        function showModelLoadError(detail) {
+            gymGlbLog('model-error', detail);
+            console.error('3Dモデルの読み込みに失敗しました:', detail);
+            if (!loadingScreen) return;
+            loadingScreen.style.display = 'block';
             loadingScreen.innerHTML = '<div class="loading-spinner"></div><p>モデルの読み込みに失敗しました</p>';
-        });
+        }
+
+        let gymLoadWatchStartedAt = performance.now();
+
+        function logGymGltfComponentState(phase) {
+            const gymEntity = document.querySelector('#gym-entity');
+            const gltfComp = gymEntity && gymEntity.components
+                ? gymEntity.components['gltf-model']
+                : null;
+            const sceneEl = document.querySelector('a-scene');
+            const assetsEl = document.querySelector('a-assets');
+            gymGlbLog(phase, {
+                elapsedMs: Math.round(performance.now() - gymLoadWatchStartedAt),
+                hasGltfComponent: !!gltfComp,
+                hasParsedModel: !!(gltfComp && gltfComp.model),
+                modelLoadedFlag: modelLoaded,
+                entityGltfSrc: gymEntity ? gymEntity.getAttribute('gltf-model') : null,
+                compData: gltfComp && gltfComp.data ? gltfComp.data : null,
+                sceneHasLoaded: sceneEl ? sceneEl.hasLoaded : null,
+                assetsHasLoaded: assetsEl ? assetsEl.hasLoaded : null,
+                sceneNodeName: sceneEl ? sceneEl.nodeName : null,
+                entityNodeName: gymEntity ? gymEntity.nodeName : null,
+            });
+        }
+
+        function bindGymModelLoadHandlers() {
+            const gymEntity = document.querySelector('#gym-entity');
+            if (!gymEntity || !loadingScreen) {
+                gymGlbLog('bind-handlers-abort', { gymEntity: !!gymEntity, loadingScreen: !!loadingScreen });
+                return;
+            }
+            gymGlbLog('bind-handlers');
+
+            gymEntity.addEventListener('model-loaded', function () {
+                gymGlbLog('model-loaded-event');
+                logGymGltfComponentState('after-model-loaded');
+                dismissModelLoading('体育館3Dモデルの読み込みが完了しました');
+            });
+
+            gymEntity.addEventListener('model-error', function (event) {
+                logGymGltfComponentState('on-model-error');
+                showModelLoadError(event.detail);
+            });
+
+            const gltfComp = gymEntity.components && gymEntity.components['gltf-model'];
+            if (gltfComp && gltfComp.model) {
+                gymGlbLog('model-already-parsed-before-listener');
+                dismissModelLoading('体育館3Dモデルは既に読み込み済みでした');
+            }
+        }
+
+        bindGymModelLoadHandlers();
+
+        const sceneEl = document.querySelector('a-scene');
+        if (sceneEl) {
+            sceneEl.addEventListener('renderstart', () => gymGlbLog('scene-renderstart'), { once: true });
+            sceneEl.addEventListener('loaded', () => {
+                gymGlbLog('scene-loaded-event');
+                logGymGltfSystemState('scene-loaded');
+                logGymGltfComponentState('scene-loaded');
+            });
+            if (sceneEl.hasLoaded) gymGlbLog('scene-already-loaded-at-bind');
+        }
+
+        const gymEntityForInit = document.querySelector('#gym-entity');
+        if (gymEntityForInit) {
+            gymEntityForInit.addEventListener('componentinitialized', (event) => {
+                if (event.detail && event.detail.name === 'gltf-model') {
+                    gymGlbLog('gltf-component-initialized');
+                }
+            });
+        }
+
+        window.setInterval(() => {
+            if (modelLoaded) return;
+            logGymGltfComponentState('wait-heartbeat');
+        }, 5000);
+
+        window.setTimeout(() => {
+            if (modelLoaded) return;
+            gymGlbLog('wait-timeout-120s', {
+                hint: 'asset-item-loaded だけ出て model-loaded が無い場合は Draco またはパース失敗を疑う',
+            });
+        }, 120_000);
 
         // カメラ移動関数
         function moveCamera(position) {
@@ -1092,6 +1229,9 @@
 
         // 初期化処理
         document.addEventListener('DOMContentLoaded', function () {
+            const mainContent = document.getElementById('mainContent');
+            if (mainContent) mainContent.classList.add('show');
+
             // プリローダーアニメーション開始
             animatePreloader();
 

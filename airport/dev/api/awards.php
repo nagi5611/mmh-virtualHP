@@ -260,9 +260,6 @@ if ($method === 'PUT') {
     if (array_key_exists('thumbnail', $input)) {
         $awards[$index]['thumbnail'] = trim((string)$input['thumbnail']);
     }
-    if (array_key_exists('thumbnailFrame', $input)) {
-        $awards[$index]['thumbnailFrame'] = normalize_award_thumbnail_frame($input['thumbnailFrame']);
-    }
     if (array_key_exists('attachments', $input)) {
         $awards[$index]['attachments'] = normalize_award_attachments($input['attachments']);
     }

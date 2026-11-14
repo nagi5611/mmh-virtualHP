@@ -1,94 +1,117 @@
 [
     {
+        "id": 17,
+        "date": "2026.11.1",
+        "text": {
+            "ja": "「高校生なるほどアイデアコンテスト」でグランプリを受賞しました！",
+            "en": "We won the Grand Prize at the \"High School Students' Brilliant Idea Contest\"!",
+            "zh": "在“高中生创意大赛”中荣获大奖！"
+        },
+        "order": 0,
+        "tags": [],
+        "createdAt": "2026-11-13T07:45:40+09:00",
+        "updatedAt": "2026-11-13T07:45:40+09:00"
+    },
+    {
+        "id": 16,
+        "date": "2026.08.22",
+        "text": {
+            "ja": "「SDGs甲子園2026」で準優勝しました！",
+            "en": "We won second place in the \"SDGs Koshien 2026\"!",
+            "zh": "在“SDGs甲子园2026”中获得了亚军！"
+        },
+        "order": 1,
+        "tags": [],
+        "createdAt": "2026-08-25T05:24:29+09:00",
+        "updatedAt": "2026-08-25T05:24:29+09:00"
+    },
+    {
         "id": 15,
         "date": "2026.07.31",
         "text": {
             "ja": "日経STEAMシンポジウム2026 「DiS STEAMゼミ」コンテストで優秀賞を受賞しました！",
-            "en": "",
-            "zh": ""
+            "en": "Received an Excellence Award at the Nikkei STEAM Symposium 2026 \"DiS STEAM Seminar\" Contest!",
+            "zh": "在日经STEAM研讨会2026“DiS STEAM研讨班”竞赛中荣获优秀奖！"
         },
-        "order": 0,
+        "order": 2,
         "tags": [],
         "createdAt": "2026-07-31T00:00:00Z",
-        "updatedAt": "2026-07-31T00:00:00Z"
+        "updatedAt": "2026-08-02T13:04:05+09:00"
     },
     {
         "id": 12,
         "date": "2026.07.31",
         "text": {
             "ja": "SDGs甲子園 2026コンテストで本戦出場が決定しました！",
-            "en": "",
-            "zh": ""
+            "en": "We have been selected to compete in the main competition of the SDGs Koshien 2026 contest!",
+            "zh": "我们已确定入围SDGs甲子园2026大赛的决赛！"
         },
-        "order": 1,
+        "order": 3,
         "tags": [],
         "createdAt": "2026-07-31T00:00:00Z",
-        "updatedAt": "2026-07-31T00:00:00Z"
+        "updatedAt": "2026-08-02T13:04:11+09:00"
     },
     {
         "id": 11,
         "date": "2026.07.31",
         "text": {
             "ja": "日経STEAMシンポジウム2026 「私たちは問う 自由で豊かな未来とは」コンテストで審査員特別賞を受賞しました！",
-            "en": "",
-            "zh": ""
+            "en": "Received the Judges' Special Award at the Nikkei STEAM Symposium 2026 \"We Ask: What is a Free and Prosperous Future?\" Contest!",
+            "zh": "荣获日经STEAM专题讨论会2026“我们追问：什么是自由而富裕的未来？”大赛评委会特别奖！"
         },
-        "order": 2,
+        "order": 4,
         "tags": [],
         "createdAt": "2026-07-31T00:00:00Z",
-        "updatedAt": "2026-07-31T00:00:00Z"
+        "updatedAt": "2026-08-02T13:04:43+09:00"
     },
     {
         "id": 14,
         "date": "2026.07.29",
         "text": {
             "ja": "「STI for SDGsアワード」で書類選考を突破しました！",
-            "en": "",
-            "zh": ""
+            "en": "We passed the document screening for the \"STI for SDGs Award\"!",
+            "zh": "通过了“STI for SDGs 奖”的资料筛选！"
         },
-        "order": 3,
+        "order": 5,
         "tags": [],
         "createdAt": "2026-07-29T00:00:00Z",
-        "updatedAt": "2026-07-29T00:00:00Z"
+        "updatedAt": "2026-08-02T13:04:49+09:00"
     },
     {
         "id": 13,
         "date": "2026.06.15",
         "text": {
             "ja": "「自由すぎる研究®EXPO2026」で一次審査を突破しました！",
-            "en": "",
-            "zh": ""
+            "en": "We passed the first round of screening at the \"Too Free Research® EXPO 2026\"!",
+            "zh": "「自由すぎる研究®EXPO2026」我通过了初审！"
         },
-        "order": 4,
+        "order": 6,
         "tags": [],
         "createdAt": "2026-06-15T00:00:00Z",
-        "updatedAt": "2026-06-15T00:00:00Z"
+        "updatedAt": "2026-08-02T13:05:17+09:00"
     },
     {
         "id": 1,
         "date": "2025.12.20",
         "text": {
-            "ja": "「国際会議 ESD Youth Summit 2025」で活動成果を発表しました。",
-            "en": "Presented our activities at \"International Conference ESD Youth Summit 2025\".",
-            "zh": "在「国际会议 ESD Youth Summit 2025」上展示了我们的活动成果。"
+            "ja": "「国際会議 ESD Youth Summit 2025」でカテゴリー最優秀賞をいただきました！",
+            "en": "We received the Best Category Award at the \"International Conference ESD Youth Summit 2025\"!",
+            "zh": "在“国际会议 ESD Youth Summit 2025”中荣获类别最优秀奖！"
         },
-        "order": 5,
-        "tags": [
-            "国際会議",
-            "発表"
-        ],
+        "order": 7,
+        "tags": [],
         "createdAt": "2025-12-20T00:00:00Z",
-        "updatedAt": "2025-12-20T00:00:00Z"
+        "updatedAt": "2026-08-26T14:42:42+09:00"
     },
     {
         "id": 2,
         "date": "2025.11.30",
         "text": {
-            "ja": "開発者向けポータルサイトを公開しました。<a class=\"news-link\" href=\"/development/\" target=\"_blank\" rel=\"noopener\">開発ポータル</a>から最新情報をご覧いただけます。",
-            "en": "Launched the developer portal site. You can view the latest information from the <a class=\"news-link\" href=\"/development/\" target=\"_blank\" rel=\"noopener\">Developer Portal</a>.",
-            "zh": "发布了开发者门户网站。您可以从<a class=\"news-link\" href=\"/development/\" target=\"_blank\" rel=\"noopener\">开发者门户</a>查看最新信息。"
+            "ja": "開発者向けポータルサイトを公開しました。<a class=\"news-link\" href=\"\/development\/\" target=\"_blank\" rel=\"noopener\">開発ポータル<\/a>から最新情報をご覧いただけます。",
+            "en": "Launched the developer portal site. You can view the latest information from the <a class=\"news-link\" href=\"\/development\/\" target=\"_blank\" rel=\"noopener\">Developer Portal<\/a>.",
+            "zh": "发布了开发者门户网站。您可以从<a class=\"news-link\" href=\"\/development\/\" target=\"_blank\" rel=\"noopener\">开发者门户<\/a>查看最新信息。"
         },
-        "order": 6,
+        "order": 8,
         "tags": [
             "開発",
             "サイト"
@@ -104,7 +127,7 @@
             "en": "Presented our activities at \"Ehime SDGs Koshien 2025\".",
             "zh": "在「爱媛SDGs甲子园2025」上展示了我们的活动成果。"
         },
-        "order": 7,
+        "order": 9,
         "tags": [
             "SDGs",
             "発表"
@@ -120,7 +143,7 @@
             "en": "Won the Grand Prize (Minister of Education, Culture, Sports, Science and Technology Award) at \"Nikkei STEAM Symposium 2025: What is a Free and Rich Future?\".",
             "zh": "在「Nikkei STEAM研讨会2025 我们问，自由而丰富的未来是什么？」中获得最优秀文部科学大臣奖。"
         },
-        "order": 8,
+        "order": 10,
         "tags": [
             "受賞",
             "STEAM"
@@ -136,7 +159,7 @@
             "en": "Advanced to the final round of SDGs Koshien.",
             "zh": "进入SDGs甲子园决赛。"
         },
-        "order": 9,
+        "order": 11,
         "tags": [
             "SDGs"
         ],
@@ -151,7 +174,7 @@
             "en": "Our activities were featured on NHK's \"Himepon! High School Tour\".",
             "zh": "我们的活动在NHK「ひめポン！高中巡游」中被介绍。"
         },
-        "order": 10,
+        "order": 12,
         "tags": [
             "メディア",
             "NHK"
@@ -167,7 +190,7 @@
             "en": "Selected as an excellent school at \"Social Challenge Grand Prix\".",
             "zh": "在「社会挑战大奖赛」中被评为优秀学校。"
         },
-        "order": 11,
+        "order": 13,
         "tags": [
             "受賞"
         ],
@@ -182,7 +205,7 @@
             "en": "Presented our activities at Matsuyama Junior Chamber \"Citizens Forum\".",
             "zh": "在松山青年会议所「市民论坛」上展示了我们的活动成果。"
         },
-        "order": 12,
+        "order": 14,
         "tags": [
             "発表"
         ],
@@ -197,7 +220,7 @@
             "en": "Presented our activities at Ehime Digital Twin Forum.",
             "zh": "在爱媛数字孪生论坛上进行了活动发表。"
         },
-        "order": 13,
+        "order": 15,
         "tags": [
             "発表",
             "デジタルツイン"
@@ -213,7 +236,7 @@
             "en": "Won the Special Corporate Sponsor Award at \"Ehime SDGs Koshien 2024\".",
             "zh": "在「爱媛SDGs甲子园2024」中获得协赞企业特别奖。"
         },
-        "order": 14,
+        "order": 16,
         "tags": [
             "受賞",
             "SDGs"

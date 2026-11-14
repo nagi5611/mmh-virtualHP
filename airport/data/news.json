@@ -1,5 +1,69 @@
 [
     {
+        "id": 9,
+        "date": "2026.09.27",
+        "datetime": "2026-09-27",
+        "link": "",
+        "text": {
+            "ja": "「空の日フェスタ2026」に出展しました！ジオラマ展示やメタバース体験を楽しんでいただけました！",
+            "zh": "我们参加了「空之日嘉年华2026」！参观者们享受了我们的立体模型展示和元宇宙体验！",
+            "zh-TW": "我們參加了「空之日嘉年華2026」！參觀者們享受了我們的立體模型展示和元宇宙體驗！",
+            "en": "We exhibited at 'Sky Day Festa 2026'! Visitors enjoyed our diorama display and metaverse experience!",
+            "ko": "「하늘의 날 페스타 2026」에 참가했습니다! 디오라마 전시와 메타버스 체험을 즐겨주셨습니다!"
+        },
+        "order": 0,
+        "createdAt": "2026-09-27T23:04:58+09:00",
+        "updatedAt": "2026-09-27T23:04:58+09:00"
+    },
+    {
+        "id": 8,
+        "date": "2026.08.01",
+        "datetime": "2026-08-01",
+        "link": "",
+        "text": {
+            "ja": "メタバース内のチャットに自動翻訳機能が追加されました",
+            "zh": "元宇宙内的聊天已新增自动翻译功能。",
+            "zh-TW": "元宇宙內的聊天已新增自動翻譯功能。",
+            "en": "Automatic translation functionality has been added to the chat in the metaverse.",
+            "ko": "메타버스 내 채팅에 자동 번역 기능이 추가되었습니다."
+        },
+        "order": 1,
+        "createdAt": "2026-08-23T10:08:09+09:00",
+        "updatedAt": "2026-08-23T10:08:31+09:00"
+    },
+    {
+        "id": 7,
+        "date": "2026.08.22",
+        "datetime": "2026-08-22",
+        "link": "",
+        "text": {
+            "ja": "Takara Leben Presents「SDGs甲子園 2026」で新人賞を受賞しました！",
+            "zh": "在Takara Leben Presents「SDGs甲子園 2026」中荣获新人奖！",
+            "zh-TW": "在Takara Leben Presents「SDGs甲子園 2026」中榮獲新人獎！",
+            "en": "We received the Newcomer Award at Takara Leben Presents 'SDGs Koshien 2026'!",
+            "ko": "Takara Leben Presents 'SDGs 고시엔 2026'에서 신인상을 수상했습니다!"
+        },
+        "order": 2,
+        "createdAt": "2026-08-23T10:05:42+09:00",
+        "updatedAt": "2026-08-23T10:05:42+09:00"
+    },
+    {
+        "id": 6,
+        "date": "2026.08.07",
+        "datetime": "2026-08-07",
+        "link": "https:\/\/tankyu-skill.com\/expo\/irexpo\/finalresults2026\/",
+        "text": {
+            "ja": "「自由すぎる研究EXPO2026」で金賞(こころが響いた瞬間賞)を受賞しました！",
+            "zh": "我们荣获了「过于自由的研究EXPO2026」的金奖（心灵共鸣瞬间奖）！",
+            "zh-TW": "我們榮獲了「過於自由的研究EXPO2026」的金獎（心靈共鳴瞬間獎）！",
+            "en": "We won the Gold Prize (Moment that Resonated with the Heart Award) at the 'Too Free Research EXPO 2026'!",
+            "ko": "「너무 자유로운 연구 EXPO 2026」에서 금상(마음에 울림을 준 순간상)을 수상했습니다!"
+        },
+        "order": 3,
+        "createdAt": "2026-08-23T10:02:55+09:00",
+        "updatedAt": "2026-08-23T10:05:57+09:00"
+    },
+    {
         "id": 5,
         "date": "2026.07.17",
         "datetime": "2026-07-17",
@@ -11,7 +75,7 @@
             "en": "We received an Excellence Award at the \"Presentation Koshien 2026 Chugoku-Shikoku Block\"!",
             "ko": "「프레젠테이션 고시엔 2026 주고쿠・시코쿠 블록」에서 우수상을 수상했습니다!"
         },
-        "order": 0,
+        "order": 4,
         "createdAt": "2026-07-17T22:41:42+09:00",
         "updatedAt": "2026-07-17T22:41:42+09:00"
     },
@@ -27,7 +91,7 @@
             "en": "The official Instagram of the Airport Diorama Team has been launched!",
             "ko": "공항 디오라마 팀의 공식 인스타그램이 개설되었습니다!"
         },
-        "order": 1,
+        "order": 5,
         "createdAt": "2026-07-04T02:20:51+09:00",
         "updatedAt": "2026-07-04T02:20:51+09:00"
     },
@@ -43,7 +107,7 @@
             "en": "We were awarded an Encouragement Award at the \"Social Co-creation Contest 2026\" hosted by Ehime University!",
             "ko": "에히메 대학 주최 '사회 공창 콘테스트 2026'에서 장려상을 수상했습니다!"
         },
-        "order": 2,
+        "order": 6,
         "createdAt": "2026-07-02T23:16:18+09:00",
         "updatedAt": "2026-07-02T23:16:30+09:00"
     },
@@ -53,15 +117,15 @@
         "datetime": "2026-06-18",
         "link": "#diorama-ar",
         "text": {
-            "ja": "ジオラマの体験にARモードが追加されました！",
-            "zh": "AR模式已添加到立体模型体验中！",
-            "zh-TW": "AR模式已新增至立體模型體驗！",
-            "en": "AR mode has been added to the diorama experience!",
-            "ko": "디오라마 체험에 AR 모드가 추가되었습니다!"
+            "ja": "ジオラマの体験にARモードが追加されました",
+            "zh": "AR模式已添加到立体模型体验中。",
+            "zh-TW": "AR模式已新增至立體模型體驗中。",
+            "en": "AR mode has been added to the diorama experience.",
+            "ko": "디오라마 체험에 AR 모드가 추가되었습니다."
         },
-        "order": 3,
+        "order": 7,
         "createdAt": "2026-07-02T23:15:33+09:00",
-        "updatedAt": "2026-07-02T23:15:33+09:00"
+        "updatedAt": "2026-08-23T10:08:47+09:00"
     },
     {
         "id": 1,
@@ -75,7 +139,7 @@
             "en": "The official website has been renewed!",
             "ko": "공식 홈페이지가 새롭게 단장되었습니다!"
         },
-        "order": 4,
+        "order": 8,
         "createdAt": "2026-05-16T01:28:23+09:00",
         "updatedAt": "2026-05-16T01:28:23+09:00"
     }

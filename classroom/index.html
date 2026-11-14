@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>教室・階段メタバース - 松山南高校ばーちゃるず</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <style>
         body {
             margin: 0;
@@ -363,16 +362,17 @@
             }
         }
 
-        /* メインコンテンツ */
+        /* UI オーバーレイ（a-scene は body 直下で常時表示） */
         .main-content {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease, visibility 1s ease;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
         }
 
         .main-content.show {
             opacity: 1;
-            visibility: visible;
         }
 
         .ui-overlay {
@@ -687,7 +687,41 @@
         </div>
     </div>
 
-    <!-- メインコンテンツ -->
+    <a-scene id="classroomScene" vr-mode-ui="enabled: true" style="height: 100vh; width: 100vw;"
+        background="color: #87CEEB" fog="type: linear; color: #87CEEB; near: 20; far: 100"
+        loading-screen="enabled: false">
+
+        <a-light type="ambient" color="#ffffff" intensity="0.7"></a-light>
+        <a-light type="directional" position="15 25 15" color="#ffffff" intensity="0.9"></a-light>
+        <a-light type="point" position="0 3 0" color="#ffffff" intensity="0.5"></a-light>
+        <a-light type="point" position="-5 3 5" color="#ffffff" intensity="0.3"></a-light>
+        <a-light type="point" position="5 3 -5" color="#ffffff" intensity="0.3"></a-light>
+
+        <a-entity id="classroom-entity" gltf-model="url(../GLBs/classroom_2.glb)" position="0 0 0" rotation="0 0 0"
+            scale="1 1 1">
+        </a-entity>
+
+        <a-plane position="0 -0.1 0" rotation="-90 0 0" width="100" height="100" color="#4a4a4a">
+        </a-plane>
+
+        <a-sphere id="hotspot-1" position="2 1.5 3" radius="0.1" color="#28a699" opacity="0.8"
+            animation="property: scale; to: 1.2 1.2 1.2; dir: alternate; dur: 1000; loop: true">
+        </a-sphere>
+        <a-sphere id="hotspot-2" position="-3 2 -2" radius="0.1" color="#28a699" opacity="0.8"
+            animation="property: scale; to: 1.2 1.2 1.2; dir: alternate; dur: 1000; loop: true; delay: 500">
+        </a-sphere>
+
+        <a-entity id="cameraRig" position="0 0 8">
+            <a-camera id="camera" look-controls="pointerLockEnabled: false" position="0 0 0">
+                <a-cursor geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
+                    material="color: #28a699; shader: flat" position="0 0 -1"
+                    animation__click="property: scale; startEvents: click; from: 1 1 1; to: 0.8 0.8 0.8; dur: 150; dir: alternate; easing: easeInQuad">
+                </a-cursor>
+            </a-camera>
+        </a-entity>
+    </a-scene>
+
+    <!-- UI オーバーレイ -->
     <div class="main-content" id="mainContent">
         <div class="ui-overlay">
             <div class="header">
@@ -740,69 +774,79 @@
             </button>
         </div>
 
-        <a-scene vr-mode-ui="enabled: true" style="height: 100vh; width: 100vw;" background="color: #87CEEB"
-            fog="type: linear; color: #87CEEB; near: 20; far: 100" loading-screen="enabled: false">
-
-            <!-- アセット -->
-            <a-assets>
-                <a-asset-item id="classroom-model" src="../GLBs/classroom_2.glb"></a-asset-item>
-            </a-assets>
-
-            <!-- 環境光 -->
-            <a-light type="ambient" color="#ffffff" intensity="0.7"></a-light>
-
-            <!-- 方向光 -->
-            <a-light type="directional" position="15 25 15" color="#ffffff" intensity="0.9"
-                light="castShadow: true; shadowMapHeight: 2048; shadowMapWidth: 2048"></a-light>
-
-            <!-- 追加の光源（教室内を明るく） -->
-            <a-light type="point" position="0 3 0" color="#ffffff" intensity="0.5"></a-light>
-            <a-light type="point" position="-5 3 5" color="#ffffff" intensity="0.3"></a-light>
-            <a-light type="point" position="5 3 -5" color="#ffffff" intensity="0.3"></a-light>
-
-            <!-- 教室・階段3Dモデル -->
-            <a-entity id="classroom-entity" gltf-model="#classroom-model" position="0 0 0" rotation="0 0 0"
-                scale="1 1 1" shadow="cast: true; receive: true">
-            </a-entity>
-
-            <!-- 地面 -->
-            <a-plane position="0 -0.1 0" rotation="-90 0 0" width="100" height="100" color="#4a4a4a"
-                shadow="receive: true" material="roughness: 0.8">
-            </a-plane>
-
-            <!-- 3D ホットスポット -->
-            <a-sphere id="hotspot-1" position="2 1.5 3" radius="0.1" color="#28a699" opacity="0.8"
-                animation="property: scale; to: 1.2 1.2 1.2; dir: alternate; dur: 1000; loop: true">
-            </a-sphere>
-
-            <a-sphere id="hotspot-2" position="-3 2 -2" radius="0.1" color="#28a699" opacity="0.8"
-                animation="property: scale; to: 1.2 1.2 1.2; dir: alternate; dur: 1000; loop: true; delay: 500">
-            </a-sphere>
-
-            <!-- カメラリグ -->
-            <a-entity id="cameraRig" position="0 0 8">
-
-                <!-- カメラ -->
-                <a-camera id="camera" look-controls="pointerLockEnabled: false"
-                    wasd-controls="enabled: true; acceleration: 25" position="0 0 0">
-
-                    <!-- カーソル -->
-                    <a-cursor geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.02"
-                        material="color: #28a699; shader: flat" position="0 0 -1"
-                        animation__click="property: scale; startEvents: click; from: 1 1 1; to: 0.8 0.8 0.8; dur: 150; dir: alternate; easing: easeInQuad">
-                    </a-cursor>
-                </a-camera>
-
-                <!-- VRコントローラー -->
-                <a-entity id="leftHand" hand-controls="hand: left; handModelStyle: lowPoly; color: #28a699">
-                </a-entity>
-                <a-entity id="rightHand" hand-controls="hand: right; handModelStyle: lowPoly; color: #28a699">
-                </a-entity>
-            </a-entity>
-        </a-scene>
+        <script>
+            (function () {
+                if (location.protocol !== 'file:') return;
+                const show = () => {
+                    const root = document.getElementById('mainContent') || document.body;
+                    root.querySelectorAll('a-scene').forEach((el) => el.remove());
+                    const loading = document.getElementById('loadingScreen');
+                    if (loading) loading.style.display = 'none';
+                    let box = document.getElementById('file-protocol-warning');
+                    if (!box) {
+                        box = document.createElement('div');
+                        box.id = 'file-protocol-warning';
+                        box.setAttribute('role', 'alert');
+                        box.style.cssText = 'position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:24px;background:#0f1419;color:#e8eef4;font-family:system-ui,sans-serif;line-height:1.65;';
+                        box.innerHTML = '<div style="max-width:36rem"><h1 style="font-size:1.2rem;margin:0 0 12px">HTTP サーバーから開いてください</h1><p style="margin:0 0 12px">HTML を <code>file://</code> で開くと、ブラウザの CORS により GLB を読み込めません（<code>a-assets</code> の fetch が拒否されます）。</p><p style="margin:0 0 8px"><strong>手順（このサイトのルート <code>public_html</code> で）:</strong></p><ol style="margin:0 0 12px;padding-left:1.25rem"><li><code>npm run serve</code></li><li>ブラウザで <code>http://localhost:8080/classroom/</code> を開く</li></ol><p style="margin:0;font-size:0.9rem;color:#9aa8b5">GLB は <code>GLBs/classroom_2.glb</code> に置いてください（Git 管理外の大容量ファイル）。</p></div>';
+                        document.body.appendChild(box);
+                    }
+                };
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', show, { once: true });
+                } else {
+                    show();
+                }
+            })();
+        </script>
     </div>
 
     <script>
+        const CLASSROOM_PAGE_BUILD_ID = 'classroom-gym-pattern-2026-03-25a';
+        const CLASSROOM_GLB_URL = new URL('../GLBs/classroom_2.glb', window.location.href).href;
+
+        const classroomGlbLog = (phase, detail) => {
+            const payload = detail !== undefined ? detail : '';
+            console.log(`[classroom:glb] ${phase}`, payload);
+        };
+
+        classroomGlbLog('boot', {
+            build: CLASSROOM_PAGE_BUILD_ID,
+            href: location.href,
+            glbUrl: CLASSROOM_GLB_URL,
+        });
+
+        window.addEventListener('error', (event) => {
+            classroomGlbLog('window-error', { message: event.message, filename: event.filename });
+        });
+
+        classroomGlbLog('configure-entity-html', {
+            applied: document.getElementById('classroom-entity')?.getAttribute('gltf-model'),
+        });
+
+        if (typeof PerformanceObserver !== 'undefined') {
+            try {
+                const classroomResourceObserver = new PerformanceObserver((list) => {
+                    list.getEntries().forEach((entry) => {
+                        if (!/draco|classroom_2\.glb/i.test(entry.name)) return;
+                        classroomGlbLog('resource-timing', {
+                            name: entry.name,
+                            durationMs: Math.round(entry.duration),
+                            transferSize: entry.transferSize,
+                        });
+                    });
+                });
+                classroomResourceObserver.observe({ type: 'resource', buffered: true });
+            } catch (err) {
+                classroomGlbLog('resource-observer-failed', String(err));
+            }
+        }
+
+        classroomGlbLog('load-mode', {
+            gltf: 'url(../GLBs/classroom_2.glb)',
+            aAssets: false,
+        });
+
         // プリローダーアニメーション
         function animatePreloader() {
             const redBall = document.querySelector('.dna-ball.red');
@@ -960,6 +1004,7 @@
             const preloader = document.getElementById('preloader');
             const mainContent = document.getElementById('mainContent');
 
+            classroomGlbLog('preloader-hide');
             preloader.classList.add('hidden');
             mainContent.classList.add('show');
 
@@ -976,23 +1021,103 @@
             corridor: { position: "0 2 -6", rotation: "0 180 0" }
         };
 
-        // 3Dモデルの読み込み状態管理
         let modelLoaded = false;
         const loadingScreen = document.getElementById('loadingScreen');
-        const classroomEntity = document.querySelector('#classroom-entity');
+        let classroomLoadWatchStartedAt = performance.now();
 
-        // モデル読み込み完了時の処理
-        classroomEntity.addEventListener('model-loaded', function () {
+        function dismissClassroomModelLoading(message) {
+            if (modelLoaded) return;
             modelLoaded = true;
-            loadingScreen.style.display = 'none';
-            console.log('教室・階段3Dモデルの読み込みが完了しました');
-        });
+            if (loadingScreen) loadingScreen.style.display = 'none';
+            classroomGlbLog('model-ready-ui-dismiss', message || '');
+        }
 
-        // モデル読み込みエラー時の処理
-        classroomEntity.addEventListener('model-error', function (event) {
-            console.error('3Dモデルの読み込みに失敗しました:', event.detail);
+        function showClassroomModelLoadError(detail) {
+            classroomGlbLog('model-error', detail);
+            console.error('3Dモデルの読み込みに失敗しました:', detail);
+            if (!loadingScreen) return;
+            loadingScreen.style.display = 'block';
             loadingScreen.innerHTML = '<div class="loading-spinner"></div><p>モデルの読み込みに失敗しました</p>';
-        });
+        }
+
+        function logClassroomGltfComponentState(phase) {
+            const classroomEntity = document.querySelector('#classroom-entity');
+            const gltfComp = classroomEntity && classroomEntity.components
+                ? classroomEntity.components['gltf-model']
+                : null;
+            const sceneEl = document.querySelector('a-scene');
+            classroomGlbLog(phase, {
+                elapsedMs: Math.round(performance.now() - classroomLoadWatchStartedAt),
+                hasGltfComponent: !!gltfComp,
+                hasParsedModel: !!(gltfComp && gltfComp.model),
+                modelLoadedFlag: modelLoaded,
+                entityGltfSrc: classroomEntity ? classroomEntity.getAttribute('gltf-model') : null,
+                sceneHasLoaded: sceneEl ? sceneEl.hasLoaded : null,
+                sceneNodeName: sceneEl ? sceneEl.nodeName : null,
+                entityNodeName: classroomEntity ? classroomEntity.nodeName : null,
+            });
+        }
+
+        function bindClassroomModelLoadHandlers() {
+            const classroomEntity = document.querySelector('#classroom-entity');
+            if (!classroomEntity || !loadingScreen) {
+                classroomGlbLog('bind-handlers-abort', {
+                    classroomEntity: !!classroomEntity,
+                    loadingScreen: !!loadingScreen,
+                });
+                return;
+            }
+            classroomGlbLog('bind-handlers');
+
+            classroomEntity.addEventListener('model-loaded', function () {
+                classroomGlbLog('model-loaded-event');
+                logClassroomGltfComponentState('after-model-loaded');
+                dismissClassroomModelLoading('教室・階段3Dモデルの読み込みが完了しました');
+            });
+
+            classroomEntity.addEventListener('model-error', function (event) {
+                logClassroomGltfComponentState('on-model-error');
+                showClassroomModelLoadError(event.detail);
+            });
+
+            const gltfComp = classroomEntity.components && classroomEntity.components['gltf-model'];
+            if (gltfComp && gltfComp.model) {
+                classroomGlbLog('model-already-parsed-before-listener');
+                dismissClassroomModelLoading('教室・階段3Dモデルは既に読み込み済みでした');
+            }
+        }
+
+        bindClassroomModelLoadHandlers();
+
+        const classroomSceneEl = document.querySelector('a-scene');
+        if (classroomSceneEl) {
+            classroomSceneEl.addEventListener('renderstart', () => classroomGlbLog('scene-renderstart'), { once: true });
+            classroomSceneEl.addEventListener('loaded', () => {
+                classroomGlbLog('scene-loaded-event');
+                logClassroomGltfComponentState('scene-loaded');
+            });
+        }
+
+        const classroomEntityForInit = document.querySelector('#classroom-entity');
+        if (classroomEntityForInit) {
+            classroomEntityForInit.addEventListener('componentinitialized', (event) => {
+                if (event.detail && event.detail.name === 'gltf-model') {
+                    classroomGlbLog('gltf-component-initialized');
+                }
+            });
+        }
+
+        window.setInterval(() => {
+            if (modelLoaded) return;
+            logClassroomGltfComponentState('wait-heartbeat');
+        }, 5000);
+
+        window.setTimeout(() => {
+            if (modelLoaded) return;
+            classroomGlbLog('wait-timeout-120s', {
+                hint: 'Draco・WebGL・キャッシュを疑う',
+            });
+        }, 120_000);
 
         // カメラ移動関数
         function moveCamera(position) {
@@ -1233,6 +1358,9 @@
 
         // 初期化処理
         document.addEventListener('DOMContentLoaded', function () {
+            const mainContent = document.getElementById('mainContent');
+            if (mainContent) mainContent.classList.add('show');
+
             // プリローダーアニメーション開始
             animatePreloader();
 

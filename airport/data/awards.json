@@ -1,5 +1,55 @@
 [
     {
+        "id": 8,
+        "year": "2026",
+        "datetime": "2026-01-01",
+        "status": "nominated",
+        "featured": true,
+        "published": true,
+        "link": "",
+        "organization": {
+            "ja": "SDGs甲子園2026～高校生実践プロジェクト～",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "title": {
+            "ja": "SDGs甲子園2026～高校生実践プロジェクト～",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "result": {
+            "ja": "新人賞",
+            "zh": "",
+            "zh-TW": "",
+            "en": "",
+            "ko": ""
+        },
+        "description": {
+            "ja": "８月22日に開催されたTakara  Leben Presents「SDGs甲子園2026」で新人賞を受賞しました！",
+            "zh": "在8月22日举办的Takara Leben Presents“SDGs甲子园2026”中荣获新人奖！",
+            "zh-TW": "在8月22日舉辦的Takara Leben Presents「SDGs甲子園2026」中榮獲新人獎！",
+            "en": "We won the Newcomer Award at the Takara Leben Presents \"SDGs Koshien 2026\" held on August 22nd!",
+            "ko": "8월 22일에 개최된 Takara Leben Presents 'SDGs 고시엔 2026'에서 신인상을 수상했습니다!"
+        },
+        "thumbnail": "images\/awards\/award-8-thumb-1786597855.png",
+        "thumbnailFrame": {
+            "width": 100,
+            "height": 0,
+            "cropLeft": 0,
+            "cropTop": 0,
+            "cropRight": 0,
+            "cropBottom": 0
+        },
+        "attachments": [],
+        "order": 0,
+        "createdAt": "2026-08-13T14:07:30+09:00",
+        "updatedAt": "2026-08-23T10:10:27+09:00"
+    },
+    {
         "id": 7,
         "year": "2026",
         "datetime": "2026-01-01",
@@ -22,18 +72,18 @@
             "ko": ""
         },
         "result": {
-            "ja": "一次通過",
+            "ja": "金賞",
             "zh": "",
             "zh-TW": "",
             "en": "",
             "ko": ""
         },
         "description": {
-            "ja": "2026年6月15日株式会社トモノカイ主催の「自由すぎる研究®EXPO2026」の一次を通過しました！現在は二次審査中です",
-            "zh": "2026年6月15日，我通过了株式会社トモノカイ",
-            "zh-TW": "2026年6月15日，我們通過了株式會社トモノ",
-            "en": "On June 15, 2026, we passed the first round of",
-            "ko": "2026년 6월 15일 주식회사 토모노카이 주"
+            "ja": "株式会社トモノカイ主催の「自由すぎる研究®EXPO2026」で心が響いた瞬間賞を受賞しました！",
+            "zh": "我们荣获了株式会社Tomonokai主办的“过于自由的研究®EXPO2026”中的“心弦共鸣瞬间奖”！",
+            "zh-TW": "我們榮獲了株式會社Tomonokai主辦的「過於自由的研究®EXPO2026」中的「心弦共鳴瞬間獎」！",
+            "en": "We received the 'Heart-Resonating Moment Award' at the 'Too Free Research® EXPO 2026' hosted by Tomonokai Co., Ltd.!",
+            "ko": "주식회사 토모노카이 주최의 '너무 자유로운 연구® EXPO2026'에서 '마음에 울림을 준 순간상'을 수상했습니다!"
         },
         "thumbnail": "images\/awards\/award-7-thumb-1783014429.png",
         "thumbnailFrame": {
@@ -60,9 +110,9 @@
                 "mime": "video\/mp4"
             }
         ],
-        "order": 0,
+        "order": 1,
         "createdAt": "2026-07-03T02:42:09+09:00",
-        "updatedAt": "2026-07-03T03:54:25+09:00"
+        "updatedAt": "2026-08-13T14:19:48+09:00"
     },
     {
         "id": 6,
@@ -118,9 +168,9 @@
                 "mime": "application\/pdf"
             }
         ],
-        "order": 1,
+        "order": 2,
         "createdAt": "2026-07-03T02:23:20+09:00",
-        "updatedAt": "2026-07-03T03:54:39+09:00"
+        "updatedAt": "2026-08-13T14:07:27+09:00"
     },
     {
         "id": 5,
@@ -176,7 +226,7 @@
                 "mime": "video\/mp4"
             }
         ],
-        "order": 2,
+        "order": 3,
         "createdAt": "2026-07-03T02:22:40+09:00",
         "updatedAt": "2026-07-17T15:12:49+09:00"
     }

@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "serve": "npx --yes serve . -l 8080",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:development": "playwright test tests/development.spec.js"

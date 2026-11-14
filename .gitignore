@@ -28,8 +28,6 @@ development/assets/downloads/*
 !development/assets/downloads/.gitkeep
 development/simulation/data/*.zip
 !development/simulation/data/.gitkeep
-development/app/fds/scenarios/*.firesim
-!development/app/fds/scenarios/.gitkeep
 
 # Playwright
 test-results/
